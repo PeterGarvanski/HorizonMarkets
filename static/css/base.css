@@ -1,0 +1,59 @@
+/* General CSS */
+
+body {
+    font-family: "Inika", serif;
+    font-weight: 700;
+    color: #484B6A;
+    background-color: #E5E5E5;
+}
+
+.box-shadow {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+/* CSS for Navigation */
+
+.nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #181a20;
+    width: 98vw;
+    margin: 15px auto;
+    border: solid 5px #D2D3DB;
+    border-radius: 50px;
+}
+
+.my-nav {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.list-item {
+    margin: 10px 10px 0 0;
+    font-size: 36px;
+
+}
+
+.nav-link {
+    color: #eae8e8;
+}
+
+.nav-button {
+    float: right;
+    font-weight: bold;
+    padding: 5px 20px;
+    margin-right: 10px;
+    font-size: 28px;
+    color: #ffffff;
+    border: solid 2px #eae8e8;
+    border-radius: 25px;
+    background-color: #fcd535;
+}
+
+.settings {
+    border: none;
+    border-radius: 90px;
+    background-color: transparent;
+}
