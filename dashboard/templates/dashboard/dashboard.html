@@ -13,9 +13,23 @@
     <div class="my-container">
         <div class="trapezium shw">
             <h4 class="balance">Account Balance:</h4>
-            <h2 class="sum">$50,000</h2>
+            <h2 class="sum txt-shadow">$50,000</h2>
         </div>
         <div class="sections account-history"></div>
-        <div class="sections fav-tickers"></div>
+        <div class="sections fav-tickers">
+            <h1 class="title centre">Favourited Tickers</h1>
+            {% for ticker in fav_tickers %}
+            <hr class="divider">
+                <div class="row">
+                    <div class="col-md-4 centre">
+                        <p class="name">{{ ticker }}</p>
+                    </div>
+                    <div class="col-md-8 centre-gap">
+                        <p class="value">N/A</p>
+                        <p class="percentage">N/A</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
