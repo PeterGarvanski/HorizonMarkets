@@ -3,7 +3,6 @@
 body {
     font-family: "Inika", serif;
     font-weight: 700;
-    color: #484B6A;
     background-color: #181a20f6;
 }
 
@@ -69,4 +68,57 @@ body {
     border: none;
     border-radius: 90px;
     background-color: transparent;
+    margin-top: 5px;
+}
+
+.btn.dropdown-toggle {
+    margin: 10px 20px;
+    background-color: #181a20;
+    border: solid 2px #ffffff;
+}
+
+/* CSS for Navigation on mobile devices */
+
+@media screen and (min-width: 320px) and (max-width: 576px) {
+    /* CSS for Navigation */
+    .nav-button {
+        font-size: 14px;
+        font-weight: 400;
+        padding: 2px 10px;
+        border-width: 2px;
+        margin-right: 5px;
+    }
+    
+    .settings {
+        margin-top: 2px;
+    }
+}
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+    /* CSS for Navigation */
+    .nav-button {
+        font-size: 20px;
+        border-width: 2px;
+    }
+
+    .settings {
+        margin-top: 2px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    /* CSS for Navigation */
+    .nav-button {
+        border-width: 3px;
+    }
+
+    .settings {
+        margin-top: 2px;
+    }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+    .list-item {
+        font-size: 30px;
+    }
 }
