@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Dahsboard
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="my-container">
+        <div class="trapezium shw">
+            <h4 class="balance">Account Balance:</h4>
+            <h2 class="sum">$50,000</h2>
+        </div>
+        <div class="sections account-history"></div>
+        <div class="sections fav-tickers"></div>
+    </div>
+{% endblock %}

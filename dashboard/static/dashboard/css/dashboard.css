@@ -1,0 +1,76 @@
+/* CSS For Dahboard Page */
+
+.my-container {
+    position: relative;
+}
+
+.sections {
+    background-color: #1a1d25f2;
+    width: 45vw;
+    height: 82vh;
+    border: solid 2px #ffffff;
+    border-radius: 10px;
+}
+
+.account-history {
+    position: absolute;
+    left:calc(0vw + 80px); /* 50vw minus half of the width of the element minus the desired gap */
+}
+
+.fav-tickers {
+    position: absolute;
+    left: calc(50vw + 20px); /* 50vw plus half of the width of the element plus the desired gap */
+}
+
+.sum {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 26px;
+    color: #ffffff;
+}
+
+.balance {
+    margin: 10px auto 0 auto;
+    font-size: 14px;
+    color:  #ffffff;
+}
+
+.trapezium {
+    position: absolute;
+    left: calc(50vw - 75px);
+    z-index:2;
+    width:150px;
+    height:60px;
+    margin:0px auto;
+    text-transform:uppercase;
+    text-align:center;
+    background-color: #181a20;
+    
+}
+ 
+.trapezium:before, .trapezium:after {
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    bottom:0;
+    z-index:-2;
+    border-radius: 10px;
+    background-color: #181a20;
+}
+ 
+.trapezium:before {
+    transform:skew(-40deg);
+    left:40px;
+}
+ 
+.trapezium:after {
+    transform:skew(40deg);
+    right:40px;
+    left:auto;
+}
+
+.shw {
+    filter: drop-shadow(0px 5px 10px #cecece);
+}

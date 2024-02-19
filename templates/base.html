@@ -41,10 +41,11 @@
                 {% include 'includes/mobile-nav.html' %}
             </div>
         </div>
+        <div class="row">
+            {% block content %}
+            {% endblock %}
+        </div>
     </div>
-
-    {% block content %}
-    {% endblock %}
     
     {% block extra_js %}
     {% endblock %}

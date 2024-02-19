@@ -3,15 +3,21 @@
 body {
     font-family: "Inika", serif;
     font-weight: 700;
-    background-color: #181a20f6;
+    background-color: #181a20;
 }
 
 .box-shadow {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
 }
 
 .txt-shadow {
     text-shadow: 0px 1px 2px rgba(255, 255, 255, 0.67);
+}
+
+.centre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* CSS for Navigation */
@@ -20,11 +26,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #181a20;
+    background-color: #1a1d25f2;
     width: 98vw;
-    margin: 15px auto;
-    border: solid 5px #ffffff;
-    border-radius: 50px;
+    margin: 15px auto 20px auto;
+    border: solid 3px #ffffff;
+    border-radius: 10px;
 }
 
 .my-nav {
@@ -59,8 +65,8 @@ body {
     margin-right: 10px;
     font-size: 22px;
     color: #ffffff;
-    border: solid 4px #ffffff;
-    border-radius: 25px;
+    border: solid 3px #ffffff;
+    border-radius: 10px;
     background-color: #f0b90b;
 }
 
@@ -87,6 +93,7 @@ body {
         padding: 2px 10px;
         border-width: 2px;
         margin-right: 5px;
+        border-radius: 5px;
     }
     
     .settings {

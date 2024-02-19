@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
 
-def index(request):
+def dashboard(request):
     """
     A view to return the dashboard page of the website.
     """
-    return render(request, 'dashboard/index.html')
+    return render(request, 'dashboard/dashboard.html')
