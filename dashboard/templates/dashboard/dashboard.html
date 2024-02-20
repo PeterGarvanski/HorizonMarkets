@@ -22,9 +22,9 @@
                     <canvas id="account-history-chart"></canvas>
                 </div>
                 <div class="date-row centre">
-                    <a href="#" class="date-buttons">D</a>
-                    <a href="#" class="date-buttons">M</a>
-                    <a href="#" class="date-buttons">Y</a>
+                    <a href="#" class="date-buttons">Day</a>
+                    <a href="#" class="date-buttons">Month</a>
+                    <a href="#" class="date-buttons">Year</a>
                 </div>
             </div>
         </div>
@@ -50,6 +50,52 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script>
+        // Define the WebSocket endpoint for Coinbase's WebSocket feed
+        const websocketEndpoint = 'wss://ws-feed.pro.coinbase.com';
+
+        const cryptos = [
+                "BTC-USD", "ETH-USD", "SOL-USD", "XRP-USD",
+                "ADA-USD", "NEXO-USD", "USDT-USD", "GBPX-USD"
+            ]
+    
+        // Create a WebSocket connection
+        const ws = new WebSocket(websocketEndpoint);
+
+        // Handle WebSocket connection open event
+        ws.onopen = function() {
+            console.log('WebSocket connection established.');
+
+            // Subscribe to the specified product channel
+            ws.send(JSON.stringify({
+                "type": "subscribe",
+                "product_ids": cryptos,
+                "channels": [
+                    "ticker_1000",
+                    {
+                        "name": "ticker_1000",
+                        "product_ids": cryptos
+                    }
+                ]
+            }));
+        };
+
+        // Request
+
+        // Handle WebSocket messages
+        ws.onmessage = function(event) {
+            // Parse the received data
+            let tickerName = document.getElementsByClassName('name')
+            const message = JSON.parse(event.data);
+            // You can handle different types of messages here, such as trades, order book updates, ticker data, etc.
+            console.log(message.product_id, message.price);
+        };
+
+        // Handle WebSocket close event
+        ws.onclose = function() {
+            console.log('WebSocket connection closed.');
+        };
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{% static 'dashboard/js/account-history-chart.js' %}"></script>
 {% endblock %}
