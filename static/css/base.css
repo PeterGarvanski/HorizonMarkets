@@ -1,17 +1,26 @@
 /* General CSS */
 
 body {
-    font-family: "Inika", serif;
+    font-family: "Poppins", sans-serif;
     font-weight: 700;
-    background-color: #181a20;
+    background-color: #0c0f12;
+    color: #e4e9ee;
+}
+
+.primary-clr {
+    color: #a8b7c6;
+}
+
+.secondary-clr {
+    color: #494061;
+}
+
+.accent {
+    color: #8870a1;
 }
 
 .box-shadow {
     box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
-}
-
-.txt-shadow {
-    text-shadow: 0px 1px 2px rgba(255, 255, 255, 0.67);
 }
 
 .centre {
@@ -20,16 +29,16 @@ body {
     align-items: center;
 }
 
+
 /* CSS for Navigation */
 
 .nav-menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #1a1d25f2;
+    background-color: #191922;
     width: 98vw;
-    margin: 15px auto 20px auto;
-    border: solid 3px #ffffff;
+    margin: 20px auto;
     border-radius: 10px;
 }
 
@@ -47,11 +56,12 @@ body {
 }
 
 .nav-link {
-    color: #ffffff;
+    color: #e4e9ee;
+    font-weight: 600;
 }
 
 .nav-link:hover {
-    color: #f0b90b;
+    color: #8870a1;
 }
 
 .nav-link.dashboard {
@@ -59,28 +69,37 @@ body {
 }
 
 .nav-button {
+    padding: 0.5em 2em;
     float: right;
-    font-weight: bold;
-    padding: 5px 20px;
+    font-weight: 500;
     margin-right: 10px;
-    font-size: 22px;
-    color: #ffffff;
-    border: solid 3px #ffffff;
+    font-size: 18px;
+    color: #e4e9ee;
+    border: none;
     border-radius: 10px;
-    background-color: #f0b90b;
+}
+
+.log-in {
+    background-color: #a8b7c6;
+}
+
+.register {
+    background-color: #494061;
 }
 
 .settings {
     border: none;
     border-radius: 90px;
     background-color: transparent;
-    margin-top: 5px;
+    color: #494061;
+
 }
 
 .btn.dropdown-toggle {
     margin: 10px 20px;
-    background-color: #181a20;
-    border: solid 2px #ffffff;
+    background-color: #191922;
+    border: solid 2px #e4e9ee;
+    color: #e4e9ee;
 }
 
 /* CSS for Navigation on mobile devices */
@@ -88,14 +107,12 @@ body {
 @media screen and (min-width: 320px) and (max-width: 576px) {
     /* CSS for Navigation */
     .nav-button {
-        font-size: 14px;
+        font-size: 10px;
         font-weight: 400;
-        padding: 2px 10px;
-        border-width: 2px;
         margin-right: 5px;
         border-radius: 5px;
     }
-    
+
     .settings {
         margin-top: 2px;
     }
@@ -104,19 +121,8 @@ body {
 @media screen and (min-width: 576px) and (max-width: 768px) {
     /* CSS for Navigation */
     .nav-button {
-        font-size: 20px;
+        font-size: 16px;
         border-width: 2px;
-    }
-
-    .settings {
-        margin-top: 2px;
-    }
-}
-
-@media screen and (min-width: 768px) and (max-width: 992px) {
-    /* CSS for Navigation */
-    .nav-button {
-        border-width: 3px;
     }
 
     .settings {
@@ -126,6 +132,6 @@ body {
 
 @media screen and (min-width: 992px) and (max-width: 1200px) {
     .list-item {
-        font-size: 30px;
+        font-size: 24px;
     }
 }

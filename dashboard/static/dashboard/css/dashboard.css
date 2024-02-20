@@ -5,35 +5,32 @@
 }
 
 .sections {
-    background-color: #1a1d25f2;
-    width: 45vw;
-    height: 82vh;
-    border: solid 2px #ffffff;
+    background-color: #191922;
+    width: 48%;
+    height: 750px;
     border-radius: 10px;
+    margin-top: 750px;
 }
 
 .account-history {
     position: absolute;
-    left:calc(0vw + 80px); /* 50vw minus half of the width of the element minus the desired gap */
+    left:calc(0vw + 25px); /* 50vw minus half of the width of the element minus the desired gap */
 }
 
 .fav-tickers {
     position: absolute;
-    left: calc(50vw + 20px); /* 50vw plus half of the width of the element plus the desired gap */
+    left: calc(50vw + 15px); /* 50vw plus half of the width of the element plus the desired gap */
 }
 
 .sum {
     text-align: center;
-    font-family: sans-serif;
     font-size: 26px;
-    color: #ffffff;
 }
 
 .balance {
     margin: 10px auto 0 auto;
     font-size: 14px;
     font-weight: bold;
-    color:  #ffffff;
 }
 
 .trapezium {
@@ -45,7 +42,7 @@
     margin:0px auto;
     text-transform:uppercase;
     text-align:center;
-    background-color: #181a20;
+    background-color: #494061;
     
 }
  
@@ -58,7 +55,7 @@
     bottom:0;
     z-index:-2;
     border-radius: 10px;
-    background-color: #181a20;
+    background-color: #494061;
 }
  
 .trapezium:before {
@@ -72,34 +69,40 @@
     left:auto;
 }
 
-.shw {
-    filter: drop-shadow(0px 5px 10px #cecece);
-}
-
 .title {
-    color: #ffffff;
-    margin: 20px 0 40px 0;
+    margin: 20px 0 30px 0;
+    font-weight: 600;
 }
 
 .name {
-    color: #ffffff;
     font-size: 26px;
-    text-align: center;
+    margin: 15px 0;
+    font-weight: 600;
 }
 
 .value {
-    color: #ffffff;
     font-size: 22px;
+    margin: auto 0;
+    font-weight: 400;
 }
 
 .percentage {
-    color: #ffffff;
-    margin-right: 100px;
     padding: 5px 20px;
-    background-color: green;
+    background-color: #a8b7c6;
     border-radius: 10px;
     font-size: 22px;
     text-align: center;
+    margin: auto 0;
+    font-weight: 400;
+}
+
+.cancel {
+    margin: auto 100px auto 0;
+    color: #494061;
+}
+
+.cancel:hover {
+    color: #ffffff;
 }
 
 .centre-gap {
@@ -112,5 +115,10 @@
 .divider {
     width: 80%;
     margin: 8px auto;
-    background-color: #313441;
+    background-color: #494061;
+}
+
+#account-history-chart {
+    width: 90%;
+    height: 800px;
 }

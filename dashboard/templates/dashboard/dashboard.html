@@ -11,25 +11,37 @@
 
 {% block content %}
     <div class="my-container">
-        <div class="trapezium shw">
+        <div class="trapezium">
             <h4 class="balance">Account Balance:</h4>
-            <h2 class="sum txt-shadow">$50,000</h2>
+            <h2 class="sum">$50,000</h2>
         </div>
-        <div class="sections account-history"></div>
-        <div class="sections fav-tickers">
-            <h1 class="title centre">Favourited Tickers</h1>
-            {% for ticker in fav_tickers %}
-            <hr class="divider">
-                <div class="row">
-                    <div class="col-md-4 centre">
-                        <p class="name">{{ ticker }}</p>
+        <div class="col-md-6 centre">
+            <div class="sections account-history">
+                <canvas id="account-history-chart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6 centre">
+            <div class="sections fav-tickers">
+                <h1 class="title centre">Favourited Tickers</h1>
+                {% for ticker in fav_tickers %}
+                    <hr class="divider">
+                    <div class="row">
+                        <div class="col-md-4 centre">
+                            <h3 class="name">{{ ticker }}</h3>
+                        </div>
+                        <div class="col-md-8 centre-gap">
+                            <p class="value">N/A</p>
+                            <p class="percentage">N/A</p>
+                            <a href="#" class="cancel"><i class="fas fa-xmark"></i></a>
+                        </div>
                     </div>
-                    <div class="col-md-8 centre-gap">
-                        <p class="value">N/A</p>
-                        <p class="percentage">N/A</p>
-                    </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'dashboard/js/account-history-chart.js' %}"></script>
 {% endblock %}
