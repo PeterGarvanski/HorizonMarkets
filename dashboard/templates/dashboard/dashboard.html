@@ -35,11 +35,11 @@
                     <hr class="divider">
                     <div class="row">
                         <div class="col-md-4 centre">
-                            <h3 class="name">{{ ticker }}</h3>
+                            <h3 class="name" id="{{ ticker }}">{{ ticker }}</h3>
                         </div>
                         <div class="col-md-8 centre-gap">
-                            <p class="value">N/A</p>
-                            <p class="percentage">N/A</p>
+                            <p class="value" id="{{ ticker }}_value">N/A</p>
+                            <p class="percentage" id="{{ ticker }}_percentage">N/A</p>
                             <a href="#" class="cancel"><i class="fas fa-xmark"></i></a>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
 
         const cryptos = [
                 "BTC-USD", "ETH-USD", "SOL-USD", "XRP-USD",
-                "ADA-USD", "NEXO-USD", "USDT-USD", "GBPX-USD"
+                "ADA-USD", "USDT-USD",
             ]
     
         // Create a WebSocket connection
@@ -80,15 +80,28 @@
             }));
         };
 
-        // Request
-
         // Handle WebSocket messages
         ws.onmessage = function(event) {
             // Parse the received data
-            let tickerName = document.getElementsByClassName('name')
             const message = JSON.parse(event.data);
-            // You can handle different types of messages here, such as trades, order book updates, ticker data, etc.
-            console.log(message.product_id, message.price);
+            try {
+                if (message.type === 'ticker' && cryptos.includes(message.product_id)) {
+                    // Extract ticker name and price from the message
+                    const crypto = message.product_id.replace('-USD', '');
+                    const tickerValueElement = document.getElementById(`${crypto}_value`);
+                    const tickerPercentageElement = document.getElementById(`${crypto}_percentage`);
+
+                    // Update the inner HTML of the elements
+                    if (tickerValueElement && tickerPercentageElement) {
+                        console.log(message)
+                        tickerValueElement.innerHTML = message.price;
+                        tickerPercentageElement.innerHTML = (((parseFloat(message.price) - parseFloat(message.open_24H)) / parseFloat(message.open_24H)) * 100).toFixed(3)
+                        console.log(message)
+                    }
+                }
+            } catch (error) {
+                console.log("Error handling WebSocket message:", error);
+            }
         };
 
         // Handle WebSocket close event
