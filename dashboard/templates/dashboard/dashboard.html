@@ -16,12 +16,20 @@
             <h2 class="sum">$50,000</h2>
         </div>
         <div class="col-md-6 centre">
-            <div class="sections account-history">
-                <canvas id="account-history-chart"></canvas>
+            <div class="sections box-shadow account-history">
+                <h1 class="title centre">Account History</h1>
+                <div class="chart">
+                    <canvas id="account-history-chart"></canvas>
+                </div>
+                <div class="date-row centre">
+                    <a href="#" class="date-buttons">D</a>
+                    <a href="#" class="date-buttons">M</a>
+                    <a href="#" class="date-buttons">Y</a>
+                </div>
             </div>
         </div>
         <div class="col-md-6 centre">
-            <div class="sections fav-tickers">
+            <div class="sections box-shadow fav-tickers">
                 <h1 class="title centre">Favourited Tickers</h1>
                 {% for ticker in fav_tickers %}
                     <hr class="divider">
