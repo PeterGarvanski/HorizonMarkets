@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="col-md-6 centre">
-            <div class="sections box-shadow fav-tickers">
+            <div class="sections box-shadow fav-tickers" data="{{ fav_tickers }}">
                 <h1 class="title centre">Favourited Tickers</h1>
                 {% for ticker in fav_tickers %}
                     <hr class="divider">
@@ -50,65 +50,7 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script>
-        // Define the WebSocket endpoint for Coinbase's WebSocket feed
-        const websocketEndpoint = 'wss://ws-feed.pro.coinbase.com';
-
-        const cryptos = [
-                "BTC-USD", "ETH-USD", "SOL-USD", "XRP-USD",
-                "ADA-USD", "USDT-USD",
-            ]
-    
-        // Create a WebSocket connection
-        const ws = new WebSocket(websocketEndpoint);
-
-        // Handle WebSocket connection open event
-        ws.onopen = function() {
-            console.log('WebSocket connection established.');
-
-            // Subscribe to the specified product channel
-            ws.send(JSON.stringify({
-                "type": "subscribe",
-                "product_ids": cryptos,
-                "channels": [
-                    "ticker_1000",
-                    {
-                        "name": "ticker_1000",
-                        "product_ids": cryptos
-                    }
-                ]
-            }));
-        };
-
-        // Handle WebSocket messages
-        ws.onmessage = function(event) {
-            // Parse the received data
-            const message = JSON.parse(event.data);
-            try {
-                if (message.type === 'ticker' && cryptos.includes(message.product_id)) {
-                    // Extract ticker name and price from the message
-                    const crypto = message.product_id.replace('-USD', '');
-                    const tickerValueElement = document.getElementById(`${crypto}_value`);
-                    const tickerPercentageElement = document.getElementById(`${crypto}_percentage`);
-
-                    // Update the inner HTML of the elements
-                    if (tickerValueElement && tickerPercentageElement) {
-                        console.log(message)
-                        tickerValueElement.innerHTML = message.price;
-                        tickerPercentageElement.innerHTML = (((parseFloat(message.price) - parseFloat(message.open_24H)) / parseFloat(message.open_24H)) * 100).toFixed(3)
-                        console.log(message)
-                    }
-                }
-            } catch (error) {
-                console.log("Error handling WebSocket message:", error);
-            }
-        };
-
-        // Handle WebSocket close event
-        ws.onclose = function() {
-            console.log('WebSocket connection closed.');
-        };
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{% static 'dashboard/js/account-history-chart.js' %}"></script>
+    <script src="{% static 'dashboard/js/market-data.js' %}"></script>
 {% endblock %}

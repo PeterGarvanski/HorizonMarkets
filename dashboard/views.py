@@ -7,6 +7,6 @@ def dashboard(request):
     """
 
     context = {
-        "fav_tickers" : ["BTC", "ETH", "SOL", "XRP", "ADA", "NEXO", "USDT", "GBPX"],
+        "fav_tickers" : ["BTC-USD", "ETH-USD", "SOL-USD", "XRP-USD", "ADA-USD","DOT-USD", "USDT-USD", "LINK-USD"],
     }
     return render(request, 'dashboard/dashboard.html', context)
