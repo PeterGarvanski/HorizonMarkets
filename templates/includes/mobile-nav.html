@@ -5,7 +5,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-              <li><a class="dropdown-item active" href="#">Dashboard</a></li>
+              <li><a class="dropdown-item active" href="{% url 'dashboard' %}">Dashboard</a></li>
               <li><a class="dropdown-item" href="#">Markets</a></li>
               <li><a class="dropdown-item" href="#">Chart</a></li>
               <li><hr class="dropdown-divider"></li>
@@ -14,8 +14,8 @@
           </div>
     </div>
     <div class="col-md-6">
-        <button type="button" class="btn btn-light nav-button settings" href="#"><i class="fas fa-gear"></i></button>
-        <button type="button" class="btn btn-light nav-button" href="#">Log In</button>
-        <button type="button" class="btn btn-light nav-button" href="#">Register</button>
+        <a  href="{% url 'settings' %}" class="btn btn-light nav-button settings"><i class="fas fa-gear"></i></button>
+        <a  href="{% url 'account_signup' %}" class="btn btn-light nav-button sign-up">Sign Up</a>
+        <a  href="{% url 'account_login' %}" class="btn btn-light nav-button log-in">Log In</a>
     </div>
 </nav>
