@@ -7,7 +7,7 @@ from .models import UserProfile
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'email', 'first_name', 'last_name']
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
@@ -16,9 +16,15 @@ class UserProfileForm(forms.ModelForm):
             Fieldset(
                 'User Profile Information',
                 'username',
+                'email',
                 'first_name',
                 'last_name',
-                'email',
             ),
             Submit('submit', 'Save')
         )
+
+        # Adding CSS classes and id's to form fields
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control form-inputs'
+            field.widget.attrs['id'] = field_name
+            self.fields[field_name].label = f'<span class="form-label">{self.fields[field_name].label}</span>'

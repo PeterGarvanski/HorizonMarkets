@@ -178,7 +178,7 @@
 }
 
 .settings-title {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .settings-form {
@@ -194,10 +194,44 @@
 }
 
 .links a {
-    margin: 0 10px;
+    margin: 30px 10px;
+    /* text-decoration: none; */
+    color: #080B0E;
+    letter-spacing: -1px;
+    padding: 0.5em 1em;
+    border-radius: 30px;
+}
+
+.links a:hover {
+    color: #437DBC;
+    background-color: #ffffff;
 }
 
 .save {
     display: block;
     margin: 20px auto 0;
+    padding: 0.5em 3em;
+    border-radius: 30px;
+    border: none;
+    color: #ffffff;
+    background-color: #93b8e1;
+    font-size: 18px;
+}
+
+.save:hover {
+    background-color: #ffffff;
+    color: #437DBC;
+}
+
+.form-inputs {
+    background-color: #f5f8fb;
+    width: 75%;
+    border-radius: 30px;
+    border: 1px solid #93b7e179;
+    margin: 5px auto 20px auto;  
+}
+
+.form-label {
+    color: #93B8E1;
+    margin-left: 80px;
 }
