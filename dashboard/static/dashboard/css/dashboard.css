@@ -162,3 +162,42 @@
     display: flex;
     justify-content: center;
 }
+
+.sections.settings-display {
+    position: absolute;
+    left: 25vw;
+    top: 0;
+    text-align: center;
+    margin-top: 0;
+}
+
+.my-centre {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.settings-title {
+    margin-bottom: 20px;
+}
+
+.settings-form {
+    width: 60%;
+    text-align: left;
+    margin: auto;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.links a {
+    margin: 0 10px;
+}
+
+.save {
+    display: block;
+    margin: 20px auto 0;
+}

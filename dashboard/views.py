@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import UserProfileForm
 from django.contrib.auth.decorators import login_required
+
 
 @login_required
 def dashboard(request):
@@ -12,8 +14,28 @@ def dashboard(request):
     }
     return render(request, 'dashboard/dashboard.html', context)
 
+
 def settings(request):
     """
     A view to return the Settings page of the website.
     """
-    return render(request, 'dashboard/settings.html')
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('settings')  # Redirect to a success page
+    else:
+        form = UserProfileForm()
+
+    context = {
+        "form" : form
+    }
+
+    return render(request, 'dashboard/settings.html', context)
+
+
+def transfer(request):
+    """
+    A view to return the Transfer page of the website.
+    """
+    return render(request, 'dashboard/transfer.html')

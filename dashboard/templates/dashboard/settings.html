@@ -10,11 +10,21 @@
 {% endblock %}
 
 {% block content %}
-    <div class="col-md-3"></div>
-    <div class="col-md-6 centre">
-        <div class="display box-shadow">
-            <h1 class="settings-title title">Settings</h1>
+    <div class="my-container">
+        <div class="col-md-6 my-centre">
+            <div class="sections box-shadow settings-display">
+                <h1 class="title settings-title">Settings</h1>
+                <form method="post" class="settings-form">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="links">
+                        <a href="#">Trading Logs</a>
+                        <a href="#">Account Transactions</a>
+                        <a href="#">Password Reset</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary save">Save</button>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="col-md-3"></div>
 {% endblock %}

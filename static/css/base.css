@@ -79,13 +79,13 @@ body {
     border-radius: 30px;
 }
 
-.log-in {
+.log-out {
     background-color: transparent;
     border: none;
     padding: 0.5em 1em;
 }
 
-.sign-up {
+.transfer {
     background-color: #93B8E1;
     border: none;
     color: #ffffff;
