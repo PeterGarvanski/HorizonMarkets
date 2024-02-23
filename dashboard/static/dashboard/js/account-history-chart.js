@@ -1,5 +1,9 @@
 // Get the canvas element
-var ctx = document.getElementById('account-history-chart').getContext('2d');
+var chartElement = document.getElementById('account-history-chart');
+var accountData = chartElement.getAttribute('my-data');
+var ctx = chartElement.getContext('2d');
+
+console.log(accountData);
 
 // Define the data
 var data = {
@@ -8,7 +12,7 @@ var data = {
     label: 'Account Value',
     backgroundColor: '#69A2E0',
     borderColor: '#437DBC',
-    data: [50000, 45789, 36789, 42516, 52456, 59123, 61123, 65930, 68234, 70123, 67282, 65929]
+    data: accountData.split(','),
   }]
 };
 

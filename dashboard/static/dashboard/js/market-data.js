@@ -33,7 +33,6 @@ ws.onopen = function () {
 ws.onmessage = function (event) {
     // Response I recieve
     const message = JSON.parse(event.data);
-    console.log(message)
 
     try {
         if (message.type === 'ticker' && favTickers.includes(message.product_id)) {

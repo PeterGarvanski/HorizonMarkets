@@ -13,13 +13,13 @@
     <div class="my-container">
         <div class="trapezium drp-shadow">
             <h4 class="balance">Account Balance:</h4>
-            <h2 class="sum">$50,000</h2>
+            <h2 class="sum">${{ account_balance }}</h2>
         </div>
         <div class="col-md-6 centre">
             <div class="sections box-shadow account-history">
                 <h1 class="title centre">Account History</h1>
                 <div class="chart">
-                    <canvas id="account-history-chart"></canvas>
+                    <canvas id="account-history-chart" my-data="{{ account_history }}"></canvas>
                 </div>
                 <div class="date-row centre">
                     <a href="#" class="date-buttons">Day</a>
