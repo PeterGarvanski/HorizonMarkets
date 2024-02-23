@@ -1,13 +1,15 @@
-# forms.py
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit
-from .models import UserProfile
+from django.contrib.auth.models import User
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
-        model = UserProfile
+        model = User
         fields = ['username', 'email', 'first_name', 'last_name']
+        help_texts = {
+            'username': '',
+        }
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
@@ -23,7 +25,6 @@ class UserProfileForm(forms.ModelForm):
             Submit('submit', 'Save')
         )
 
-        # Adding CSS classes and id's to form fields
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control form-inputs'
             field.widget.attrs['id'] = field_name

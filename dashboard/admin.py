@@ -6,9 +6,11 @@ from .models import UserProfile
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = (
         'username',
+        'email',
         'first_name',
         'last_name',
-        'email'
+        'account_balance',
+        'account_history'
     )
 
 admin.site.register(UserProfile, UserProfileAdmin)

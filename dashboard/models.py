@@ -1,9 +1,23 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
 class UserProfile(models.Model):
-    primary_key = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=40, null=False, blank=False)
-    first_name = models.CharField(max_length=20, null=True, blank=True)
-    last_name = models.CharField(max_length=30, null=True, blank=True)
-    email = models.EmailField(max_length=60, null=False, blank=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    account_balance = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
+    account_history = models.CharField(max_length=256, null=False, blank=False, default="0")
+
+    @property
+    def username(self):
+        return self.user.username
+
+    @property
+    def email(self):
+        return self.user.email
+
+    @property
+    def first_name(self):
+        return self.user.first_name
+
+    @property
+    def last_name(self):
+        return self.user.last_name

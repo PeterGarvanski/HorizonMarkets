@@ -194,7 +194,7 @@
 }
 
 .links a {
-    margin: 30px 10px;
+    margin: 30px 5px;
     /* text-decoration: none; */
     color: #080B0E;
     letter-spacing: -1px;
@@ -210,7 +210,7 @@
 .save {
     display: block;
     margin: 20px auto 0;
-    padding: 0.5em 3em;
+    padding: 0.5em 4em;
     border-radius: 30px;
     border: none;
     color: #ffffff;
@@ -228,7 +228,7 @@
     width: 75%;
     border-radius: 30px;
     border: 1px solid #93b7e179;
-    margin: 5px auto 20px auto;  
+    margin: 5px auto 15px auto;  
 }
 
 .form-label {
