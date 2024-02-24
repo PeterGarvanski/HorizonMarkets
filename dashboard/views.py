@@ -15,9 +15,11 @@ def dashboard(request):
     user_profile, created = UserProfile.objects.get_or_create(user=user)
 
     context = {
-        "account_balance": user_profile.account_balance,
-        "account_history": "50000,45789,36789,42516,52456,59123,61123,65930,68234,70123,67282,65929",
+        "account_balance" : user_profile.account_balance,
+        "account_history" : "50000,45789,36789,42516,52456,59123,61123,65930,68234,70123,67282,65929",
         "fav_tickers" : ["BTC-USD", "ETH-USD", "SOL-USD", "XRP-USD", "ADA-USD","DOT-USD", "USDT-USD", "LINK-USD"],
+        "stripe_pk" : "pk_test_51OiF1tJWloYFxaUMwarc2ylIFT2HDdMBdhIoQ90gX5ys75vKPeH14zg1rs4dMriikfWXMgxMa429xi22q4tvVhi200Ckh9XClc",
+        "stripe_sk" : "sk_test_51OiF1tJWloYFxaUMA4g6SWVtSdaTb0x4wMTmnSX1KxMMwxOGKbaOQkvSbMTMScTqnIKm9Hgq4GnVDW5X6o6Wr00j00vJKwFWp0",
     }
 
     return render(request, 'dashboard/dashboard.html', context)
@@ -66,4 +68,10 @@ def transfer(request):
     """
     A view to return the Transfer page of the website.
     """
-    return render(request, 'dashboard/transfer.html')
+    
+    context = {
+        "stripe_public_key" : "pk_test_51OiF1tJWloYFxaUMwarc2ylIFT2HDdMBdhIoQ90gX5ys75vKPeH14zg1rs4dMriikfWXMgxMa429xi22q4tvVhi200Ckh9XClc",
+        "client_secret" : "sk_test_51OiF1tJWloYFxaUMA4g6SWVtSdaTb0x4wMTmnSX1KxMMwxOGKbaOQkvSbMTMScTqnIKm9Hgq4GnVDW5X6o6Wr00j00vJKwFWp0",
+    }
+
+    return render(request, 'dashboard/transfer.html', context)

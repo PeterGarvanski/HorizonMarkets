@@ -29,3 +29,28 @@ class UserProfileForm(forms.ModelForm):
             field.widget.attrs['class'] = 'form-control form-inputs'
             field.widget.attrs['id'] = field_name
             self.fields[field_name].label = f'<span class="form-label">{self.fields[field_name].label}</span>'
+
+
+class TransactionForm(forms.ModelForm):
+    class Meta:
+        fields = ['first_name', 'last_name', 'email', 'amount', 'transaction_type',]
+
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Fieldset(
+                'User Profile Information',
+                'first_name',
+                'last_name',
+                'email',
+                'amount',
+                'transaction_type',
+            ),
+            Submit('submit', 'Submit')
+        )
+
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control form-inputs'
+            field.widget.attrs['id'] = field_name
+            self.fields[field_name].label = f'<span class="form-label">{self.fields[field_name].label}</span>'
