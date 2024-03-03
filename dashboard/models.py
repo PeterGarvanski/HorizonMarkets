@@ -24,18 +24,17 @@ class UserProfile(models.Model):
 
 
 class Transaction(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    
+    TRANSACTION_TYPE_CHOICES = [
+        ('Withdraw', 'Withdraw'),
+        ('Deposit', 'Deposit'),
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='transactions')
+    country = models.CharField(max_length=40, null=False, blank=False, default="N/A")
+    city = models.CharField(max_length=50, null=False, blank=False, default="N/A")
+    postal_code = models.CharField(max_length=10, null=False, blank=False, default="N/A")
+    street_name = models.CharField(max_length=50, null=False, blank=False, default="N/A")
+    street_number = models.IntegerField(null=False, blank=False, default=0)
     amount = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
-    transaction_type = models.CharField(max_length=256, null=False, blank=False, default="0")
-
-    @property
-    def first_name(self):
-        return self.user.first_name
-
-    @property
-    def last_name(self):
-        return self.user.last_name
-
-    @property
-    def email(self):
-        return self.user.email
+    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPE_CHOICES, null=False, blank=False, default="Deposit")

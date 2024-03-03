@@ -181,6 +181,10 @@
     margin-bottom: 40px;
 }
 
+.title.transfer-title {
+    margin-bottom: 20px;
+}
+
 .settings-form {
     width: 60%;
     text-align: left;
@@ -235,6 +239,20 @@
     color: #93B8E1;
     margin-left: 80px;
 }
+
+.form-inputs-transaction {
+    background-color: #f5f8fb;
+    width: 60%;
+    height: 35px;
+    border-radius: 30px;
+    border: 1px solid #93b7e179;
+    margin: auto auto 10px auto;  
+}
+
+.form-label-transaction {
+    color: #93B8E1;
+}
+
 
 /* Stripe CSS */
 

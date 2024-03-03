@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import UserProfileForm
+from .forms import UserProfileForm, TransactionForm
 from .models import UserProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -68,10 +68,13 @@ def transfer(request):
     """
     A view to return the Transfer page of the website.
     """
-    
+
+    transaction_form = TransactionForm()
+
     context = {
         "stripe_public_key" : "pk_test_51OiF1tJWloYFxaUMwarc2ylIFT2HDdMBdhIoQ90gX5ys75vKPeH14zg1rs4dMriikfWXMgxMa429xi22q4tvVhi200Ckh9XClc",
         "client_secret" : "sk_test_51OiF1tJWloYFxaUMA4g6SWVtSdaTb0x4wMTmnSX1KxMMwxOGKbaOQkvSbMTMScTqnIKm9Hgq4GnVDW5X6o6Wr00j00vJKwFWp0",
+        'transaction_form': transaction_form,
     }
 
     return render(request, 'dashboard/transfer.html', context)

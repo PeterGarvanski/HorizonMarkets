@@ -1,9 +1,6 @@
 from django.contrib import admin
 from .models import UserProfile, Transaction
 
-# Register your models here.
-
-
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = (
         'username',
@@ -14,16 +11,18 @@ class UserProfileAdmin(admin.ModelAdmin):
         'account_history'
     )
 
+admin.site.register(UserProfile, UserProfileAdmin)
 
 class TransactionAdmin(admin.ModelAdmin):
     list_display = (
-        'first_name',
-        'last_name',
-        'email',
+        'user',
+        'country',
+        'city',
+        'postal_code',
+        'street_name',
+        'street_number',
         'amount',
         'transaction_type'
     )
 
-
-admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Transaction, TransactionAdmin)

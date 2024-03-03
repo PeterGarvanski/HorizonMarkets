@@ -11,14 +11,15 @@
 
 {% block content %}
 <div class="my-container">
-    <div class="col-md-6 my-centre">
+    <div class="col-md-6">
         <div class="sections box-shadow settings-display">
-            <h1 class="title settings-title">Transfer</h1>
+            <h1 class="title transfer-title">Transfer</h1>
             <form action="#" method="POST" id="payment-form">
                 {% csrf_token %}
+                {% crispy transaction_form %}
                 <div id="card-element"></div>
                 <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary save">Submit</button>
             </form>
         </div>
     </div>
