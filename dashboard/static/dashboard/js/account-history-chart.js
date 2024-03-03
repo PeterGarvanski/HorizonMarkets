@@ -3,8 +3,6 @@ var chartElement = document.getElementById('account-history-chart');
 var accountData = chartElement.getAttribute('my-data');
 var ctx = chartElement.getContext('2d');
 
-console.log(accountData);
-
 // Define the data
 var data = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],

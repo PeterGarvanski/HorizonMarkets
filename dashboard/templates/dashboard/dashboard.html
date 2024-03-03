@@ -38,8 +38,8 @@
                             <h3 class="name" id="{{ ticker }}">{{ ticker }}</h3>
                         </div>
                         <div class="col-md-8 centre-gap">
-                            <p class="value" id="{{ ticker }}_value">N/A</p>
-                            <p class="percentage" id="{{ ticker }}_percentage">N/A</p>
+                            <p class="value" id="{{ ticker }}USDT_value">N/A</p>
+                            <p class="percentage" id="{{ ticker }}USDT_percentage">N/A</p>
                             <a href="#" class="cancel"><i class="fas fa-xmark"></i></a>
                         </div>
                     </div>
@@ -52,5 +52,5 @@
 {% block extra_js %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{% static 'dashboard/js/account-history-chart.js' %}"></script>
-    <script src="{% static 'dashboard/js/market-data.js' %}"></script>
+    <script src="{% static 'dashboard/js/binance-market-data.js' %}"></script>
 {% endblock %}

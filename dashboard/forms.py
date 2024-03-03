@@ -70,4 +70,3 @@ class TransactionForm(forms.ModelForm):
             field.widget.attrs['id'] = field_name
             self.fields[field_name].label = f'<span class="form-label-transaction">{self.fields[field_name].label}</span>'
             field.required = False
-            # field.label = ''
