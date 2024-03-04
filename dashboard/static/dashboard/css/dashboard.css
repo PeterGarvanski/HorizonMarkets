@@ -165,9 +165,15 @@
 
 .sections.settings-display {
     position: absolute;
-    left: 25vw;
+    left: calc(50vw + 15px); /* 50vw plus half of the width of the element plus the desired gap */
     top: 0;
-    text-align: center;
+    margin-top: 0;
+}
+
+.sections.transfer-display {
+    position: absolute;
+    left: calc(0vw + 25px); /* 50vw plus half of the width of the element plus the desired gap */
+    top: 0;
     margin-top: 0;
 }
 
@@ -186,7 +192,6 @@
 }
 
 .settings-form {
-    width: 60%;
     text-align: left;
     margin: auto;
 }
@@ -229,7 +234,7 @@
 
 .form-inputs {
     background-color: #f5f8fb;
-    width: 75%;
+    width: 60%;
     border-radius: 30px;
     border: 1px solid #93b7e179;
     margin: 5px auto 15px auto;  
@@ -237,7 +242,11 @@
 
 .form-label {
     color: #93B8E1;
-    margin-left: 80px;
+    margin-left: 10vw;
+}
+
+legend {
+    margin: 15px 0 15px 30px;
 }
 
 .form-inputs-transaction {
@@ -251,8 +260,8 @@
 
 .form-label-transaction {
     color: #93B8E1;
+    margin-left: 10vw;
 }
-
 
 /* Stripe CSS */
 

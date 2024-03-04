@@ -19,10 +19,9 @@ class TransactionAdmin(admin.ModelAdmin):
         'country',
         'city',
         'postal_code',
-        'street_name',
-        'street_number',
+        'address_line_1',
         'amount',
-        'transaction_type'
+        'type_of_transaction'
     )
 
 admin.site.register(Transaction, TransactionAdmin)

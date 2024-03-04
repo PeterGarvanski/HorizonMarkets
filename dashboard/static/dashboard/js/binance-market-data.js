@@ -8,7 +8,7 @@ const favTickers = JSON.parse(modifiedCryptoList);
 const websocketEndpoint = 'wss://stream.binance.com:9443/ws';
 const ws = new WebSocket(websocketEndpoint);
 
-// Keep Track of time, incase of need to throtle
+// Keep Track of time, incase of need to throtte
 let lastUpdateTimestamp = 0;
 
 // Function to subscribe to the WebSocket stream
@@ -31,7 +31,6 @@ const subscribeToTicker = (ticker) => {
         const currentTime = Date.now();
         if (currentTime - lastUpdateTimestamp >= 0) {
             const tickerData = JSON.parse(event.data);
-            console.log(tickerData);
             
             if (tickerData.e === '24hrTicker') {
                 const tickerValueElement = document.getElementById(`${tickerData.s}_value`);

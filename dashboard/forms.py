@@ -4,7 +4,6 @@ from crispy_forms.layout import Layout, Fieldset, Submit
 from django.contrib.auth.models import User
 from .models import Transaction
 
-
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
@@ -22,16 +21,15 @@ class UserProfileForm(forms.ModelForm):
                 'username',
                 'email',
                 'first_name',
-                'last_name',
+                'last_name'
             ),
-            Submit('submit', 'Save')
+            Submit('submit', 'Save', css_class='btn btn-primary save')
         )
 
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-inputs'
             field.widget.attrs['id'] = field_name
             self.fields[field_name].label = f'<span class="form-label">{self.fields[field_name].label}</span>'
-
 
 class TransactionForm(forms.ModelForm):
     class Meta:
@@ -40,10 +38,9 @@ class TransactionForm(forms.ModelForm):
             'country',
             'city',
             'postal_code',
-            'street_name',
-            'street_number',
+            'address_line_1',
             'amount',
-            'transaction_type'
+            'type_of_transaction'
         ]
 
     def __init__(self, *args, **kwargs):
@@ -51,22 +48,21 @@ class TransactionForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Fieldset(
+                'Transaction Details',
+                'amount',
+                'type_of_transaction'
+            ),
+            Fieldset(
                 'Billing Address',
                 'country',
                 'city',
                 'postal_code',
-                'street_name',
-                'street_number',
+                'address_line_1'
             ),
-            Fieldset(
-                'Transaction Form',
-                'amount',
-                'transaction_type',
-            ),
+            Submit('submit', 'Submit', css_class='btn btn-primary save')
         )
 
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-inputs-transaction'
             field.widget.attrs['id'] = field_name
             self.fields[field_name].label = f'<span class="form-label-transaction">{self.fields[field_name].label}</span>'
-            field.required = False

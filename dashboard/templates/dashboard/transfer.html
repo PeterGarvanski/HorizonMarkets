@@ -12,14 +12,27 @@
 {% block content %}
 <div class="my-container">
     <div class="col-md-6">
-        <div class="sections box-shadow settings-display">
-            <h1 class="title transfer-title">Transfer</h1>
-            <form action="#" method="POST" id="payment-form">
+        <div class="sections box-shadow transfer-display">
+            <form method="POST" action="{% url 'transfer' %}" class="my-form" id="payment-form">
                 {% csrf_token %}
+                <fieldset>
+                    <legend>Card Details</legend>
+                    <div id="card-element"></div>
+                    <!-- <div class="mb-3 text-danger" id="card-errors" role="alert"></div> -->
+                </fieldset>
                 {% crispy transaction_form %}
-                <div id="card-element"></div>
-                <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-                <button type="submit" class="btn btn-primary save">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6 my-centre">
+        <div class="sections box-shadow settings-display">
+            <form method="post" class="my-forms settings-form">
+                {% csrf_token %}
+                {% crispy settings_form %}
+                <div class="links">
+                    <a href="#">View Trading Logs</a>
+                    <a href="#">Account Transactions</a>
+                </div>
             </form>
         </div>
     </div>
