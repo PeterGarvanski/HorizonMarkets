@@ -36,4 +36,4 @@ class Transaction(models.Model):
     postal_code = models.CharField(max_length=10, null=False, blank=False, default="N/A")
     address_line_1 = models.CharField(max_length=100, null=False, blank=False, default="N/A")
     amount = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
-    type_of_transaction = models.CharField(max_length=10, choices=TRANSACTION_TYPE_CHOICES, null=False, blank=False, default="Deposit")
+    transfer_type = models.CharField(max_length=10, choices=TRANSACTION_TYPE_CHOICES, null=False, blank=False, default="Deposit")

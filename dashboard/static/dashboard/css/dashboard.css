@@ -263,6 +263,10 @@ legend {
     margin-left: 10vw;
 }
 
+#transfer_type {
+    margin-left: 9.6vw;
+}
+
 /* Stripe CSS */
 
 .StripeElement {

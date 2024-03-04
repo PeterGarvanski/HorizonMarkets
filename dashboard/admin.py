@@ -21,7 +21,7 @@ class TransactionAdmin(admin.ModelAdmin):
         'postal_code',
         'address_line_1',
         'amount',
-        'type_of_transaction'
+        'transfer_type'
     )
 
 admin.site.register(Transaction, TransactionAdmin)

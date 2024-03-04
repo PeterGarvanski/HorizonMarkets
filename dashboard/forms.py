@@ -40,7 +40,7 @@ class TransactionForm(forms.ModelForm):
             'postal_code',
             'address_line_1',
             'amount',
-            'type_of_transaction'
+            'transfer_type',
         ]
 
     def __init__(self, *args, **kwargs):
@@ -50,7 +50,7 @@ class TransactionForm(forms.ModelForm):
             Fieldset(
                 'Transaction Details',
                 'amount',
-                'type_of_transaction'
+                'transfer_type',
             ),
             Fieldset(
                 'Billing Address',
@@ -66,3 +66,6 @@ class TransactionForm(forms.ModelForm):
             field.widget.attrs['class'] = 'form-inputs-transaction'
             field.widget.attrs['id'] = field_name
             self.fields[field_name].label = f'<span class="form-label-transaction">{self.fields[field_name].label}</span>'
+            
+            if field_name in ['country', 'city', 'postal_code', 'address_line_1']:
+                field.initial = None
