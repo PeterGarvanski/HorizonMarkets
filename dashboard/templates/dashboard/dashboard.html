@@ -22,9 +22,9 @@
                     <canvas id="account-history-chart" my-data="{{ account_history }}"></canvas>
                 </div>
                 <div class="date-row centre">
-                    <a href="#" class="date-buttons">Day</a>
-                    <a href="#" class="date-buttons">Month</a>
-                    <a href="#" class="date-buttons">Year</a>
+                    <a href="{% url 'dashboard' %}" id="day" class="date-buttons">Day</a>
+                    <a href="{% url 'dashboard' %}" id="month" class="date-buttons">Month</a>
+                    <a href="{% url 'dashboard' %}" id="year" class="date-buttons">Year</a>
                 </div>
             </div>
         </div>

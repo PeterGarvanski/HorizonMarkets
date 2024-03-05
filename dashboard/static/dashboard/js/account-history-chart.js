@@ -1,20 +1,61 @@
-// Get the canvas element
+// Get the canvas elements
 var chartElement = document.getElementById('account-history-chart');
-var accountData = chartElement.getAttribute('my-data');
 var ctx = chartElement.getContext('2d');
 
-// Define the data
+// Get the account history data and parse JSON format
+var accountDataString = chartElement.getAttribute('my-data');
+var modifiedAccountData = accountDataString.replace(/'/g, '"')
+var accountData = JSON.parse(modifiedAccountData);
+
+// Fallback account history options
+const accountHistoryData = accountData.today.balances
+const accountHistoryLabels = accountData.today.times
+
+// Event listener for DOM to finnish loading
+document.addEventListener("DOMContentLoaded", function () {
+  
+//  Gets Date buttons and adds event listener for each
+var dateButtons = document.querySelectorAll('.date-buttons');
+  dateButtons.forEach(function (button) {
+    button.addEventListener('click', function (event) {
+
+      // Get the id of the clicked element
+      var buttonId = event.target.id;
+
+      // Update the account data based on which element was clicked
+      if (buttonId === 'day') {
+        accountHistoryData = accountData.today.balances
+        accountHistoryLabels = accountData.today.times
+      } 
+      
+      else if (buttonId === 'month') {
+        accountHistoryData = accountData.this_month.balances
+        accountHistoryLabels = accountData.this_month.days
+        console.log("Month button clicked");
+      } 
+      
+      else if (buttonId === 'year') {
+        accountHistoryData = accountData.this_year.balances
+        accountHistoryLabels = accountData.this_year.months
+        console.log("Year button clicked");
+      }
+    });
+  });
+});
+
+
+// Add Data to the chart element
 var data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  labels: accountHistoryLabels,
   datasets: [{
     label: 'Account Value',
     backgroundColor: '#69A2E0',
     borderColor: '#437DBC',
-    data: accountData.split(','),
+    data: accountHistoryData,
   }]
 };
 
-// Configure the chart
+// Configure the chart element
 var myChart = new Chart(ctx, {
   type: 'line',
   data: data,

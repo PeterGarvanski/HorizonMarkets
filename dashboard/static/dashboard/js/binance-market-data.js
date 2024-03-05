@@ -37,7 +37,7 @@ const subscribeToTicker = (ticker) => {
                 const tickerPercentageElement = document.getElementById(`${tickerData.s}_percentage`);
 
                 const tickerPrice = parseFloat(tickerData.c);
-                const tickerPercentage = parseFloat(tickerData.P);
+                const tickerPercentage = ((tickerPrice - parseFloat(tickerData.o)) / parseFloat(tickerData.o)) * 100;
 
                 if (tickerPercentage > 0) {
                     tickerPercentageElement.style.backgroundColor = "#11a452";

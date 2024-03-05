@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     account_balance = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
-    account_history = models.CharField(max_length=256, null=False, blank=False, default="0")
 
     @property
     def username(self):
@@ -37,3 +36,11 @@ class Transaction(models.Model):
     address_line_1 = models.CharField(max_length=100, null=False, blank=False, default="N/A")
     amount = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
     transfer_type = models.CharField(max_length=10, choices=TRANSACTION_TYPE_CHOICES, null=False, blank=False, default="Deposit")
+
+
+class AccountHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='account_history')
+    new_account_balance = models.DecimalField(max_digits=15, decimal_places=2)
+    net_difference = models.DecimalField(max_digits=15, decimal_places=2)
+    date = models.DateField(auto_now_add=True)
+    time = models.TimeField(auto_now_add=True)

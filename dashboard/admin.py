@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, Transaction
+from .models import UserProfile, Transaction, AccountHistory
 
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = (
@@ -7,8 +7,7 @@ class UserProfileAdmin(admin.ModelAdmin):
         'email',
         'first_name',
         'last_name',
-        'account_balance',
-        'account_history'
+        'account_balance'
     )
 
 admin.site.register(UserProfile, UserProfileAdmin)
@@ -25,3 +24,14 @@ class TransactionAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(Transaction, TransactionAdmin)
+
+class AccountHistoryAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'new_account_balance',
+        'net_difference',
+        'date',
+        'time'
+    )
+
+admin.site.register(AccountHistory, AccountHistoryAdmin)
