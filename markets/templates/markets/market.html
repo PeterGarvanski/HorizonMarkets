@@ -11,13 +11,19 @@
 
 {% block content %}
     <div class="sections box-shadow">
+        <form action="{% url 'markets' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" class="search-bar" name="search_bar">
+            <button type="submit" class="search-button"><i class="fas fa-magnifying-glass"></i></button>
+        </form>
+        <ul class="search-dropdown">
+            {% for crypto in crypto_querys %}
+                <li class="crypto-option"><a href="" class="crypto-links">{{ crypto }}</a></li>
+                <hr class="line">
+            {% endfor %}
+        </ul>
         <!-- TradingView Widget BEGIN -->
         <div class="tradingview-widget-container">
-            <form action="" method="POST">
-                {% csrf_token %}
-                <input type="text" class="search-bar">
-                <input type="submit" value="Go" class="search-button">
-            </form>
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
                 {
