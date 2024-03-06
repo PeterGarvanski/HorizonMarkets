@@ -7,76 +7,94 @@ var accountDataString = chartElement.getAttribute('my-data');
 var modifiedAccountData = accountDataString.replace(/'/g, '"')
 var accountData = JSON.parse(modifiedAccountData);
 
-// Fallback account history options
-const accountHistoryData = accountData.today.balances
-const accountHistoryLabels = accountData.today.times
+// Variables for account history data and labels
+var accountHistoryData;
+var accountHistoryLabels;
+var axisTitle;
 
-// Event listener for DOM to finnish loading
-document.addEventListener("DOMContentLoaded", function () {
-  
-//  Gets Date buttons and adds event listener for each
-var dateButtons = document.querySelectorAll('.date-buttons');
-  dateButtons.forEach(function (button) {
-    button.addEventListener('click', function (event) {
+// Function to set chart fallback data
+function setDefaultData() {
+  accountHistoryData = accountData.today.balances;
+  accountHistoryLabels = accountData.today.times;
+}
 
-      // Get the id of the clicked element
-      var buttonId = event.target.id;
+// Set default data
+setDefaultData();
 
-      // Update the account data based on which element was clicked
-      if (buttonId === 'day') {
-        accountHistoryData = accountData.today.balances
-        accountHistoryLabels = accountData.today.times
-      } 
-      
-      else if (buttonId === 'month') {
-        accountHistoryData = accountData.this_month.balances
-        accountHistoryLabels = accountData.this_month.days
-        console.log("Month button clicked");
-      } 
-      
-      else if (buttonId === 'year') {
-        accountHistoryData = accountData.this_year.balances
-        accountHistoryLabels = accountData.this_year.months
-        console.log("Year button clicked");
-      }
-    });
-  });
-});
-
-
-// Add Data to the chart element
-var data = {
-  labels: accountHistoryLabels,
-  datasets: [{
-    label: 'Account Value',
-    backgroundColor: '#69A2E0',
-    borderColor: '#437DBC',
-    data: accountHistoryData,
-  }]
-};
-
-// Configure the chart element
+// Create the initial chart with default data
 var myChart = new Chart(ctx, {
   type: 'line',
-  data: data,
+  data: {
+    labels: accountHistoryLabels,
+    datasets: [{
+      label: 'Account Value',
+      backgroundColor: '#69A2E0',
+      borderColor: '#437DBC',
+      data: accountHistoryData,
+    }]
+  },
   options: {
     scales: {
       x: {
+        title: {
+          display: true,
+          text: axisTitle
+        },
         grid: {
-          color: '#437dbc3b' // Specify the color for the x-axis grid lines
+          color: '#437dbc3b'
         },
         ticks: {
-          color: '#080B0E' // Specify the color for the x-axis ticks
+          color: '#080B0E'
         }
       },
       y: {
         grid: {
-          color: '#437dbc3b' // Specify the color for the y-axis grid lines
+          color: '#437dbc3b'
         },
         ticks: {
-          color: '#080B0E' // Specify the color for the y-axis ticks
+          color: '#080B0E'
         }
       }
     }
   }
+});
+
+// Function to update the chart data
+function updateChartData() {
+  myChart.data.labels = accountHistoryLabels;
+  myChart.data.datasets[0].data = accountHistoryData;
+  myChart.options.scales.x.title.text = axisTitle;
+  myChart.update();
+}
+
+//  Gets Date buttons and adds event listener for each
+var dateButtons = document.querySelectorAll('.date-buttons');
+dateButtons.forEach(function (button) {
+  button.addEventListener('click', function (event) {
+    
+    // Get the id of the clicked element
+    var buttonId = event.target.id;
+
+    // Update the account data based on which element was clicked
+    if (buttonId === 'day') {
+      accountHistoryData = accountData.today.balances;
+      accountHistoryLabels = accountData.today.times;
+      axisTitle = 'Times Throughout Day'
+    } 
+    
+    else if (buttonId === 'month') {
+      accountHistoryData = accountData.this_month.balances;
+      accountHistoryLabels = accountData.this_month.days;
+      axisTitle = 'Days of the Month'
+    } 
+    
+    else if (buttonId === 'year') {
+      accountHistoryData = accountData.this_year.balances;
+      accountHistoryLabels = accountData.this_year.months;
+      axisTitle = 'Months in the Year'
+    }
+
+    // Update the chart data
+    updateChartData();
+  });
 });
