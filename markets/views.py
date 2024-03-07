@@ -38,6 +38,12 @@ def markets(request):
                 market.fav_tickers.append(crypto)
                 market.save()
 
+        elif 'remove_crypto' in request.POST:
+            crypto = request.POST.get('remove_crypto')
+            market.fav_tickers.remove(crypto)
+            market.save()
+            return redirect('dashboard')
+
         elif 'add_to_chart' in request.POST:
             ...
 
@@ -49,8 +55,6 @@ def markets(request):
         is_favourited = True
     else: 
         is_favourited = False
-
-    print
 
     # All the relevant context the templates will need
     context = {

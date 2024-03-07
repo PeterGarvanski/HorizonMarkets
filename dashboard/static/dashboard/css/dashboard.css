@@ -107,6 +107,8 @@
 .cancel {
     margin: auto 100px auto 0;
     color: #69A2E0;
+    background-color: transparent;
+    border: none;
 }
 
 .cancel:hover {

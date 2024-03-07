@@ -40,7 +40,11 @@
                         <div class="col-md-8 centre-gap">
                             <p class="value" id="{{ ticker }}USDT_value">N/A</p>
                             <p class="percentage" id="{{ ticker }}USDT_percentage">N/A</p>
-                            <a href="#" class="cancel"><i class="fas fa-xmark"></i></a>
+                            <form action="{% url 'markets' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="remove_crypto" value="{{ ticker }}">
+                                <button type="submit" class="cancel"><i class="fas fa-xmark"></i></button>
+                            </form>
                         </div>
                     </div>
                 {% endfor %}
