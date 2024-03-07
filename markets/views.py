@@ -17,27 +17,33 @@ def markets(request):
     user = request.user
     market = Market.objects.get_or_create(user=user)[0]
 
+    # Empty list to store the query results
     crypto_query  = []
 
+    # If a form is being submitted
     if request.method == 'POST':
 
+        # If the form is the search bar look up the asset and return a query
         if 'search_bar' in request.POST:
             search_response = request.POST.get('search_bar')
             for crypto in all_assets['cryptos']:
                 if search_response.upper() in crypto:
                     crypto_query.append(crypto)
         
+        # If the form is the crypto options save the ticker to user_market
         elif 'crypto_name' in request.POST:
             chosen_market = request.POST.get('crypto_name')
             market.user_market = chosen_market
             market.save()
 
+        # If the form is the favourites add the ticker to fav_tickers
         elif 'add_to_favourites' in request.POST:
             crypto, currency = market.user_market.split("/")
             if len(market.fav_tickers) < 8 and crypto not in market.fav_tickers:
                 market.fav_tickers.append(crypto)
                 market.save()
 
+        # If the form is the remove ticker, remove the ticker from fav_tickers
         elif 'remove_crypto' in request.POST:
             crypto = request.POST.get('remove_crypto')
             market.fav_tickers.remove(crypto)
@@ -47,10 +53,12 @@ def markets(request):
         elif 'add_to_chart' in request.POST:
             ...
 
+    # Modify the names fior user freindability
     users_market = market.user_market
     modified_market = users_market.replace("/", "")
     crypto, currency = users_market.split("/")
 
+    # Sets is_favourited depending if the ticker is already in fav_tickers
     if crypto in market.fav_tickers:
         is_favourited = True
     else: 
