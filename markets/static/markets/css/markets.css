@@ -15,6 +15,17 @@
     background-color: #f5f8fb;
     border-radius: 30px;
     border: 1px solid #93b7e179;
+    padding-left: 10px;
+    color: #080B0E;
+}
+
+.search-bar::placeholder {
+    color: #93b8e1;
+}
+
+.search-bar:focus {
+    border: solid 2px #93b8e1;
+    outline: none;
 }
 
 .search-button {
@@ -51,7 +62,7 @@
 
 .crypto-option {
     margin: auto;
-    width: 300px;
+    width: 100%;
     text-align: center;
     margin-top: 10px;
 }
@@ -61,12 +72,37 @@
 }
 
 .crypto-links {
+    width: 100%;
     text-decoration: none;
     color: #080B0E;
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
 }
 
-.line{
-    width: 80%;
-    margin: 8px auto;
-    background-color: #437dbc3b;
+.market-button {
+    position: absolute;
+    top: 163px;
+    background-color: transparent;
+    border-radius: 30px;
+    color: #93b8e1;
+    border: none;
+    font-size: 30px;
+    height: 50px;
+    width: 50px;
+}
+
+.favourite {
+    left: 90vw;
+}
+
+.chart {
+    left: 93vw;
+}
+
+.market-button:hover {
+    color: #437DBC;
+    background-color: #ffffff;
 }

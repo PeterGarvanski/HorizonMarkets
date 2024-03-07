@@ -5,7 +5,8 @@ from .models import Market
 class MarketAdmin(admin.ModelAdmin):
     list_display = (
         'user',
-        'user_market'
+        'user_market',
+        'fav_tickers'
     )
 
 admin.site.register(Market, MarketAdmin)

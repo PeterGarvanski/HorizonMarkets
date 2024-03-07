@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import UserProfileForm, TransactionForm
 from .models import UserProfile, AccountHistory
+from markets.models import Market
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from datetime import datetime
@@ -18,6 +19,7 @@ def dashboard(request):
     user = request.user
     user_profile, created = UserProfile.objects.get_or_create(user=user)
     account_history_querys = AccountHistory.objects.filter(user=user)
+    fav_tickers = Market.objects.get_or_create(user=user)[0]
 
     # Create a dictionary to store sorted account history data
     account_history = {
@@ -54,7 +56,7 @@ def dashboard(request):
     context = {
         'account_balance' : user_profile.account_balance,
         'account_history' : account_history,
-        'fav_tickers' : ["BTC", "ETH", "BNB", "SOL", "NEXO", "ADA", "AVAX", "DOT"],
+        'fav_tickers' : fav_tickers.fav_tickers,
     }
 
     return render(request, 'dashboard/dashboard.html', context)

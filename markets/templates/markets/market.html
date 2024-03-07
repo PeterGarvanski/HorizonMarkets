@@ -13,15 +13,40 @@
     <div class="sections box-shadow">
         <form action="{% url 'markets' %}" method="POST">
             {% csrf_token %}
-            <input type="text" class="search-bar" name="search_bar">
+            <input type="text" class="search-bar" name="search_bar" placeholder="Search For Crypto's">
             <button type="submit" class="search-button"><i class="fas fa-magnifying-glass"></i></button>
         </form>
+        <form action="{% url 'markets' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="add_to_favourites" value="{{ crypto }}">
+            <button type="submit" class="market-button favourite">
+                {% if is_favourited %}
+                    <i class="fa-solid fa-heart"></i>
+                {% else %}
+                    <i class="fa-regular fa-heart"></i>
+                {% endif %}
+            </button>
+        </form>
+        <form action="{% url 'markets' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="add_to_chart" value="{{ crypto }}">
+            <button type="submit" class="market-button chart"><i class="fas fa-arrow-right-to-bracket"></i></button>
+        </form>
+        
+        {% if crypto_querys|length == 0 %}
+        {% else %}
         <ul class="search-dropdown">
             {% for crypto in crypto_querys %}
-                <li class="crypto-option"><a href="" class="crypto-links">{{ crypto }}</a></li>
-                <hr class="line">
+                <form action="{% url 'markets' %}" method="post">
+                    {% csrf_token %}
+                    <li class="crypto-option">
+                        <input type="hidden" name="crypto_name" value="{{ crypto }}">
+                        <button type="submit" class="crypto-links">{{ crypto }}</button>
+                    </li>
+                </form>
             {% endfor %}
         </ul>
+        {% endif %}        
         <!-- TradingView Widget BEGIN -->
         <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
@@ -29,7 +54,7 @@
                 {
                     "symbols": [
                     [
-                        "BINANCE:BTCUSDT|1D"
+                        "BINANCE:{{ user_market }}|1D"
                     ]
                     ],
                     "chartOnly": false,
