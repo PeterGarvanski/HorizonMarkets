@@ -50,9 +50,6 @@ def markets(request):
             market.save()
             return redirect('dashboard')
 
-        elif 'add_to_chart' in request.POST:
-            ...
-
     # Modify the names fior user freindability
     users_market = market.user_market
     modified_market = users_market.replace("/", "")

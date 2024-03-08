@@ -5,3 +5,27 @@
     border-radius: 10px;
     margin: auto;
 }
+
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chart-actions {
+    position: absolute;
+    top: 143px;
+    background-color: transparent;
+    border: none;
+}
+
+.add {
+    left: 94vw;
+}
+
+.remove {
+    left: 96.5vw;
+}
+
+.chart-actions:hover {
+    color: #69A2E0;
+}

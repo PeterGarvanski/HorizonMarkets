@@ -10,9 +10,59 @@
 {% endblock %}
 
 {% block content %}
-    <div class="chart-section box-shadow"></div>
-{% endblock %}
-
-{% block extra_js %}
-
+    <div class="chart-section box-shadow">
+        <div class="chart-container">
+            {% for crypto in crypto_charts %}
+                <div class="chart-buttons">
+                    {% if crypto_charts|length > 1 and crypto_charts|length < 3 %}
+                        <form action="{% url 'chart' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="remove_chart" value="{{ crypto }}">
+                            <button type="submit" class="chart-actions remove"><i class="fas fa-xmark"></i></button>
+                        </form>
+                        <form action="{% url 'chart' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="add_chart" value="{{ crypto }}">
+                            <button type="submit" class="chart-actions add"><i class="fa-solid fa-plus"></i></button>
+                        </form>
+                    {% elif crypto_charts|length > 2 %}
+                        <form action="{% url 'chart' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="remove_chart" value="{{ crypto }}">
+                            <button type="submit" class="chart-actions remove"><i class="fas fa-xmark"></i></button>
+                        </form>
+                    {% elif crypto_charts|length < 2 %}
+                        <form action="{% url 'chart' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="add_chart" value="{{ crypto }}">
+                            <button type="submit" class="chart-actions add"><i class="fa-solid fa-plus"></i></button>
+                        </form>
+                    {% endif %}
+                </div>
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget" style="width: 100%;"></div>
+                    <script type="text/javascript"
+                        src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                        {
+                            "height": "750",
+                            "symbol": "BINANCE:{{ crypto }}",
+                            "interval": "60",
+                            "timezone": "Etc/UTC",
+                            "theme": "light",
+                            "style": "1",
+                            "locale": "en",
+                            "gridLineColor": "rgba(105, 162, 224, 0.24)",
+                            "backgroundColor": "rgba(236, 241, 247, 1)",
+                            "allow_symbol_change": true,
+                            "enable_publishing": false,
+                            "hide_side_toolbar": false,
+                            "save_image": false,
+                            "calendar": false,
+                            "support_host": "https://www.tradingview.com"
+                        }
+                    </script>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

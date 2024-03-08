@@ -27,12 +27,6 @@
                 {% endif %}
             </button>
         </form>
-        <form action="{% url 'markets' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="add_to_chart" value="{{ crypto }}">
-            <button type="submit" class="market-button chart"><i class="fas fa-arrow-right-to-bracket"></i></button>
-        </form>
-        
         {% if crypto_querys|length == 0 %}
         {% else %}
         <ul class="search-dropdown">
