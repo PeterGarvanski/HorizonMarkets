@@ -153,7 +153,6 @@ all_assets = {
         "VITE/USDT",
         "VOXEL/USDT",
         "WAXP/USDT",
-        "WBTC/BTC",
         "YFI/USDT",
         "ZEC/USDT",
         "ZIL/USDT"

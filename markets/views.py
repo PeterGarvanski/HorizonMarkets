@@ -26,9 +26,17 @@ def markets(request):
         # If the form is the search bar look up the asset and return a query
         if 'search_bar' in request.POST:
             search_response = request.POST.get('search_bar')
-            for crypto in all_assets['cryptos']:
-                if search_response.upper() in crypto:
-                    crypto_query.append(crypto)
+            for asset in all_assets['cryptos']:
+                crypto, currency = asset.split("/")
+
+                # If the search directly matches the crypto just return the market
+                if search_response.upper() == crypto:
+                    market.user_market = asset
+                    market.save()
+
+                # Otherwise return a query with potential cryptos
+                elif search_response.upper() in asset:
+                    crypto_query.append(asset)
         
         # If the form is the crypto options save the ticker to user_market
         elif 'crypto_name' in request.POST:
