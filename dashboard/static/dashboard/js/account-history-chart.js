@@ -5,6 +5,7 @@ var ctx = chartElement.getContext('2d');
 // Get the account history data and parse JSON format
 var accountDataString = chartElement.getAttribute('my-data');
 var modifiedAccountData = accountDataString.replace(/'/g, '"')
+console.log(modifiedAccountData)
 var accountData = JSON.parse(modifiedAccountData);
 
 // Variables for account history data and labels

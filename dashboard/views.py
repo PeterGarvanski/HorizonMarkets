@@ -21,9 +21,13 @@ def dashboard(request):
     account_history_querys = AccountHistory.objects.filter(user=user)
     fav_tickers = Market.objects.get_or_create(user=user)[0]
 
+    today = datetime.now().date()
+    initial_account_balance_today = AccountHistory.objects.exclude(
+        date=today).latest('date', 'time').new_account_balance
+
     # Create a dictionary to store sorted account history data
     account_history = {
-        'today': {'balances': [], 'times': []},
+        'today': {'balances': [float(initial_account_balance_today)], 'times': ['Start of Today']},
         'this_month': {'balances': [], 'days': []},
         'this_year': {'balances': [], 'months': []}
     }
@@ -31,8 +35,9 @@ def dashboard(request):
     # Sort account history data based on dates and times
     for data in account_history_querys:
         date = data.date
-        time = data.time
+        time = data.time.strftime('%H:%M')
         balance = data.new_account_balance
+
 
         # Today's account history
         if date == datetime.now().date():
