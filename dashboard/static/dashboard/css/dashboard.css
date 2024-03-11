@@ -269,6 +269,10 @@ legend {
     margin-left: 9.6vw;
 }
 
+.invalid-feedback strong {
+    display: none;
+}
+
 /* Stripe CSS */
 
 .StripeElement {

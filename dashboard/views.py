@@ -88,7 +88,7 @@ def transfer(request):
     """
     A view to return the Transfer page of the website,
     this includes two forms: one where customers can
-    make deposits and withdrwals and another where they
+    make deposits and withdrawals and another where they
     can update their personal information.
     """
 
@@ -97,7 +97,9 @@ def transfer(request):
     user_profile, created = UserProfile.objects.get_or_create(user=user)
     account_history_querys = AccountHistory.objects.filter(user=user)
     transaction_form = TransactionForm()
-    
+    settings_form = UserProfileForm(instance=user)
+    error_message = ''  # Initialize error_message here
+
     # If a form is being submitted
     if request.method == 'POST':
 
@@ -154,11 +156,6 @@ def transfer(request):
             # If form is invalid send error message
             else:
                 error_message = 'User Profile Form is Invalid!'
-
-    # If method is GET pre-populate userProfile form
-    else:
-        settings_form = UserProfileForm(instance=user)
-        error_message = ''
 
     # All the relevant context the templates will need
     context = {
