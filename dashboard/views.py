@@ -5,6 +5,7 @@ from markets.models import Market
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from datetime import datetime
+import calendar
 
 
 @login_required
@@ -21,15 +22,28 @@ def dashboard(request):
     account_history_querys = AccountHistory.objects.filter(user=user)
     fav_tickers = Market.objects.get_or_create(user=user)[0]
 
+    # Create timestamps for day, month and year for later use
     today = datetime.now().date()
+    this_month = datetime.now().month
+    this_year = datetime.now().year
+
+    # Calculate days in month and create lists for months and days for later use
+    days_in_month = calendar.monthrange(this_year, this_month)[1]
+    days_in_month_list = [day for day in range(1, days_in_month + 1)]
+    months = [calendar.month_name[month] for month in range(1, 13)]
+    daily_balances_in_month = []
+    
+    for day in days_in_month_list:
+        daily_balances_in_month.append(0)
+
     initial_account_balance_today = AccountHistory.objects.exclude(
         date=today).latest('date', 'time').new_account_balance
 
     # Create a dictionary to store sorted account history data
     account_history = {
         'today': {'balances': [float(initial_account_balance_today)], 'times': ['Start of Today']},
-        'this_month': {'balances': [], 'days': []},
-        'this_year': {'balances': [], 'months': []}
+        'this_month': {'balances': daily_balances_in_month, 'days': days_in_month_list},
+        'this_year': {'balances': [], 'months': months}
     }
 
     # Sort account history data based on dates and times
@@ -38,24 +52,41 @@ def dashboard(request):
         time = data.time.strftime('%H:%M')
         balance = data.new_account_balance
 
-
         # Today's account history
-        if date == datetime.now().date():
+        if date == today:
             account_history['today']['balances'].append(float(balance))
             account_history['today']['times'].append(str(time))
 
         # This Months account history
-        if date.month == datetime.now().month:
-            account_history['this_month']['balances'].append(float(balance))
-            if date.day not in account_history['this_month']['days']:
-                account_history['this_month']['days'].append(str(date.day))
+        if date.month == this_month and date.year == this_year:
+
+            # For each day in the month create a custom date and query the database
+            for day in days_in_month_list:
+                custom_date = f'{this_year}-{this_month}-{day}'
+                balance_for_day = AccountHistory.objects.filter(user=user, date=custom_date).last()
+
+                # If the balance has changed that day set its value to the corresponding day in the list
+                if balance_for_day.exists():
+                    daily_balances_in_month[day - 1] = float(balance_for_day.new_account_balance)
+
+                # Otherwise find the last existing balance before the current day
+                else:
+                    previous_balances = AccountHistory.objects.filter(
+                        user=user, date__lt=custom_date).order_by('-date', '-time')
+                    
+                    # If there are balances set the value to the previous existing balance
+                    if previous_balances.exists():
+                        last_balance = previous_balances.first().new_account_balance
+                        daily_balances_in_month[day - 1] = float(last_balance)
+                    
+                    # If there's no previous balance, set it the users account balance
+                    else:
+                        daily_balances_in_month[day - 1] = 0
 
         # This Years account history
-        if date.year == datetime.now().year:
+        if date.year == this_year:
             account_history['this_year']['balances'].append(float(balance))
-            if date.month not in account_history['this_year']['months']:
-                account_history['this_year']['months'].append(str(date.month))
-
+            
 
     # All the relevant context the templates will need
     context = {
