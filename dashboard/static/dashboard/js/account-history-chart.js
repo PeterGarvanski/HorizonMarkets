@@ -7,8 +7,6 @@ var accountDataString = chartElement.getAttribute('my-data');
 var modifiedAccountData = accountDataString.replace(/'/g, '"');
 var accountData = JSON.parse(modifiedAccountData);
 
-console.log(accountData);
-
 // Variables for account history data and labels
 var accountHistoryData;
 var accountHistoryLabels;

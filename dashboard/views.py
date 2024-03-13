@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.exceptions import ObjectDoesNotExist
 from .forms import UserProfileForm, TransactionForm
 from .models import UserProfile, AccountHistory
 from markets.models import Market
@@ -31,22 +32,26 @@ def dashboard(request):
     days_in_month = calendar.monthrange(this_year, this_month)[1]
     days_in_month_list = [day for day in range(1, days_in_month + 1)]
     months = [calendar.month_name[month] for month in range(1, 13)]
-    daily_balances_in_month = []
-    
-    for day in days_in_month_list:
-        daily_balances_in_month.append(0)
+    daily_balances_in_month = [0 for _ in days_in_month_list]
+    monthly_balances_in_year = [0 for _ in months]
 
-    initial_account_balance_today = AccountHistory.objects.exclude(
-        date=today).latest('date', 'time').new_account_balance
+    # Creates a value to prepopulate the day chart for the account history
+    try:
+        initial_account_balance_today = account_history_querys.exclude(
+            date=today
+        ).latest('date', 'time').new_account_balance
+    
+    except ObjectDoesNotExist:
+        initial_account_balance_today = 0
 
     # Create a dictionary to store sorted account history data
     account_history = {
         'today': {'balances': [float(initial_account_balance_today)], 'times': ['Start of Today']},
         'this_month': {'balances': daily_balances_in_month, 'days': days_in_month_list},
-        'this_year': {'balances': [], 'months': months}
+        'this_year': {'balances': monthly_balances_in_year, 'months': months}
     }
 
-    # Sort account history data based on dates and times
+    # Sorts account history data based on dates and times into the dictionary
     for data in account_history_querys:
         date = data.date
         time = data.time.strftime('%H:%M')
@@ -63,30 +68,61 @@ def dashboard(request):
             # For each day in the month create a custom date and query the database
             for day in days_in_month_list:
                 custom_date = f'{this_year}-{this_month}-{day}'
-                balance_for_day = AccountHistory.objects.filter(user=user, date=custom_date).last()
+                balance_for_day = AccountHistory.objects.filter(
+                    user=user,
+                    date=custom_date
+                ).last()
 
                 # If the balance has changed that day set its value to the corresponding day in the list
-                if balance_for_day.exists():
+                if balance_for_day:
                     daily_balances_in_month[day - 1] = float(balance_for_day.new_account_balance)
 
                 # Otherwise find the last existing balance before the current day
                 else:
-                    previous_balances = AccountHistory.objects.filter(
-                        user=user, date__lt=custom_date).order_by('-date', '-time')
+                    previous_balance = AccountHistory.objects.filter(
+                        user=user,
+                        date__lt=custom_date
+                    ).order_by('-date', '-time').first()
                     
                     # If there are balances set the value to the previous existing balance
-                    if previous_balances.exists():
-                        last_balance = previous_balances.first().new_account_balance
-                        daily_balances_in_month[day - 1] = float(last_balance)
+                    if previous_balance:
+                        daily_balances_in_month[day - 1] = float(previous_balance.new_account_balance)
                     
-                    # If there's no previous balance, set it the users account balance
+                    # If there's no previous balance, set it to 0
                     else:
                         daily_balances_in_month[day - 1] = 0
 
         # This Years account history
         if date.year == this_year:
-            account_history['this_year']['balances'].append(float(balance))
-            
+
+            # For each month in the year query the database and get the last monthly transaction
+            for month in range(len(months)):
+                last_monthly_balance = AccountHistory.objects.filter(
+                    user=user, 
+                    date__year=this_year,
+                    date__month=(month + 1)
+                ).last()
+
+                # If there are transactions this month set the new value to the corresponding month
+                if last_monthly_balance:
+                    monthly_balances_in_year[month] = float(last_monthly_balance.new_account_balance)
+
+                # If there are no transactions this month get the value of the last transaction made
+                else:
+                    previous_monthly_balance = AccountHistory.objects.filter(
+                        user=user, 
+                        date__year=this_year,
+                    ).last()
+
+                    query_year, query_month, query_day = str(previous_monthly_balance.date).split("-")
+
+                    # If the user has previous transactions and no transactions this month
+                    if previous_monthly_balance and month > int(query_month) - 1:
+                        monthly_balances_in_year[month] = float(previous_monthly_balance.new_account_balance)
+
+                    # If the user has no transactions
+                    else:
+                        monthly_balances_in_year[month] = 0
 
     # All the relevant context the templates will need
     context = {

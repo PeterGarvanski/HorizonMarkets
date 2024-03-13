@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-3ey%xg@@4f!w@@+v#62sfbiadjaqc(#jcne+$)60v79f6yd-b#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-petergarvan-horizonmark-ofungvqkje6.ws-eu108.gitpod.io']
+ALLOWED_HOSTS = ['8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io']
 
 
 # Application definition
@@ -100,8 +100,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu108.gitpod.io',
-    # Add any other trusted origins here
+    'https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io',
 ]
 
 SITE_ID = 1
