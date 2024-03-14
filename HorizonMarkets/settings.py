@@ -101,6 +101,7 @@ AUTHENTICATION_BACKENDS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io',
+    # Add any other trusted origins here
 ]
 
 SITE_ID = 1

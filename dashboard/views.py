@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from datetime import datetime
 import calendar
+from env import STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY
 
 
 @login_required
@@ -226,8 +227,8 @@ def transfer(request):
 
     # All the relevant context the templates will need
     context = {
-        'stripe_public_key': 'pk_test_51OiF1tJWloYFxaUMwarc2ylIFT2HDdMBdhIoQ90gX5ys75vKPeH14zg1rs4dMriikfWXMgxMa429xi22q4tvVhi200Ckh9XClc',
-        'client_secret': 'sk_test_51OiF1tJWloYFxaUMA4g6SWVtSdaTb0x4wMTmnSX1KxMMwxOGKbaOQkvSbMTMScTqnIKm9Hgq4GnVDW5X6o6Wr00j00vJKwFWp0',
+        'stripe_public_key': STRIPE_PUBLIC_KEY,
+        'client_secret': STRIPE_SECRET_KEY,
         'transaction_form': transaction_form,
         'settings_form': settings_form,
         'error_message': error_message,
