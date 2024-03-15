@@ -149,7 +149,7 @@ def settings(request):
     user = request.user
     user_profile, created = UserProfile.objects.get_or_create(user=user)
     user_form = UserProfileForm(instance=user)
-    error_message = ''  # Initialize error_message here
+    error_message = ''
 
     # If the user form is being submitted
     if request.method == 'POST':
@@ -177,72 +177,22 @@ def settings(request):
 def transfer(request):
     """
     A view to return the Transfer page of the website,
-    this includes two forms: one where customers can
-    make deposits and withdrawals and another where they
-    can update their personal information.
+    this includes a stripe payment form allowing users
+    to deposit money into their accounts.
     """
 
-    # Requests the logged in users data and uses it to query the databases
-    user = request.user
-    account_history_querys = AccountHistory.objects.filter(user=user)
-    error_message = ''  # Initialize error_message here
-
-    # If a form is being submitted
-    if request.method == 'POST':
-
-        transaction_form = TransactionForm(request.POST)
-
-        # If all the form fields are valid get the data
-        if transaction_form.is_valid():
-            transaction = transaction_form.save(commit=False)
-
-            # If the transfer_type is deposit add money to account
-            if transaction.transfer_type == 'Deposit':
-                user_profile.account_balance = (user_profile.account_balance + transaction.amount)
-                new_entry = AccountHistory.objects.create(
-                    user=user,
-                    new_account_balance=user_profile.account_balance,
-                    net_difference=transaction.amount
-                )
-
-                user_profile.save()
-                new_entry.save()
-
-            # If the transfer_type is withdraw subtract money from account
-            else:
-                user_profile.account_balance = (user_profile.account_balance - transaction.amount)
-                new_entry = AccountHistory.objects.create(
-                    user=user,
-                    new_account_balance=user_profile.account_balance,
-                    net_difference=transaction.amount
-                )
-
-                user_profile.save()
-                new_entry.save()
-
-            # Post users transactions to the database and redirect to dashboard
-            transaction.user = user
-            transaction.save()
-            return redirect('dashboard')
-
-        # If form is invalid send error message
-        else:
-            error_message = 'Transaction Form is Invalid!'
-
-    # All the relevant context the templates will need
-    context = {
-        'error_message': error_message,
-    }
-
-    return render(request, 'dashboard/transfer.html', context)
+    return render(request, 'dashboard/transfer.html')
 
 
 def create_checkout_session(request):
+    """
+    Stripe function to create checkout sessions.
+    """
+
     YOUR_DOMAIN = 'https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io/'
     stripe.api_key = STRIPE_SECRET_KEY
 
     try:
-        # Your code to create the checkout session goes here
         session = stripe.checkout.Session.create(
             ui_mode='embedded',
             line_items=[
@@ -252,14 +202,51 @@ def create_checkout_session(request):
                 },
             ],
             mode='payment',
-            return_url=YOUR_DOMAIN,
+            return_url=YOUR_DOMAIN + '/return.html?session_id={CHECKOUT_SESSION_ID}',
         )
-        return JsonResponse({'clientSecret': session.client_secret})
+    
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'clientSecret': session.client_secret})
+
+
+def session_status(request):
+    """
+    Stripe function to retreieve session details,
+    and update users account balance and history
+    depending on deposits and withdrawals.
+    """
+    # Requests the logged in users data and uses it to query the databases
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+    stripe.api_key = STRIPE_SECRET_KEY
+    session_id = request.GET.get('session_id')
+
+    # Try to get session details
+    try:
+        session = stripe.checkout.Session.retrieve(session_id)
+
+        # If payment has been confirmed update account balance and add a entry for account history
+        if session and session.payment_status == "paid":
+            deposit_amount = session.amount_total / 100
+            user_profile.account_balance += deposit_amount
+            user_profile.save()
+
+            new_entry = AccountHistory.objects.create(
+                user=user,
+                new_account_balance=user_profile.account_balance,
+                net_difference=deposit_amount
+            )
+            print(new_entry)
+            new_entry.save()
+
+        return JsonResponse({'status': session.status, 'customer_email': session.customer_email})
+    
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
 
-def session_status(request):
-    session = stripe.checkout.Session.retrieve(request.args.get('session_id'))
+def return_page(request):
 
-    return JsonResponse(status=session.status, customer_email=session.customer_details.email)
+    return render(request, 'dashboard/return.html')

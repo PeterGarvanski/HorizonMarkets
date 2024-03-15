@@ -8,4 +8,5 @@ urlpatterns = [
     path('transfer/', views.transfer, name="transfer"),
     path('create-checkout-session/', views.create_checkout_session, name="checkout_session"),
     path('session-status/', views.session_status, name="session_status"),
+    path('return.html', views.return_page, name="return_page"),
 ]
