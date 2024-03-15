@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.http import HttpRequest, JsonResponse
 from .forms import UserProfileForm, TransactionForm
 from .models import UserProfile, AccountHistory
 from markets.models import Market
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+import stripe
+from env import STRIPE_SECRET_KEY
 from datetime import datetime
 import calendar
-from env import STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY
 
 
 @login_required
@@ -227,11 +229,38 @@ def transfer(request):
 
     # All the relevant context the templates will need
     context = {
-        'stripe_public_key': STRIPE_PUBLIC_KEY,
-        'client_secret': STRIPE_SECRET_KEY,
         'transaction_form': transaction_form,
         'settings_form': settings_form,
         'error_message': error_message,
     }
 
     return render(request, 'dashboard/transfer.html', context)
+
+
+# This is your test secret API key.
+stripe.api_key = STRIPE_SECRET_KEY
+
+YOUR_DOMAIN = 'https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io/'
+
+def create_checkout_session(request):
+    try:
+        # Your code to create the checkout session goes here
+        session = stripe.checkout.Session.create(
+            ui_mode='embedded',
+            line_items=[
+                {
+                    'price': 'price_1OuZR3P1CjHWdbKH01S6Ap9A',
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            return_url=YOUR_DOMAIN,
+        )
+        return JsonResponse({'clientSecret': session.client_secret})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+def session_status():
+  session = stripe.checkout.Session.retrieve(request.args.get('session_id'))
+
+  return JsonResponse(status=session.status, customer_email=session.customer_details.email)
