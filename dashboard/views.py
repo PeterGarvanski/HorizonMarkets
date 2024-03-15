@@ -140,14 +140,34 @@ def dashboard(request):
 @login_required
 def settings(request):
     """
-    A view to return the settings page of the website,
-    this includes a section where the users can submit a
-    form for customer support.
+    A view to return the Settings page of the website,
+    this includes the users personal information form,
+    and a section where the user can email customer support.
     """
+
+    # Requests the logged in users data and uses it to query the databases
+    user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=user)
+    user_form = UserProfileForm(instance=user)
+    error_message = ''  # Initialize error_message here
+
+    # If the user form is being submitted
+    if request.method == 'POST':
+        user_form = UserProfileForm(request.POST, instance=user)
+
+        # If all the form fields are valid post data and redirect
+        if user_form.is_valid():
+            user_form.save()
+            return redirect('dashboard')
+            
+        # If form is invalid send error message
+        else:
+            error_message = 'User Profile Form is Invalid!'
 
     # All the relevant context the templates will need
     context = {
-        # Add something here
+        'user_form': user_form,
+        'error_message': error_message,
     }
 
     return render(request, 'dashboard/settings.html', context)
@@ -164,85 +184,63 @@ def transfer(request):
 
     # Requests the logged in users data and uses it to query the databases
     user = request.user
-    user_profile, created = UserProfile.objects.get_or_create(user=user)
     account_history_querys = AccountHistory.objects.filter(user=user)
-    transaction_form = TransactionForm()
-    settings_form = UserProfileForm(instance=user)
     error_message = ''  # Initialize error_message here
 
     # If a form is being submitted
     if request.method == 'POST':
 
-        # If the form is the Transaction form get that form
-        if 'country' in request.POST:
-            transaction_form = TransactionForm(request.POST)
+        transaction_form = TransactionForm(request.POST)
 
-            # If all the form fields are valid get the data
-            if transaction_form.is_valid():
-                transaction = transaction_form.save(commit=False)
+        # If all the form fields are valid get the data
+        if transaction_form.is_valid():
+            transaction = transaction_form.save(commit=False)
 
-                # If the transfer_type is deposit add money to account
-                if transaction.transfer_type == 'Deposit':
-                    user_profile.account_balance = (user_profile.account_balance + transaction.amount)
-                    new_entry = AccountHistory.objects.create(
-                        user=user,
-                        new_account_balance=user_profile.account_balance,
-                        net_difference=transaction.amount
-                    )
+            # If the transfer_type is deposit add money to account
+            if transaction.transfer_type == 'Deposit':
+                user_profile.account_balance = (user_profile.account_balance + transaction.amount)
+                new_entry = AccountHistory.objects.create(
+                    user=user,
+                    new_account_balance=user_profile.account_balance,
+                    net_difference=transaction.amount
+                )
 
-                    user_profile.save()
-                    new_entry.save()
+                user_profile.save()
+                new_entry.save()
 
-                # If the transfer_type is withdraw subtract money from account
-                else:
-                    user_profile.account_balance = (user_profile.account_balance - transaction.amount)
-                    new_entry = AccountHistory.objects.create(
-                        user=user,
-                        new_account_balance=user_profile.account_balance,
-                        net_difference=transaction.amount
-                    )
-
-                    user_profile.save()
-                    new_entry.save()
-
-                # Post users transactions to the database and redirect to dashboard
-                transaction.user = user
-                transaction.save()
-                return redirect('dashboard')
-
-            # If form is invalid send error message
+            # If the transfer_type is withdraw subtract money from account
             else:
-                error_message = 'Transaction Form is Invalid!'
+                user_profile.account_balance = (user_profile.account_balance - transaction.amount)
+                new_entry = AccountHistory.objects.create(
+                    user=user,
+                    new_account_balance=user_profile.account_balance,
+                    net_difference=transaction.amount
+                )
 
-        # If the form is the UserProfile form get that form
+                user_profile.save()
+                new_entry.save()
+
+            # Post users transactions to the database and redirect to dashboard
+            transaction.user = user
+            transaction.save()
+            return redirect('dashboard')
+
+        # If form is invalid send error message
         else:
-            settings_form = UserProfileForm(request.POST, instance=user)
-
-            # If all the form fields are valid post data and redirect
-            if settings_form.is_valid():
-                settings_form.save()
-                return redirect('dashboard')
-            
-            # If form is invalid send error message
-            else:
-                error_message = 'User Profile Form is Invalid!'
+            error_message = 'Transaction Form is Invalid!'
 
     # All the relevant context the templates will need
     context = {
-        'transaction_form': transaction_form,
-        'settings_form': settings_form,
         'error_message': error_message,
     }
 
     return render(request, 'dashboard/transfer.html', context)
 
 
-# This is your test secret API key.
-stripe.api_key = STRIPE_SECRET_KEY
-
-YOUR_DOMAIN = 'https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io/'
-
 def create_checkout_session(request):
+    YOUR_DOMAIN = 'https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io/'
+    stripe.api_key = STRIPE_SECRET_KEY
+
     try:
         # Your code to create the checkout session goes here
         session = stripe.checkout.Session.create(
@@ -260,7 +258,8 @@ def create_checkout_session(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-def session_status():
-  session = stripe.checkout.Session.retrieve(request.args.get('session_id'))
 
-  return JsonResponse(status=session.status, customer_email=session.customer_details.email)
+def session_status(request):
+    session = stripe.checkout.Session.retrieve(request.args.get('session_id'))
+
+    return JsonResponse(status=session.status, customer_email=session.customer_details.email)

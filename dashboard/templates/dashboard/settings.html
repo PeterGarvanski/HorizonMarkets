@@ -10,4 +10,21 @@
 {% endblock %}
 
 {% block content %}
+<div class="my-container">
+    <div class="col-md-6">
+        <div class="sections box-shadow support-display"></div>
+    </div>
+    <div class="col-md-6 my-centre">
+        <div class="sections box-shadow settings-display">
+            <form method="post" class="my-forms settings-form">
+                {% csrf_token %}
+                {% crispy user_form %}
+                <div class="links">
+                    <a href="#">View Trading Logs</a>
+                    <a href="#">Account Transactions</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

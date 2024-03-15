@@ -167,16 +167,26 @@
 
 .sections.settings-display {
     position: absolute;
-    left: calc(50vw + 15px); /* 50vw plus half of the width of the element plus the desired gap */
+    left: calc(50vw + 15px);
     top: 0;
     margin-top: 0;
 }
 
-.sections.transfer-display {
+.sections.support-display {
     position: absolute;
-    left: calc(0vw + 25px); /* 50vw plus half of the width of the element plus the desired gap */
+    left: calc(0vw + 25px);
     top: 0;
     margin-top: 0;
+}
+
+.transfer-display {
+    position: absolute;
+    left: calc(25vw);
+    top: 0;
+    margin-top: 0;
+    height: 750px;
+    border-radius: 10px;
+    width: 50%;
 }
 
 .my-centre {
@@ -249,61 +259,4 @@
 
 legend {
     margin: 15px 0 15px 30px;
-}
-
-.form-inputs-transaction {
-    background-color: #f5f8fb;
-    width: 60%;
-    height: 35px;
-    border-radius: 30px;
-    border: 1px solid #93b7e179;
-    margin: auto auto 10px auto;  
-}
-
-.form-label-transaction {
-    color: #93B8E1;
-    margin-left: 10vw;
-}
-
-#transfer_type {
-    margin-left: 9.6vw;
-}
-
-.invalid-feedback strong {
-    display: none;
-}
-
-/* Stripe CSS */
-
-.StripeElement {
-  box-sizing: border-box;
-  height: 40px;
-  padding: 10px 12px;
-  border: 1px solid transparent;
-  border-radius: 0px;
-  background-color: white;
-  box-shadow: 0 1px 3px 0 #e6ebf1;
-  -webkit-transition: box-shadow 150ms ease;
-  transition: box-shadow 150ms ease;
-}
-
-.StripeElement--focus {
-  box-shadow: 0 1px 3px 0 #cfd7df;
-}
-
-.StripeElement--webkit-autofill {
-  background-color: #fefde5 !important;
-}
-
-.stripe-style-input::placeholder {
-    color: #fff;
-}
-
-#card-element {
-    width: 60%;
-    margin: auto;
-    background-color: #f5f8fb;
-    color: #000;
-    border: 1px solid #93b7e179;
-    border-radius: 30px;
 }

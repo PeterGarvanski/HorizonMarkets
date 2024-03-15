@@ -11,26 +11,13 @@
 
 {% block content %}
 <div class="my-container">
-    <div class="col-md-6">
-        <div class="sections box-shadow transfer-display">
-            <div id="checkout"></div>
-        </div>
-    </div>
-    <div class="col-md-6 my-centre">
-        <div class="sections box-shadow settings-display">
-            <form method="post" class="my-forms settings-form">
-                {% csrf_token %}
-                {% crispy settings_form %}
-                <div class="links">
-                    <a href="#">View Trading Logs</a>
-                    <a href="#">Account Transactions</a>
-                </div>
-            </form>
-        </div>
+    <div class="transfer-display">
+        <div id="checkout" class="box-shadow"></div>
     </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
     <script src="{% static 'dashboard/js/stripe_payments.js' %}"></script>
+    <script src="{% static 'dashboard/js/return.js' %}"></script>
 {% endblock %}
