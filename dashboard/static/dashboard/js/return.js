@@ -4,13 +4,15 @@ async function initialize() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const sessionId = urlParams.get('session_id');
-  const response = await fetch(`/session-status?session_id=${sessionId}`);
+
+  const response = await fetch(`https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io/session-status/?session_id=${sessionId}`);
   const session = await response.json();
 
   if (session.status == 'open') {
-    window.replace('https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io/transfer.html')
+    window.replace('https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io')
   } else if (session.status == 'complete') {
-    document.getElementById('success').classList.remove('hidden');
-    document.getElementById('customer-email').textContent = session.customer_email
+    setTimeout(function() {
+      window.location.href = 'https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io/';
+    }, 5000);
   }
 }

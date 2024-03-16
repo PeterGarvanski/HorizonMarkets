@@ -187,6 +187,7 @@
     height: 750px;
     border-radius: 10px;
     width: 50%;
+    text-align: center;
 }
 
 .my-centre {
@@ -197,10 +198,6 @@
 
 .settings-title {
     margin-bottom: 40px;
-}
-
-.title.transfer-title {
-    margin-bottom: 20px;
 }
 
 .settings-form {
@@ -259,4 +256,8 @@
 
 legend {
     margin: 15px 0 15px 30px;
+}
+
+.transaction-title {
+    margin-top: 50px;
 }

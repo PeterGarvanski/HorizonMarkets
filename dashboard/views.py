@@ -184,15 +184,17 @@ def transfer(request):
     return render(request, 'dashboard/transfer.html')
 
 
+@login_required
 def create_checkout_session(request):
     """
     Stripe function to create checkout sessions.
     """
-
+    # Stripe information
     YOUR_DOMAIN = 'https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io/'
     stripe.api_key = STRIPE_SECRET_KEY
 
     try:
+        # Creates a new checkout session
         session = stripe.checkout.Session.create(
             ui_mode='embedded',
             line_items=[
@@ -205,12 +207,15 @@ def create_checkout_session(request):
             return_url=YOUR_DOMAIN + '/return.html?session_id={CHECKOUT_SESSION_ID}',
         )
     
+    # If any errors occur
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
+    # Return stripe secret key
     return JsonResponse({'clientSecret': session.client_secret})
 
 
+@login_required
 def session_status(request):
     """
     Stripe function to retreieve session details,
@@ -230,7 +235,7 @@ def session_status(request):
         # If payment has been confirmed update account balance and add a entry for account history
         if session and session.payment_status == "paid":
             deposit_amount = session.amount_total / 100
-            user_profile.account_balance += deposit_amount
+            user_profile.account_balance = float(user_profile.account_balance) + float(deposit_amount)
             user_profile.save()
 
             new_entry = AccountHistory.objects.create(
@@ -238,7 +243,6 @@ def session_status(request):
                 new_account_balance=user_profile.account_balance,
                 net_difference=deposit_amount
             )
-            print(new_entry)
             new_entry.save()
 
         return JsonResponse({'status': session.status, 'customer_email': session.customer_email})
@@ -247,6 +251,7 @@ def session_status(request):
         return JsonResponse({'error': str(e)}, status=500)
 
 
+@login_required
 def return_page(request):
 
     return render(request, 'dashboard/return.html')

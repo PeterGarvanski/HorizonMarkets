@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Thank you for your order
+    Successful Transfer
 {% endblock %}
 
 {% block extra_css %}
@@ -10,16 +10,14 @@
 {% endblock %}
 
 {% block content %}
-    <section id="success" class="hidden">
-        <p>
-        We appreciate your business! A confirmation email will be sent to <span id="customer-email"></span>.
-
-        If you have any questions, please email <a href="mailto:orders@example.com">orders@example.com</a>.
-        </p>
-    </section>
+    <div class="my-container">
+        <div class="transfer-display">
+            <h1 class="transaction-title">Your Transaction was Succesful!</h1>
+            <p class="transaction-message">You will be redirected shortly to the dashboard page.</p>
+        </div>
+    </div>
 {% endblock %}
 
 {% block extra_js %}
-    <script src="{% static 'dashboard/js/stripe_payments.js' %}"></script>
     <script src="{% static 'dashboard/js/return.js' %}"></script>
 {% endblock %}
