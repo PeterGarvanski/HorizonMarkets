@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Deposit
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="my-container">
+        <div class="transfer-display">
+            <a class="transfer-page-link" href="{% url 'withdraw' %}">Withdrawals <i class="fas fa-arrow-right"></i></a>
+            <form action="{% url 'deposit' %}" method="post" id="deposit-form">
+                {% csrf_token %}
+                <label for="amount-multiplier" class="amount-multiplier-label">Amount</label>
+                <input type="number" class="amount-multiplier" name="amount-multiplier" min="1" max="1000" value="{{ multiplier }}">
+            </form>
+            <div id="checkout" class="box-shadow"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'dashboard/js/deposit-amount.js' %}"></script>
+    <script src="{% static 'dashboard/js/stripe_payments.js' %}"></script>
+{% endblock %}

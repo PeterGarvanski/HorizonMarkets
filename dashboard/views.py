@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpRequest, JsonResponse
-from .forms import UserProfileForm, TransactionForm
+from .forms import UserProfileForm
 from .models import UserProfile, AccountHistory
 from markets.models import Market
 import stripe
@@ -174,14 +174,37 @@ def settings(request):
 
 
 @login_required
-def transfer(request):
+def deposit(request):
     """
     A view to return the Transfer page of the website,
     this includes a stripe payment form allowing users
     to deposit money into their accounts.
     """
 
-    return render(request, 'dashboard/transfer.html')
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+
+    if request.method == 'POST':
+        amount_multiplier = request.POST.get('amount-multiplier')
+        user_profile.deposit_amount_multiplier = amount_multiplier
+        user_profile.save()
+
+    context = {
+        'multiplier': user_profile.deposit_amount_multiplier
+    }
+
+    return render(request, 'dashboard/deposit.html', context)
+
+
+@login_required
+def withdraw(request):
+    """
+    A view to return the Transfer page of the website,
+    this includes a stripe payment form allowing users
+    to deposit money into their accounts.
+    """
+
+    return render(request, 'dashboard/withdraw.html')
 
 
 @login_required
@@ -189,6 +212,9 @@ def create_checkout_session(request):
     """
     Stripe function to create checkout sessions.
     """
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+
     # Stripe information
     YOUR_DOMAIN = 'https://8000-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io/'
     stripe.api_key = STRIPE_SECRET_KEY
@@ -200,7 +226,7 @@ def create_checkout_session(request):
             line_items=[
                 {
                     'price': 'price_1OuZR3P1CjHWdbKH01S6Ap9A',
-                    'quantity': 1,
+                    'quantity': user_profile.deposit_amount_multiplier,
                 },
             ],
             mode='payment',

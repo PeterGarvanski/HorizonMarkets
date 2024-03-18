@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Transfer
+    Withdraw
 {% endblock %}
 
 {% block extra_css %}
@@ -12,11 +12,7 @@
 {% block content %}
 <div class="my-container">
     <div class="transfer-display">
-        <div id="checkout" class="box-shadow"></div>
+        <a class="transfer-page-link" href="{% url 'deposit' %}">Deposits <i class="fas fa-arrow-right"></i></a>
     </div>
 </div>
-{% endblock %}
-
-{% block extra_js %}
-    <script src="{% static 'dashboard/js/stripe_payments.js' %}"></script>
 {% endblock %}

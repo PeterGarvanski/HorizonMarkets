@@ -261,3 +261,41 @@ legend {
 .transaction-title {
     margin-top: 50px;
 }
+
+.transfer-page-link {
+    position: absolute;
+    top: 20px;
+    left: 42vw;
+    text-decoration: none;
+    color: #69A2E0;
+}
+
+.transfer-page-link:hover {
+    color: #080B0E;
+}
+
+.amount-multiplier {
+    position: absolute;
+    top: 60px;
+    left: 30.5vw;
+    background-color: #ecf1f7;
+    border: none;
+    border-bottom: 1px solid #080B0E;
+    font-weight: 400;
+    font-size: 26px;
+    width: 75px;
+    height: 35px;
+    text-align: center;
+}
+
+.amount-multiplier-label {
+    position: absolute;
+    top: 37px;
+    left: 30.5vw;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.fas.fa-arrow-right {
+    margin-left: 10px;
+}
