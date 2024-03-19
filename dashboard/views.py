@@ -1,3 +1,4 @@
+from env import STRIPE_SECRET_KEY, PAYPAL_CLIENT_ID, PAYPAL_SECRET_KEY
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
@@ -8,10 +9,11 @@ from .models import UserProfile, AccountHistory
 from markets.models import Market
 import stripe
 import requests
-from env import STRIPE_SECRET_KEY, PAYPAL_CLIENT_ID, PAYPAL_SECRET_KEY
 from datetime import datetime
 import calendar
-
+import time
+import uuid
+import json
 
 @login_required
 def dashboard(request):
@@ -182,14 +184,17 @@ def deposit(request):
     to deposit money into their accounts.
     """
 
+    # Requests the logged in users data
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
 
+    # If the form is being submitted change the users amount_multiplier
     if request.method == 'POST':
         amount_multiplier = request.POST.get('amount-multiplier')
         user_profile.deposit_amount_multiplier = amount_multiplier
         user_profile.save()
 
+    # All the relevant context the templates will need
     context = {
         'multiplier': user_profile.deposit_amount_multiplier
     }
@@ -200,61 +205,78 @@ def deposit(request):
 @login_required
 def withdraw(request):
     """
-    A view to return the Transfer page of the website,
-    this includes a stripe payment form allowing users
-    to deposit money into their accounts.
+    A view to return the Withdraw page of the website,
+    this includes a payment form allowing users
+    to withdraw money into their accounts.
     """
-
+    # Requests the logged in users data
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
     access_token = get_access_token(PAYPAL_CLIENT_ID, PAYPAL_SECRET_KEY)
 
+    # If the form is being get the email and amount from the fields
     if request.method == 'POST':
         email = request.POST.get('paypal-email')
         withdrawal_amount = request.POST.get('withdrawal-amount')
 
+        # Headers and Data for paypal payout system
         headers = {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer' + access_token,
+            'Authorization': f'Bearer {access_token}',
         }
 
         data = {
             "sender_batch_header": {
-                "sender_batch_id": "Payouts_2020_100007",
-                "email_subject": "You have a payout!",
-                "email_message": "You have received your Withdrawal! Thanks for using our service!"
+                "sender_batch_id": f"Payouts_{time.strftime('%Y%m%d%H%M%S')}",
+                "email_subject": "You have money!",
+                "email_message": "You received a payment. Thanks for using our service!"
             },
             "items": [
                 {
                     "recipient_type": "EMAIL",
                     "amount": {
-                        "value": withdrawal_amount,
+                        "value": f"{float(withdrawal_amount)}",
                         "currency": "USD"
                     },
                     "note": "Horizon Markets Withdrawal!",
-                    "sender_item_id": "201403140001",
+                    "sender_item_id": f"Item_{uuid.uuid4()}",
                     "receiver": "sb-l2gaz29911579@personal.example.com",
-                    "recipient_wallet": "RECIPIENT_SELECTED"
+                    "recipient_wallet": "PAYPAL"
                 }
             ]
         }
 
-        response = requests.post('https://api-m.sandbox.paypal.com/v1/payments/payouts', headers=headers, data=data)
-
-        print(response)
-        
-        user_profile.account_balance = float(user_profile.account_balance) - float(withdrawal_amount)
-        user_profile.save()
-
-        new_entry = AccountHistory.objects.create(
-            user=user,
-            new_account_balance=user_profile.account_balance,
-            net_difference=withdrawal_amount
+        # Post the data and get the batch id from the response
+        post_response = requests.post(
+            'https://api-m.sandbox.paypal.com/v1/payments/payouts',
+            headers=headers,
+            data=json.dumps(data)
         )
-        new_entry.save()
+        post_response_data = post_response.json()
+        payout_batch_id = post_response_data['batch_header']['payout_batch_id']
 
-        return redirect('dashboard')
+        # Gets JSON response
+        response = requests.get(f'https://api-m.sandbox.paypal.com/v1/payments/payouts/{payout_batch_id}', headers=headers)
+        response_data = response.json()
 
+        # If the withdrawal went through
+        if response_data['batch_header']['batch_status'] == 'PENDING' or response_data['batch_header']['batch_status'] == 'SUCCESS':
+            
+            # Update users account balance
+            user_profile.account_balance = float(user_profile.account_balance) - float(withdrawal_amount)
+            user_profile.save()
+
+            # Log a new entry to account history
+            new_entry = AccountHistory.objects.create(
+                user=user,
+                new_account_balance=user_profile.account_balance,
+                net_difference=withdrawal_amount
+            )
+            new_entry.save()
+
+            return redirect('dashboard')
+
+    # All the relevant context the templates will need
     context = {
         'account_balance': user_profile.account_balance
     }
