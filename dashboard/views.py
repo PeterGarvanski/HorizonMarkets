@@ -7,7 +7,8 @@ from .forms import UserProfileForm
 from .models import UserProfile, AccountHistory
 from markets.models import Market
 import stripe
-from env import STRIPE_SECRET_KEY
+import requests
+from env import STRIPE_SECRET_KEY, PAYPAL_CLIENT_ID, PAYPAL_SECRET_KEY
 from datetime import datetime
 import calendar
 
@@ -206,14 +207,65 @@ def withdraw(request):
 
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
+    access_token = get_access_token(PAYPAL_CLIENT_ID, PAYPAL_SECRET_KEY)
 
-    print(user_profile.account_balance)
+    if request.method == 'POST':
+        email = request.POST.get('paypal-email')
+        withdrawal_amount = request.POST.get('withdrawal-amount')
+
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer' + access_token,
+        }
+
+        data = {
+            "sender_batch_header": {
+                "sender_batch_id": "Payouts_2020_100007",
+                "email_subject": "You have a payout!",
+                "email_message": "You have received your Withdrawal! Thanks for using our service!"
+            },
+            "items": [
+                {
+                    "recipient_type": "EMAIL",
+                    "amount": {
+                        "value": withdrawal_amount,
+                        "currency": "USD"
+                    },
+                    "note": "Horizon Markets Withdrawal!",
+                    "sender_item_id": "201403140001",
+                    "receiver": "sb-l2gaz29911579@personal.example.com",
+                    "recipient_wallet": "RECIPIENT_SELECTED"
+                }
+            ]
+        }
+
+        response = requests.post('https://api-m.sandbox.paypal.com/v1/payments/payouts', headers=headers, data=data)
+
+        print(response)
+        
+        user_profile.account_balance = float(user_profile.account_balance) - float(withdrawal_amount)
+        user_profile.save()
+
+        new_entry = AccountHistory.objects.create(
+            user=user,
+            new_account_balance=user_profile.account_balance,
+            net_difference=withdrawal_amount
+        )
+        new_entry.save()
+
+        return redirect('dashboard')
 
     context = {
         'account_balance': user_profile.account_balance
     }
 
     return render(request, 'dashboard/withdraw.html', context)
+
+
+@login_required
+def return_page(request):
+
+    return render(request, 'dashboard/return.html')
 
 
 @login_required
@@ -286,7 +338,22 @@ def session_status(request):
         return JsonResponse({'error': str(e)}, status=500)
 
 
-@login_required
-def return_page(request):
-
-    return render(request, 'dashboard/return.html')
+def get_access_token(client_id, client_secret):
+    url = 'https://api.sandbox.paypal.com/v1/oauth2/token'  # For production, use 'https://api.paypal.com/v1/oauth2/token'
+    headers = {
+        'Accept': 'application/json',
+        'Accept-Language': 'en_US',
+        'content-type': 'application/x-www-form-urlencoded'
+    }
+    data = {
+        'grant_type': 'client_credentials'
+    }
+    auth = (client_id, client_secret)
+    response = requests.post(url, headers=headers, data=data, auth=auth)
+    
+    if response.status_code == 200:
+        print('Access Token Aquired')
+        return response.json()['access_token']
+    else:
+        print('Error:', response.text)
+        return None

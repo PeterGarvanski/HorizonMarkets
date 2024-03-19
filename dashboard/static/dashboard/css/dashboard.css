@@ -346,6 +346,7 @@ legend {
     border-radius: 10px;
     height: 45px;
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+    padding-left: 10px;
 }
 
 .withdraw-input.amount {
@@ -366,6 +367,7 @@ legend {
 .withdraw-input.withdraw-button {
     background-color: #93b8e1;
     border: none;
+    padding: none;
 }
 
 .account-balance-sum {
