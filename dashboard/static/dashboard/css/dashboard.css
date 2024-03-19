@@ -299,3 +299,86 @@ legend {
 .fas.fa-arrow-right {
     margin-left: 10px;
 }
+
+.withdraw-display {
+    width: 50%;
+    height: 750px;
+    background-color: #ecf1f7;
+    margin: auto;
+    position: relative;
+}
+
+#withdraw-form {
+    max-width: 400px;
+    margin: auto;
+}
+
+.head{
+    height: 150px;
+    width: 100%;
+    background-color: #ecf1f7;
+}
+
+.form-section {
+    border: 1px solid rgba(128, 128, 128, 0.158);
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.withdraw-title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    padding: 20px 0 30px 0;
+}
+
+.withdrawal-warning {
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.withdraw-input {
+    width: 90%;
+    margin: 0 0 20px 5%;
+    border: 1px solid rgba(128, 128, 128, 0.233);
+    border-radius: 10px;
+    height: 45px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.withdraw-input.amount {
+    margin-bottom: 0;
+}
+
+.withdrawal-label {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 0 5px 6%;
+    color: #080b0e85;
+}
+
+.withdrawal-label.first {
+    margin: 20px 0 5px 6%;
+}
+
+.withdraw-input.withdraw-button {
+    background-color: #93b8e1;
+    border: none;
+}
+
+.account-balance-sum {
+    font-size: 13px;
+    font-weight: 600;
+    color: #080b0e85;
+    text-align: right;
+    margin: 5px 6% 0 0;
+}
+
+.paypal {
+    font-size: 10px;
+    font-weight: 500;
+    color: #080b0e85;
+    text-align: center;
+}

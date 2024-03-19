@@ -204,7 +204,16 @@ def withdraw(request):
     to deposit money into their accounts.
     """
 
-    return render(request, 'dashboard/withdraw.html')
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+
+    print(user_profile.account_balance)
+
+    context = {
+        'account_balance': user_profile.account_balance
+    }
+
+    return render(request, 'dashboard/withdraw.html', context)
 
 
 @login_required
