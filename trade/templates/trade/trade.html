@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Trade
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'trade/css/trade.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">Trades taken today</div>
+        <div class="col-md-6">Make trades</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">Active Trades</div>
+    </div>
+{% endblock %}

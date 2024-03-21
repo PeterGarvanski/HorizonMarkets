@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'dashboard',
     'markets',
     'chart',
+    'trade',
     
     # Other
     'crispy_forms',
