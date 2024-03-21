@@ -1,0 +1,112 @@
+.trade-sections {
+    width: 48.5%;
+    height: 500px;
+    margin: auto;
+    margin-left: 25px;
+    background-color: #ecf1f7;
+    border-radius: 10px;
+}
+
+.active-trades {
+    width: 98%;
+    min-height: 230px;
+    height: fit-content;
+    margin: 25px 0 0 32px;
+    background-color: #ecf1f7;
+    border-radius: 10px;
+}
+
+.titles {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    margin: 10px 0 0 10px;
+}
+
+#trade-form {
+    max-width: 400px;
+    margin: auto;
+}
+
+.form-section {
+    border: 1px solid rgba(128, 128, 128, 0.158);
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.withdraw-input {
+    width: 90%;
+    margin: 0 0 20px 5%;
+    border: 1px solid rgba(128, 128, 128, 0.233);
+    border-radius: 10px;
+    height: 45px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+    padding-left: 10px;
+}
+
+.withdrawal-label {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 0 5px 6%;
+    color: #080b0e85;
+}
+
+.withdraw-input.withdraw-button {
+    background-color: #93b8e1;
+    color: #ffffff;
+    font-weight: 500;
+    border: none;
+    padding: none;
+}
+
+.order-type {
+    width: 49%;
+    display: inline-block;
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+.order-type-text {
+    margin: 10px auto 5px;
+    text-align: center;
+}
+
+.radio-label {
+    display: inline-block;
+    border: 1px solid rgba(128, 128, 128, 0.233);
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #080b0e85;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+  
+  input[type="radio"] {
+    display: none;
+}
+  
+  input[type="radio"]:checked + .radio-label {
+    background-color: #93b8e1;
+    color: #fff;
+}
+
+  .input-group {
+    width: 95%;
+    margin: auto;
+}
+  
+  .input-wrapper {
+    width: 50%;
+}
+
+.account-balance {
+    text-align: center;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #080b0e85;
+}
+  

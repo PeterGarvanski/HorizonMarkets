@@ -11,10 +11,62 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-6">Trades taken today</div>
-        <div class="col-md-6">Make trades</div>
+        <div class="col-md-6 trade-sections box-shadow right">
+            <h2 class="titles">Today's Trades</h2>
+        </div>
+        <div class="col-md-6 trade-sections box-shadow left">
+            <h2 class="titles">Trade Markets</h2>
+            <form action="{% url 'trade' %}" method="post" id="trade-form">
+                {% csrf_token %}
+                <div class="form-section">
+                    <p class="account-balance">Account Balance: ${{ account_balance }}</p>
+                    <div class="order-type">
+                        <p class="withdrawal-label order-type-text">Order Type</p>
+                        <input type="radio" name="order-type" id="market" value="market" checked>
+                        <label class="radio-label" for="market">Market</label>
+                        <input type="radio" name="order-type" id="limit" value="limit">
+                        <label class="radio-label" for="limit">Limit</label>
+                    </div>
+                    <div class="order-type">
+                        <p class="withdrawal-label order-type-text">Market Side</p>
+                        <input type="radio" name="side" id="buy" value="buy" checked>
+                        <label class="radio-label" for="buy">Buy</label>
+                        <input type="radio" name="side" id="sell" value="sell">
+                        <label class="radio-label" for="sell">Sell</label>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <label for="symbol" class="withdrawal-label">Symbol</label>
+                            <input type="text" class="withdraw-input" name="symbol" placeholder="e.g. BTCUSDT" autocomplete="off">
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="amount" class="withdrawal-label first">Amount In $</label>
+                            <input type="number" class="withdraw-input amount" name="amount" min="10" max="100000" required>
+                        </div>
+                    </div>
+                    <div id="limit-inputs"></div>
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                          <label for="take-profit" class="withdrawal-label">Take Profit Level</label>
+                          <input type="number" class="withdraw-input" name="take-profit" min="0" max="1000000">
+                        </div>
+                        <div class="input-wrapper">
+                          <label for="stop-loss" class="withdrawal-label">Stop Loss Level</label> 
+                          <input type="number" class="withdraw-input" name="stop-loss" min="0" max="1000000">
+                        </div>
+                      </div>
+                    <input type="submit" class="withdraw-button withdraw-input" value="Order">
+                </div>
+            </form>
+        </div>
     </div>
     <div class="row">
-        <div class="col-md-12">Active Trades</div>
-    </div>
+        <div class="col-md-12 active-trades box-shadow">
+            <h2 class="titles">Open Positions</h2>
+        </div>
+    </div>    
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'trade/js/trade.js' %}"></script>
 {% endblock %}
