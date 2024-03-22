@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const limitInputsDiv = document.getElementById("limit-inputs");
     const priceInput = `
         <label for="price" class="withdrawal-label">Price</label>
-        <input type="number" class="withdraw-input" name="price" required>
+        <input type="number" class="withdraw-input" name="price" placeholder="$" required>
     `;
 
     function updateLimitInputs() {
