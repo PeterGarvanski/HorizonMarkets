@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import OpenTrades
+from .models import OpenTrades, CryptoAssets
 
 
 class OpenTradesAdmin(admin.ModelAdmin):
@@ -18,3 +18,11 @@ class OpenTradesAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(OpenTrades, OpenTradesAdmin)
+
+class CryptoAssetsAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'assets',
+    )
+
+admin.site.register(CryptoAssets, CryptoAssetsAdmin)

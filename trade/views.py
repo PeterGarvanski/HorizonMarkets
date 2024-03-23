@@ -2,7 +2,7 @@ from env import BINANCE_API_KEY, BINANCE_SECRET_KEY
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import OpenTrades
+from .models import OpenTrades, CryptoAssets
 from dashboard.models import UserProfile, AccountHistory
 import base64
 import requests
@@ -14,41 +14,83 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key
 def trade(request):
     """
     A view to return the Trade page of the website,
+    this includes a trading display where orders can be placed.
+    This also allows users to monitor todays positions
+    and any current open positions.
     """
     # Requests the logged in users data
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
+    assets_dict, created = CryptoAssets.objects.get_or_create(user=user)
+    error_message = ''
 
+    # If a form is being submitted
     if request.method == 'POST':
-        symbol = request.POST.get('symbol')
-        side = request.POST.get('side')
-        order_type = request.POST.get('order-type')
-        quantity = request.POST.get('quantity')
-        take_profit = request.POST.get('take-profit')
-        stop_loss = request.POST.get('stop-loss')
+        symbol = str(request.POST.get('symbol')).upper()
+        side = str(request.POST.get('side'))
+        order_type = str(request.POST.get('order-type'))
+        quantity = float(request.POST.get('quantity'))
+        take_profit = float(request.POST.get('take-profit'))
+        stop_loss = float(request.POST.get('stop-loss'))
         price = request.POST.get('price')
 
-        trade = place_order(symbol.upper(), side, order_type, quantity, price)
+        # If the trade is bullish place an order
+        if side == 'BUY':
+            trade = place_order(symbol, side, order_type, quantity, price)
+            
+            # If the order goes through create a new trade and post to the database
+            if trade.get('status') == 'FILLED':
+                new_trade = OpenTrades.objects.create(
+                    user=user,
+                    order_id=trade.get('orderId'),
+                    client_order_id=trade.get('clientOrderId'),
+                    symbol=trade.get('symbol'),
+                    order_type=trade.get('type'),
+                    side=trade.get('side'),
+                    quantity=trade.get('executedQty'),
+                    cumulative_quote_qty=trade.get('cummulativeQuoteQty'),
+                    price=trade.get('price'),
+                    take_profit=take_profit,
+                    stop_loss=stop_loss
+                )
+                new_trade.save()
 
-        if trade.get('status') == 'FILLED':
-            new_trade = OpenTrades.objects.create(
-                user=user,
-                order_id=trade.get('orderId'),
-                client_order_id=trade.get('clientOrderId'),
-                symbol=trade.get('symbol'),
-                order_type=trade.get('type'),
-                side=trade.get('side'),
-                quantity=trade.get('executedQty'),
-                cumulative_quote_qty=trade.get('cummulativeQuoteQty'),
-                price=trade.get('price'),
-                take_profit=take_profit,
-                stop_loss=stop_loss
-            )
-            new_trade.save()
+                # Update the crypto assets dictionary to reflect the trade
+                for asset_name, asset_quantity in assets_dict.assets.items():
+                    if asset_name == trade.get('symbol'):
+                        assets_dict.assets[asset_name] += float(trade.get('executedQty'))
+                        break
+                    else:
+                        assets_dict.assets[trade.get('symbol')] = float(trade.get('executedQty'))
+            
+            # If trade did not get filled update error message
+            else:
+                error_message = trade
+
+        # If the trade is bearish check the assests and quantitys
+        else:
+            for asset_name, asset_quantity in assets_dict.assets.items():
+                
+                # If the asset is owned and has a higher quantity then the trades execute a trade
+                if symbol == asset_name and quantity <= asset_quantity:
+                    trade = place_order(symbol, side, order_type, quantity, price)
+                    
+                    # If the trade gets filled
+                    if trade.get('status') == 'FILLED':
+                        assets_dict.assets[asset_name] -= float(trade.get('executedQty'))
+                    else:
+                        error_message = trade
+                
+                # If the trade quantity is larger set the error message
+                else:
+                    error_message = 'Error: Quantity too large!'
+                
+        assets_dict.save()
 
     # All the relevant context the templates will need
     context = {
-        'account_balance': user_profile.account_balance
+        'account_balance': user_profile.account_balance,
+        'error_message': error_message
     }
 
     return render(request, 'trade/trade.html', context)
@@ -61,22 +103,21 @@ def place_order(symbol, side, order_type, quantity, price):
     PRIVATE_KEY_PATH='test-prv-key.pem'
 
     # Load the private key.
-    # In this example the key is expected to be stored without encryption,
-    # but we recommend using a strong password for improved security.
     with open(PRIVATE_KEY_PATH, 'rb') as f:
         private_key = load_pem_private_key(data=f.read(),
                                         password=None)
 
+    # Set up the request parameters
     if order_type == "MARKET":
-        # Set up the request parameters
         params = {
             'symbol':       symbol,
             'side':         side,
             'type':         order_type,
             'quantity':     quantity,
         }
+    
+    # Set up the request parameters
     else:
-        # Set up the request parameters
         params = {
             'symbol':       symbol,
             'side':         side,
@@ -87,7 +128,7 @@ def place_order(symbol, side, order_type, quantity, price):
         }
 
     # Timestamp the request
-    timestamp = int(time.time() * 1000) # UNIX timestamp in milliseconds
+    timestamp = int(time.time() * 1000)
     params['timestamp'] = timestamp
 
     # Sign the request
