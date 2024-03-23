@@ -2,6 +2,7 @@ from env import BINANCE_API_KEY, BINANCE_SECRET_KEY
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from .models import OpenTrades
 from dashboard.models import UserProfile, AccountHistory
 import base64
 import requests
@@ -20,14 +21,30 @@ def trade(request):
 
     if request.method == 'POST':
         symbol = request.POST.get('symbol')
-        side = request.POST.get('direction')
+        side = request.POST.get('side')
         order_type = request.POST.get('order-type')
         quantity = request.POST.get('quantity')
         take_profit = request.POST.get('take-profit')
         stop_loss = request.POST.get('stop-loss')
-        # price = request.POST.get('price')  # Assuming price is part of the form
+        price = request.POST.get('price')
 
-        place_order(symbol, side, order_type, quantity, 0)
+        trade = place_order(symbol.upper(), side, order_type, quantity, price)
+
+        if trade.get('status') == 'FILLED':
+            new_trade = OpenTrades.objects.create(
+                user=user,
+                order_id=trade.get('orderId'),
+                client_order_id=trade.get('clientOrderId'),
+                symbol=trade.get('symbol'),
+                order_type=trade.get('type'),
+                side=trade.get('side'),
+                quantity=trade.get('executedQty'),
+                cumulative_quote_qty=trade.get('cummulativeQuoteQty'),
+                price=trade.get('price'),
+                take_profit=take_profit,
+                stop_loss=stop_loss
+            )
+            new_trade.save()
 
     # All the relevant context the templates will need
     context = {
@@ -35,6 +52,7 @@ def trade(request):
     }
 
     return render(request, 'trade/trade.html', context)
+
 
 def place_order(symbol, side, order_type, quantity, price):
     
@@ -49,15 +67,24 @@ def place_order(symbol, side, order_type, quantity, price):
         private_key = load_pem_private_key(data=f.read(),
                                         password=None)
 
-    print(symbol, side, order_type, quantity, price)
-
-    # Set up the request parameters
-    params = {
-        'symbol':       symbol,
-        'side':         side,
-        'type':         order_type,
-        'quantity':     quantity,
-    }
+    if order_type == "MARKET":
+        # Set up the request parameters
+        params = {
+            'symbol':       symbol,
+            'side':         side,
+            'type':         order_type,
+            'quantity':     quantity,
+        }
+    else:
+        # Set up the request parameters
+        params = {
+            'symbol':       symbol,
+            'side':         side,
+            'type':         order_type,
+            'quantity':     quantity,
+            'price':        price,
+            'timeInForce':  'GTC'
+        }
 
     # Timestamp the request
     timestamp = int(time.time() * 1000) # UNIX timestamp in milliseconds
@@ -77,4 +104,4 @@ def place_order(symbol, side, order_type, quantity, price):
         headers=headers,
         data=params,
     )
-    print(response.json())
+    return response.json()
