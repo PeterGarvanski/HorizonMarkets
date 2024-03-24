@@ -2,7 +2,7 @@ from env import BINANCE_API_KEY, BINANCE_SECRET_KEY
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import OpenTrades, CryptoAssets
+from .models import OpenTrades
 from dashboard.models import UserProfile, AccountHistory
 import base64
 import requests
@@ -21,7 +21,6 @@ def trade(request):
     # Requests the logged in users data
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
-    assets_dict, created = CryptoAssets.objects.get_or_create(user=user)
     error_message = ''
 
     # If a form is being submitted
@@ -54,14 +53,6 @@ def trade(request):
                     stop_loss=stop_loss
                 )
                 new_trade.save()
-
-                # Update the crypto assets dictionary to reflect the trade
-                for asset_name, asset_quantity in assets_dict.assets.items():
-                    if asset_name == trade.get('symbol'):
-                        assets_dict.assets[asset_name] += float(trade.get('executedQty'))
-                        break
-                    else:
-                        assets_dict.assets[trade.get('symbol')] = float(trade.get('executedQty'))
             
             # If trade did not get filled update error message
             else:
@@ -69,26 +60,26 @@ def trade(request):
 
         # If the trade is bearish check the assests and quantitys
         else:
-            for asset_name, asset_quantity in assets_dict.assets.items():
-                
-                # If the asset is owned and has a higher quantity then the trades execute a trade
-                if symbol == asset_name and quantity <= asset_quantity:
-                    trade = place_order(symbol, side, order_type, quantity, price)
-                    
-                    # If the trade gets filled
-                    if trade.get('status') == 'FILLED':
-                        assets_dict.assets[asset_name] -= float(trade.get('executedQty'))
-                    else:
-                        error_message = trade
-                
-                # If the trade quantity is larger set the error message
-                else:
-                    error_message = 'Error: Quantity too large!'
-                
-        assets_dict.save()
+            ...
+
+    open_trades = []
+
+    for trade in OpenTrades.objects.filter(user=user):
+        order = {
+            'id': str(trade.order_id),
+            'symbol': str(trade.symbol),
+            'side': str(trade.side),
+            'entry': float(trade.cumulative_quote_qty),
+            'take_profit': float(trade.take_profit),
+            'stop_loss': float(trade.stop_loss)
+        }
+        open_trades.append(order)
+
+    print(open_trades)
 
     # All the relevant context the templates will need
     context = {
+        'open_trades': open_trades,
         'account_balance': user_profile.account_balance,
         'error_message': error_message
     }

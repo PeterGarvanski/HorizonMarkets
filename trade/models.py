@@ -2,11 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class CryptoAssets(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='crypto_assets')
-    assets = models.JSONField(default=dict, null=True, blank=True)
-
-
 class OpenTrades(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='trades')
     order_id = models.IntegerField(null=False, blank=False)
