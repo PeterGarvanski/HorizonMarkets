@@ -151,9 +151,10 @@
 }
 
 .cancel {
-    float: right;
     margin-right: 10px;
     color: #080b0e;
+    border: none;
+    background-color: transparent;
 }
 
 .cancel:hover {

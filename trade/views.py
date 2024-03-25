@@ -2,11 +2,12 @@ from env import BINANCE_API_KEY, BINANCE_SECRET_KEY
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import OpenTrades
+from .models import OpenTrade, TradeHistory
 from dashboard.models import UserProfile, AccountHistory
 import base64
 import requests
 import time
+import datetime
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
 
 
@@ -39,7 +40,7 @@ def trade(request):
             
             # If the order goes through create a new trade and post to the database
             if trade.get('status') == 'FILLED':
-                new_trade = OpenTrades.objects.create(
+                new_trade = OpenTrade.objects.create(
                     user=user,
                     order_id=trade.get('orderId'),
                     client_order_id=trade.get('clientOrderId'),
@@ -56,6 +57,7 @@ def trade(request):
             
             # If trade did not get filled update error message
             else:
+                print(trade)
                 error_message = trade
 
         # If the trade is bearish check the assests and quantitys
@@ -64,18 +66,18 @@ def trade(request):
 
     open_trades = []
 
-    for trade in OpenTrades.objects.filter(user=user):
+    # Add open trades in a list to be displayed by template
+    for trade in OpenTrade.objects.filter(user=user):
         order = {
             'id': str(trade.order_id),
+            'time': str(trade.time.strftime('%H:%M')),
             'symbol': str(trade.symbol),
             'side': str(trade.side),
-            'entry': float(trade.cumulative_quote_qty),
+            'entry': round(float(trade.cumulative_quote_qty) / float(trade.quantity), 4),
             'take_profit': float(trade.take_profit),
             'stop_loss': float(trade.stop_loss)
         }
         open_trades.append(order)
-
-    print(open_trades)
 
     # All the relevant context the templates will need
     context = {
@@ -137,3 +139,60 @@ def place_order(symbol, side, order_type, quantity, price):
         data=params,
     )
     return response.json()
+
+
+def close_position(request):
+    """
+    A Function to close open trades,
+    places an equal but opposite position to the one 
+    selected, effectively closing the position,
+    then redirects to trade page.
+    """
+    # Requests the logged in users data
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+
+    # If a form is being submitted get the open trade
+    if request.method == 'POST':
+        trade_id = request.POST.get('close_position')
+        trade = OpenTrade.objects.filter(
+            user=user,
+            order_id=trade_id
+        )[0]
+        # Place an equal but oppopsite order
+        opposite_trade = place_order(trade.symbol, 'SELL', 'MARKET', trade.quantity, 0)
+
+        # If the order gets filled create a new entry for trade history
+        if opposite_trade.get('status') == 'FILLED':
+                net_pl = float(trade.cumulative_quote_qty) - float(opposite_trade.get('cummulativeQuoteQty'))
+
+                new_trade = TradeHistory.objects.create(
+                    user=user,
+                    order_id=opposite_trade.get('orderId'),
+                    client_order_id=opposite_trade.get('clientOrderId'),
+                    symbol=opposite_trade.get('symbol'),
+                    order_type=opposite_trade.get('type'),
+                    quantity=opposite_trade.get('executedQty'),
+                    cumulative_quote_qty=opposite_trade.get('cummulativeQuoteQty'),
+                    price=opposite_trade.get('price'),
+                    take_profit=trade.take_profit,
+                    stop_loss=trade.stop_loss,
+                    close_price='1',
+                    net_pl=net_pl
+                )
+                new_trade.save()
+
+                # Update user profile
+                user_profile.account_balance = float(user_profile.account_balance) + float(net_pl)
+                user_profile.save()
+
+                # Update account history
+                new_entry = AccountHistory.objects.create(
+                    user=user,
+                    new_account_balance=user_profile.account_balance,
+                    net_difference=net_pl
+                )
+                new_entry.save()
+                trade.delete()
+
+    return redirect('trade')

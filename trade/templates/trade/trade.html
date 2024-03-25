@@ -66,23 +66,33 @@
             <div class="table">
                 <div>
                     <div class="head-row">
+                        <span class="table-cell t-head">Time</span>
                         <span class="table-cell t-head">Symbol</span>
                         <span class="table-cell t-head">Side</span>
                         <span class="table-cell t-head">Entry</span>
-                        <span class="table-cell t-head">Net P&amp;L</span>
+                        <span class="table-cell t-head">Net P&L</span>
                         <span class="table-cell t-head">Take Profit</span>
-                        <span class="table-cell t-head last">Stop Loss</span>
+                        <span class="table-cell t-head">Stop Loss</span>
+                        <span class="table-cell t-head last">Close Position</span>
                     </div>
                 </div>
                 <div>
                     {% for trade in open_trades %}
                         <div class="body-row">
+                            <span class="table-cell">{{ trade.time }}</span>
                             <span class="table-cell">{{ trade.symbol }}</span>
                             <span class="table-cell">{{ trade.side }}</span>
                             <span class="table-cell">${{ trade.entry }}</span>
                             <span class="table-cell">+$200.50</span>
                             <span class="table-cell">${{ trade.take_profit }}</span>
-                            <span class="table-cell">${{ trade.stop_loss }}<i class="fas fa-xmark cancel"></i></span>
+                            <span class="table-cell">${{ trade.stop_loss }}</span>
+                            <span class="table-cell">
+                                <form action="{% url 'close_position' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="close_position" value="{{ trade.id }}">
+                                    <button type="submit" class="cancel"><i class="fas fa-xmark"></i></button>
+                                </form>
+                            </span>
                         </div>
                         <hr class="line-div">
                     {% endfor %}

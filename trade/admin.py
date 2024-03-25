@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import OpenTrades
+from .models import OpenTrade, TradeHistory
 
 
-class OpenTradesAdmin(admin.ModelAdmin):
+class OpenTradeAdmin(admin.ModelAdmin):
     list_display = (
         'user',
+        'time',
         'order_id',
         'client_order_id',
         'symbol',
@@ -17,4 +18,24 @@ class OpenTradesAdmin(admin.ModelAdmin):
         'stop_loss'
     )
 
-admin.site.register(OpenTrades, OpenTradesAdmin)
+admin.site.register(OpenTrade, OpenTradeAdmin)
+
+
+class TradeHistoryAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'time',
+        'order_id',
+        'client_order_id',
+        'symbol',
+        'order_type',
+        'quantity',
+        'cumulative_quote_qty',
+        'price',
+        'close_price',
+        'take_profit',
+        'stop_loss',
+        'net_pl',
+    )
+
+admin.site.register(TradeHistory, TradeHistoryAdmin)
