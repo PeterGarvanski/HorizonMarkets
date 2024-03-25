@@ -13,7 +13,7 @@
     <div class="sections box-shadow">
         <form action="{% url 'markets' %}" method="POST">
             {% csrf_token %}
-            <input type="text" class="search-bar" name="search_bar" placeholder="Search For Crypto's">
+            <input type="text" class="search-bar" name="search_bar" placeholder="Search For Crypto's" autocomplete="off">
             <button type="submit" class="search-button"><i class="fas fa-magnifying-glass"></i></button>
         </form>
         <form action="{% url 'markets' %}" method="post">

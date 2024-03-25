@@ -12,24 +12,25 @@
     position: absolute;
     left: calc(50vw - 200px);
     top: 170px;
-    background-color: #f5f8fb;
-    border-radius: 30px;
-    border: 1px solid #93b7e179;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.233);
     padding-left: 10px;
-    color: #080B0E;
+    color: #080b0e;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
 }
 
 .search-bar::placeholder {
-    color: #93b8e1;
+    color: #080b0e85;
 }
 
 .search-bar:focus {
-    border: solid 2px #93b8e1;
+    /* border: solid 2px #93b8e1; */
     outline: none;
 }
 
 .search-button {
-    border-radius: 40px;
+    border-radius: 10px;
     height: 35px;
     width: 60px;
     background-color: #93b8e1;
@@ -43,8 +44,8 @@
 
 .search-button:hover {
     color: #437DBC;
-    background-color: #f5f8fb;
-    border: 1px solid #93b7e179;
+    background-color: #ffffff;
+    border: 1px solid rgba(128, 128, 128, 0.233);
 }
 
 .search-dropdown {
@@ -55,9 +56,10 @@
     width: 400px;
     padding: 0;
     background-color: #f5f8fbd3;
-    border: 1px solid #93b7e179;
-    border-radius: 20px;
-    backdrop-filter: blur(2px); /* Adjust the blur radius as needed */
+    border: 1px solid rgba(128, 128, 128, 0.233);
+    border-radius: 10px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
 }
 
 .crypto-option {
@@ -74,7 +76,7 @@
 .crypto-links {
     width: 100%;
     text-decoration: none;
-    color: #080B0E;
+    color: #080b0e;
     border: none;
     background-color: transparent;
     font-size: 20px;
