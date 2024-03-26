@@ -41,6 +41,11 @@ def trade(request):
             
             # If the order goes through create a new trade and post to the database
             if trade.get('status') == 'FILLED':
+                
+                entry = 0
+                for fill in trade.get('fills'):
+                    entry += (float(fill.get('qty')) * float(fill.get('price')))
+
                 new_trade = OpenTrade.objects.create(
                     user=user,
                     order_id=trade.get('orderId'),
@@ -50,7 +55,7 @@ def trade(request):
                     side=trade.get('side'),
                     quantity=trade.get('executedQty'),
                     cumulative_quote_qty=trade.get('cummulativeQuoteQty'),
-                    price=trade.get('price'),
+                    entry=(entry / float(trade.get('executedQty'))),
                     take_profit=take_profit,
                     stop_loss=stop_loss
                 )
@@ -76,7 +81,7 @@ def trade(request):
             'symbol': str(trade.symbol),
             'side': str(trade.side),
             'quantity': str(trade.quantity),
-            'entry': round(float(trade.cumulative_quote_qty) / float(trade.quantity), 4),
+            'entry': float(trade.entry),
             'take_profit': float(trade.take_profit),
             'stop_loss': float(trade.stop_loss)
         }
@@ -175,35 +180,41 @@ def close_position(request):
 
         # If the order gets filled create a new entry for trade history
         if opposite_trade.get('status') == 'FILLED':
-                net_pl = float(opposite_trade.get('cummulativeQuoteQty')) - float(trade.cumulative_quote_qty)
+            
+            entry = 0
+            for fill in opposite_trade.get('fills'):
+                entry += (float(fill.get('qty')) * float(fill.get('price')))
 
-                new_trade = TradeHistory.objects.create(
-                    user=user,
-                    order_id=opposite_trade.get('orderId'),
-                    client_order_id=opposite_trade.get('clientOrderId'),
-                    symbol=opposite_trade.get('symbol'),
-                    order_type=opposite_trade.get('type'),
-                    quantity=opposite_trade.get('executedQty'),
-                    cumulative_quote_qty=opposite_trade.get('cummulativeQuoteQty'),
-                    entry_price=float(trade.cumulative_quote_qty) / float(trade.quantity),
-                    take_profit=trade.take_profit,
-                    stop_loss=trade.stop_loss,
-                    close_price=float(opposite_trade.get('cummulativeQuoteQty')) / float(opposite_trade.get('executedQty')),
-                    net_pl=net_pl
-                )
-                new_trade.save()
+            entry = float(entry) / float(trade.quantity)
+            net_pl = (float(entry) - float(trade.entry)) * float(trade.quantity)
 
-                # Update user profile
-                user_profile.account_balance = float(user_profile.account_balance) + float(net_pl)
-                user_profile.save()
+            new_trade = TradeHistory.objects.create(
+                user=user,
+                order_id=opposite_trade.get('orderId'),
+                client_order_id=opposite_trade.get('clientOrderId'),
+                symbol=opposite_trade.get('symbol'),
+                order_type=opposite_trade.get('type'),
+                quantity=opposite_trade.get('executedQty'),
+                cumulative_quote_qty=opposite_trade.get('cummulativeQuoteQty'),
+                entry_price=trade.entry,
+                take_profit=trade.take_profit,
+                stop_loss=trade.stop_loss,
+                close_price=entry,
+                net_pl=net_pl
+            )
+            new_trade.save()
 
-                # Update account history
-                new_entry = AccountHistory.objects.create(
-                    user=user,
-                    new_account_balance=user_profile.account_balance,
-                    net_difference=net_pl
-                )
-                new_entry.save()
-                trade.delete()
+            # Update user profile
+            user_profile.account_balance = float(user_profile.account_balance) + float(net_pl)
+            user_profile.save()
+
+            # Update account history
+            new_entry = AccountHistory.objects.create(
+                user=user,
+                new_account_balance=user_profile.account_balance,
+                net_difference=net_pl
+            )
+            new_entry.save()
+            trade.delete()
 
     return redirect('trade')

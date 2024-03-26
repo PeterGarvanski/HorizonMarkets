@@ -26,9 +26,9 @@
                         <div class="body-row">
                             <span class="table-cell">{{ trade.symbol }}</span>
                             <span class="table-cell">{{ trade.quantity }}</span>
-                            <span class="table-cell">${{ trade.entry_price }}</span>
-                            <span class="table-cell">${{ trade.close_price }}</span>
-                            <span class="table-cell">${{ trade.net_pl }}</span>
+                            <span class="table-cell">{{ trade.entry_price }}</span>
+                            <span class="table-cell">{{ trade.close_price }}</span>
+                            <span class="table-cell">{{ trade.net_pl }}</span>
                         </div>
                         <hr class="line-div">
                     {% endfor %}
@@ -40,7 +40,7 @@
             <form action="{% url 'trade' %}" method="post" id="trade-form">
                 {% csrf_token %}
                 <div class="form-section">
-                    <p class="account-balance">Account Balance: ${{ account_balance }}</p>
+                    <p class="account-balance" id="account-balance" data="{{ account_balance }}">Account Balance: ${{ account_balance }}</p>
                     <div class="order-type">
                         <p class="withdrawal-label order-type-text">Order Type</p>
                         <input type="radio" name="order-type" id="market" value="MARKET" checked>
@@ -58,11 +58,11 @@
                     <div class="input-group">
                         <div class="input-wrapper">
                             <label for="symbol" class="withdrawal-label">Symbol</label>
-                            <input type="text" class="withdraw-input" name="symbol" placeholder="e.g. BTCUSDT" autocomplete="off">
+                            <input type="text" class="withdraw-input" id="symbol" name="symbol" placeholder="e.g. BTCUSDT" autocomplete="off">
                         </div>
                         <div class="input-wrapper">
                             <label for="quantity" class="withdrawal-label first">Quantity</label>
-                            <input type="number" class="withdraw-input amount" name="quantity" min="0" max="100000" step="0.01" placeholder="e.g. 0.5" required>
+                            <input type="number" class="withdraw-input amount" id="quantity" name="quantity" min="0" max="100000" step="0.01" placeholder="e.g. 0.5" required>
                         </div>
                     </div>
                     <div id="limit-inputs"></div>
@@ -92,9 +92,9 @@
                         <span class="table-cell t-head">Side</span>
                         <span class="table-cell t-head">Quantity</span>
                         <span class="table-cell t-head">Entry</span>
-                        <span class="table-cell t-head">Net P&L</span>
                         <span class="table-cell t-head">Take Profit</span>
                         <span class="table-cell t-head">Stop Loss</span>
+                        <span class="table-cell t-head">Net P&L</span>
                         <span class="table-cell t-head last">Close Position</span>
                     </div>
                 </div>
@@ -105,10 +105,10 @@
                             <span class="table-cell">{{ trade.symbol }}</span>
                             <span class="table-cell">{{ trade.side }}</span>
                             <span class="table-cell">{{ trade.quantity }}</span>
-                            <span class="table-cell">${{ trade.entry }}</span>
+                            <span class="table-cell">{{ trade.entry }}</span>
+                            <span class="table-cell">{{ trade.take_profit }}</span>
+                            <span class="table-cell">{{ trade.stop_loss }}</span>
                             <span class="table-cell" id="{{ trade.id }}">0</span>
-                            <span class="table-cell">${{ trade.take_profit }}</span>
-                            <span class="table-cell">${{ trade.stop_loss }}</span>
                             <span class="table-cell">
                                 <form action="{% url 'close_position' %}" method="post">
                                     {% csrf_token %}
@@ -126,6 +126,7 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script src="{% static 'trade/js/quantity-validation.js' %}"></script>
     <script src="{% static 'trade/js/data-stream.js' %}"></script>
     <script src="{% static 'trade/js/trade.js' %}"></script>
 {% endblock %}

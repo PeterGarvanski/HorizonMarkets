@@ -6,14 +6,13 @@ const openTrades = JSON.parse(modifiedTradeData);
 
 // Connecting to Binance Websocket
 const websocketEndpoint = 'wss://stream.binance.com:9443/ws';
-const ws = new WebSocket(websocketEndpoint);
 
 // Keep Track of time, incase of need to throtte
 let lastUpdateTimestamp = 0;
 
 // Function to subscribe to the WebSocket stream
-const subscribeToTicker = (ticker, id, entry) => {
-    const ws = new WebSocket(websocketEndpoint); // Create a new WebSocket connection
+const subscribeToTicker = (ticker, id, entry, quantity) => {
+    const ws = new WebSocket(websocketEndpoint);
 
     // Subscribing to the ticker stream
     ws.onopen = () => {
@@ -34,7 +33,7 @@ const subscribeToTicker = (ticker, id, entry) => {
             
             if (tickerData.e === '24hrTicker') {
                 const netElement = document.getElementById(id);
-                const netPosition = parseFloat(tickerData.c) - parseFloat(entry);
+                const netPosition = (parseFloat(tickerData.c) - parseFloat(entry)) * parseFloat(quantity);
 
                 if (netPosition >= 0) {
                     netElement.style.color = "#11a452";
@@ -43,7 +42,7 @@ const subscribeToTicker = (ticker, id, entry) => {
                     netElement.style.color = "#ef415b";
                 }
 
-                netElement.innerHTML = `$${netPosition.toFixed(2)}`;
+                netElement.innerHTML = netPosition.toFixed(2);
                 lastUpdateTimestamp = currentTime;
             }
         }
@@ -56,5 +55,5 @@ const subscribeToTicker = (ticker, id, entry) => {
 };
 
 openTrades.forEach(trade => {
-    subscribeToTicker(trade.symbol, trade.id, trade.entry)
+    subscribeToTicker(trade.symbol, trade.id, trade.entry, trade.quantity);
 });

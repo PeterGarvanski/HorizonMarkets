@@ -13,7 +13,7 @@ class OpenTradeAdmin(admin.ModelAdmin):
         'side',
         'quantity',
         'cumulative_quote_qty',
-        'price',
+        'entry',
         'take_profit',
         'stop_loss'
     )

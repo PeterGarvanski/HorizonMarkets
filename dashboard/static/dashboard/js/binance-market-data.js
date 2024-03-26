@@ -6,14 +6,13 @@ const favTickers = JSON.parse(modifiedCryptoList);
 
 // Connecting to Binance Websocket
 const websocketEndpoint = 'wss://stream.binance.com:9443/ws';
-const ws = new WebSocket(websocketEndpoint);
 
 // Keep Track of time, incase of need to throtte
 let lastUpdateTimestamp = 0;
 
 // Function to subscribe to the WebSocket stream
 const subscribeToTicker = (ticker) => {
-    const ws = new WebSocket(websocketEndpoint); // Create a new WebSocket connection
+    const ws = new WebSocket(websocketEndpoint);
 
     // Subscribing to the ticker stream
     ws.onopen = () => {
