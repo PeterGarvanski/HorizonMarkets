@@ -22,6 +22,7 @@ def trade(request):
     # Requests the logged in users data
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
+    todays_trades = TradeHistory.objects.filter(user=user, date=datetime.datetime.now().date())
     error_message = ''
 
     # If a form is being submitted
@@ -65,6 +66,7 @@ def trade(request):
             ...
 
     open_trades = []
+    trade_historys = []
 
     # Add open trades in a list to be displayed by template
     for trade in OpenTrade.objects.filter(user=user):
@@ -73,15 +75,24 @@ def trade(request):
             'time': str(trade.time.strftime('%H:%M')),
             'symbol': str(trade.symbol),
             'side': str(trade.side),
+            'quantity': str(trade.quantity),
             'entry': round(float(trade.cumulative_quote_qty) / float(trade.quantity), 4),
             'take_profit': float(trade.take_profit),
             'stop_loss': float(trade.stop_loss)
         }
         open_trades.append(order)
 
+    for trade in todays_trades:
+        if len(trade_historys) < 9:
+            trade_historys.insert(0, trade)
+        else:
+            trade_historys.pop()
+            trade_historys.insert(0, trade) 
+
     # All the relevant context the templates will need
     context = {
         'open_trades': open_trades,
+        'trade_historys': trade_historys,
         'account_balance': user_profile.account_balance,
         'error_message': error_message
     }
@@ -162,9 +173,11 @@ def close_position(request):
         # Place an equal but oppopsite order
         opposite_trade = place_order(trade.symbol, 'SELL', 'MARKET', trade.quantity, 0)
 
+        print(opposite_trade)
+
         # If the order gets filled create a new entry for trade history
         if opposite_trade.get('status') == 'FILLED':
-                net_pl = float(trade.cumulative_quote_qty) - float(opposite_trade.get('cummulativeQuoteQty'))
+                net_pl = float(opposite_trade.get('cummulativeQuoteQty')) - float(trade.cumulative_quote_qty)
 
                 new_trade = TradeHistory.objects.create(
                     user=user,
@@ -174,10 +187,10 @@ def close_position(request):
                     order_type=opposite_trade.get('type'),
                     quantity=opposite_trade.get('executedQty'),
                     cumulative_quote_qty=opposite_trade.get('cummulativeQuoteQty'),
-                    price=opposite_trade.get('price'),
+                    entry_price=float(trade.cumulative_quote_qty) / float(trade.quantity),
                     take_profit=trade.take_profit,
                     stop_loss=trade.stop_loss,
-                    close_price='1',
+                    close_price=float(opposite_trade.get('cummulativeQuoteQty')) / float(opposite_trade.get('executedQty')),
                     net_pl=net_pl
                 )
                 new_trade.save()

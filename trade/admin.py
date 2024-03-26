@@ -24,6 +24,7 @@ admin.site.register(OpenTrade, OpenTradeAdmin)
 class TradeHistoryAdmin(admin.ModelAdmin):
     list_display = (
         'user',
+        'date',
         'time',
         'order_id',
         'client_order_id',
@@ -31,7 +32,7 @@ class TradeHistoryAdmin(admin.ModelAdmin):
         'order_type',
         'quantity',
         'cumulative_quote_qty',
-        'price',
+        'entry_price',
         'close_price',
         'take_profit',
         'stop_loss',
