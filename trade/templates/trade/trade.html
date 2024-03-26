@@ -84,7 +84,7 @@
     <div class="row">
         <div class="col-md-12 active-trades box-shadow">
             <h2 class="titles">Open Positions</h2>
-            <div class="table">
+            <div class="table" id="open-trades" data="{{ open_trades }}">
                 <div>
                     <div class="head-row">
                         <span class="table-cell t-head">Time</span>
@@ -106,7 +106,7 @@
                             <span class="table-cell">{{ trade.side }}</span>
                             <span class="table-cell">{{ trade.quantity }}</span>
                             <span class="table-cell">${{ trade.entry }}</span>
-                            <span class="table-cell">+$200.50</span>
+                            <span class="table-cell" id="{{ trade.id }}">0</span>
                             <span class="table-cell">${{ trade.take_profit }}</span>
                             <span class="table-cell">${{ trade.stop_loss }}</span>
                             <span class="table-cell">
@@ -126,5 +126,6 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script src="{% static 'trade/js/data-stream.js' %}"></script>
     <script src="{% static 'trade/js/trade.js' %}"></script>
 {% endblock %}

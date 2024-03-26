@@ -173,8 +173,6 @@ def close_position(request):
         # Place an equal but oppopsite order
         opposite_trade = place_order(trade.symbol, 'SELL', 'MARKET', trade.quantity, 0)
 
-        print(opposite_trade)
-
         # If the order gets filled create a new entry for trade history
         if opposite_trade.get('status') == 'FILLED':
                 net_pl = float(opposite_trade.get('cummulativeQuoteQty')) - float(trade.cumulative_quote_qty)

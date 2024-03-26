@@ -10,11 +10,11 @@ class OpenTrade(models.Model):
     symbol = models.CharField(max_length=20, null=False, blank=False)
     order_type = models.CharField(max_length=10, null=False, blank=False)
     side = models.CharField(max_length=8, null=False, blank=False)
-    quantity = models.DecimalField(max_digits=20, decimal_places=8, null=False, blank=False)
+    quantity = models.DecimalField(max_digits=20, decimal_places=2, null=False, blank=False)
     cumulative_quote_qty = models.DecimalField(max_digits=20, decimal_places=8, null=False, blank=False)
     price = models.DecimalField(max_digits=20, decimal_places=8, null=True, blank=True)
-    take_profit = models.DecimalField(max_digits=20, decimal_places=8, null=True, blank=True)
-    stop_loss = models.DecimalField(max_digits=20, decimal_places=8, null=True, blank=True)
+    take_profit = models.DecimalField(max_digits=20, decimal_places=4, null=True, blank=True)
+    stop_loss = models.DecimalField(max_digits=20, decimal_places=4, null=True, blank=True)
 
 
 class TradeHistory(models.Model):
