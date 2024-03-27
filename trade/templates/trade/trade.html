@@ -50,7 +50,7 @@
                     </div>
                     <div class="order-type">
                         <p class="withdrawal-label order-type-text">Market Side</p>
-                        <input type="radio" name="side" id="buy" value="BUY" checked>
+                        <input type="radio" name="side" id="buy" value="BUY">
                         <label class="radio-label" for="buy">Buy</label>
                         <input type="radio" name="side" id="sell" value="SELL">
                         <label class="radio-label" for="sell">Sell</label>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="input-wrapper">
                             <label for="quantity" class="withdrawal-label first">Quantity</label>
-                            <input type="number" class="withdraw-input amount" id="quantity" name="quantity" min="0" max="100000" step="0.01" placeholder="e.g. 0.5" required>
+                            <input type="number" class="withdraw-input amount" id="quantity" name="quantity" min="0" max="0" step="0.01" placeholder="e.g. 0.5" required>
                         </div>
                     </div>
                     <div id="limit-inputs"></div>
@@ -127,6 +127,7 @@
 
 {% block extra_js %}
     <script src="{% static 'trade/js/quantity-validation.js' %}"></script>
+    <script src="{% static 'trade/js/sell-trade-validation.js' %}"></script>
     <script src="{% static 'trade/js/data-stream.js' %}"></script>
     <script src="{% static 'trade/js/trade.js' %}"></script>
 {% endblock %}
