@@ -1,3 +1,4 @@
+from .models import OpenTrade
 import websocket
 import hashlib
 import hmac
@@ -20,13 +21,34 @@ def compute_signature(payload, secret_key):
     return hmac.new(secret_key.encode('utf-8'), payload.encode('utf-8'), hashlib.sha256).hexdigest()
 
 
-def trade_on_message(ws, response):
-    print('Received message:', response)
+def trade_on_message(ws, response, user, take_profit, stop_loss):
+    try:
+        trade = json.loads(response)
 
-    if response.get('status') == 'FILLED':
-        print(True)
-    
-    ws.close()
+        if trade.get('status') == 200:
+            result = trade.get('result')
+            new_trade = OpenTrade.objects.create(
+                user=user,
+                order_id=result.get('orderId'),
+                client_order_id=result.get('clientOrderId'),
+                symbol=result.get('symbol'),
+                order_type=result.get('type'),
+                side=result.get('side'),
+                quantity=result.get('executedQty'),
+                cumulative_quote_qty=result.get('cummulativeQuoteQty'),
+                entry=(float(result.get('cummulativeQuoteQty')) / float(result.get('executedQty'))),
+                take_profit=take_profit,
+                stop_loss=stop_loss,
+            )
+            new_trade.save()
+            ws.close()
+        
+        else:
+            print('Error placing trade!', trade)
+
+    except Exception as e:
+        print('Error saving trade to database:', e)
+        ws.close()
 
 
 def trade_on_open(ws, params):
@@ -45,7 +67,7 @@ def trade_on_close(ws):
     print('Order webSocket connection closed')
 
 
-def handle_trade(params, symbol, side, quantity, price, take_profit, stop_loss):
+def handle_trade(user, params, symbol, side, quantity, price, take_profit, stop_loss):
 
     if params == 'MARKET':
         request_message = {
@@ -113,11 +135,8 @@ def handle_trade(params, symbol, side, quantity, price, take_profit, stop_loss):
 
     # Create a WebSocket connection
     ws = websocket.WebSocketApp('wss://testnet.binance.vision/ws-api/v3',
-                                on_message=trade_on_message,
+                                on_message=lambda ws, msg: trade_on_message(ws, msg, user, take_profit, stop_loss),
                                 on_open=lambda ws: trade_on_open(ws, request_message),
                                 on_close=trade_on_close)
 
     ws.run_forever()
-
-
-handle_trade('MARKET', 'BNBUSDT', 'BUY', '1', '', '', '')
