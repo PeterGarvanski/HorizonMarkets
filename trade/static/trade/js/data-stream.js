@@ -4,6 +4,8 @@ const tradeData = dataElement.getAttribute('data');
 const modifiedTradeData = tradeData.replace(/'/g, '"');
 const openTrades = JSON.parse(modifiedTradeData);
 
+console.log(openTrades);
+
 // Connecting to Binance Websocket
 const websocketEndpoint = 'wss://stream.binance.com:9443/ws';
 
@@ -11,12 +13,12 @@ const websocketEndpoint = 'wss://stream.binance.com:9443/ws';
 let lastUpdateTimestamp = 0;
 
 // Function to subscribe to the WebSocket stream
-const subscribeToTicker = (ticker, id, entry, quantity, side) => {
+const subscribeToTicker = (id, symbol, side, quantity, entry, takeProfit, stopLoss) => {
     const ws = new WebSocket(websocketEndpoint);
 
     // Subscribing to the ticker stream
     ws.onopen = () => {
-        const streamName = `${ticker.toLowerCase()}@ticker`;
+        const streamName = `${symbol.toLowerCase()}@ticker`;
         const subscriptionMsg = JSON.stringify({
             method: 'SUBSCRIBE',
             params: [streamName],
@@ -32,28 +34,27 @@ const subscribeToTicker = (ticker, id, entry, quantity, side) => {
             const tickerData = JSON.parse(event.data);
             
             if (tickerData.e === '24hrTicker') {
-                const netElement = document.getElementById(id);
-                const netPosition = (parseFloat(tickerData.c) - parseFloat(entry)) * parseFloat(quantity);
+                if (tickerData.c >= takeProfit || tickerData.c <= stopLoss) {
+                    let form = document.getElementById(`form_${id}`);
+                    form.submit()
 
-                if (side === 'BUY') {
-                    if (netPosition >= 0) {
-                        netElement.style.color = "#11a452";
-                        
-                    } else {
-                        netElement.style.color = "#ef415b";
-                    }
-
-                } else {
-                    if (netPosition > 0) {
-                        netElement.style.color = "#ef415b";
-                        
-                    } else {
-                        netElement.style.color = "#11a452";
-                    }
-                    netPosition *= -1
+                    removeTrade = openTrades.findIndex(trade => trade.id === id);
+                    openTrades.splice(removeTrade, 1);
                 }
-                netElement.innerHTML = netPosition.toFixed(2);
-                lastUpdateTimestamp = currentTime;
+
+                else {
+                    const netElement = document.getElementById(id);
+                    const netPosition = (parseFloat(tickerData.c) - parseFloat(entry)) * parseFloat(quantity);
+
+                    if (side === 'BUY') {
+                        netElement.style.color = (netPosition >= 0) ? "#11a452" : "#ef415b";
+                    } else {
+                        netElement.style.color = (netPosition > 0) ? "#ef415b" : "#11a452";
+                        netPosition *= -1
+                    }
+                    netElement.innerHTML = netPosition.toFixed(2);
+                    lastUpdateTimestamp = currentTime;
+                }
             }
         }
     };
@@ -65,5 +66,13 @@ const subscribeToTicker = (ticker, id, entry, quantity, side) => {
 };
 
 openTrades.forEach(trade => {
-    subscribeToTicker(trade.symbol, trade.id, trade.entry, trade.quantity, trade.side);
+    subscribeToTicker(
+        trade.id,
+        trade.symbol,
+        trade.side,
+        trade.quantity,
+        trade.entry,
+        trade.take_profit,
+        trade.stop_loss
+    );
 });

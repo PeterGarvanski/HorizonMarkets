@@ -110,7 +110,7 @@
                             <span class="table-cell">{{ trade.stop_loss }}</span>
                             <span class="table-cell" id="{{ trade.id }}">0</span>
                             <span class="table-cell">
-                                <form action="{% url 'close_position' %}" method="post">
+                                <form action="{% url 'close_position' %}" method="post" id="form_{{ trade.id }}">
                                     {% csrf_token %}
                                     <input type="hidden" name="close_position" value="{{ trade.id }}">
                                     <button type="submit" class="cancel"><i class="fas fa-xmark"></i></button>
