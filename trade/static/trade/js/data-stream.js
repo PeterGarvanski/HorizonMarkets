@@ -11,7 +11,7 @@ const websocketEndpoint = 'wss://stream.binance.com:9443/ws';
 let lastUpdateTimestamp = 0;
 
 // Function to subscribe to the WebSocket stream
-const subscribeToTicker = (ticker, id, entry, quantity) => {
+const subscribeToTicker = (ticker, id, entry, quantity, side) => {
     const ws = new WebSocket(websocketEndpoint);
 
     // Subscribing to the ticker stream
@@ -35,13 +35,23 @@ const subscribeToTicker = (ticker, id, entry, quantity) => {
                 const netElement = document.getElementById(id);
                 const netPosition = (parseFloat(tickerData.c) - parseFloat(entry)) * parseFloat(quantity);
 
-                if (netPosition >= 0) {
-                    netElement.style.color = "#11a452";
-                    
-                } else {
-                    netElement.style.color = "#ef415b";
-                }
+                if (side === 'BUY') {
+                    if (netPosition >= 0) {
+                        netElement.style.color = "#11a452";
+                        
+                    } else {
+                        netElement.style.color = "#ef415b";
+                    }
 
+                } else {
+                    if (netPosition > 0) {
+                        netElement.style.color = "#ef415b";
+                        
+                    } else {
+                        netElement.style.color = "#11a452";
+                    }
+                    netPosition *= -1
+                }
                 netElement.innerHTML = netPosition.toFixed(2);
                 lastUpdateTimestamp = currentTime;
             }
@@ -55,5 +65,5 @@ const subscribeToTicker = (ticker, id, entry, quantity) => {
 };
 
 openTrades.forEach(trade => {
-    subscribeToTicker(trade.symbol, trade.id, trade.entry, trade.quantity);
+    subscribeToTicker(trade.symbol, trade.id, trade.entry, trade.quantity, trade.side);
 });

@@ -22,9 +22,8 @@ def compute_signature(payload, secret_key):
 
 
 def trade_on_message(ws, response, user, take_profit, stop_loss):
+    trade = json.loads(response)
     try:
-        trade = json.loads(response)
-
         if trade.get('status') == 200:
             result = trade.get('result')
             new_trade = OpenTrade.objects.create(
@@ -45,10 +44,14 @@ def trade_on_message(ws, response, user, take_profit, stop_loss):
         
         else:
             print('Error placing trade!', trade)
+            ws.close()
 
     except Exception as e:
         print('Error saving trade to database:', e)
         ws.close()
+
+    print('Order webSocket connection closed')
+    
 
 
 def trade_on_open(ws, params):
@@ -61,10 +64,6 @@ def trade_on_open(ws, params):
 
     # Send the order message
     ws.send(json.dumps(params))
-
-
-def trade_on_close(ws):
-    print('Order webSocket connection closed')
 
 
 def handle_trade(user, params, symbol, side, quantity, price, take_profit, stop_loss):
@@ -137,6 +136,6 @@ def handle_trade(user, params, symbol, side, quantity, price, take_profit, stop_
     ws = websocket.WebSocketApp('wss://testnet.binance.vision/ws-api/v3',
                                 on_message=lambda ws, msg: trade_on_message(ws, msg, user, take_profit, stop_loss),
                                 on_open=lambda ws: trade_on_open(ws, request_message),
-                                on_close=trade_on_close)
+                               )
 
     ws.run_forever()

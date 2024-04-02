@@ -100,39 +100,43 @@ def close_position(request):
             user=user,
             order_id=trade_id
         )[0]
-        # Place an equal but oppopsite order
+
+        side = 'SELL' if trade.side == 'BUY' else 'BUY'
+
         handle_trade(
             user=user,
             params='MARKET',
-            symbol=trade.get('symbol'),
-            side=trade.get('side'), # TODO
-            quantity=trade.get('quantity'),
-            price='N/A',
-            take_profit='N/A',
-            stop_loss='N/A'
+            symbol=f'{trade.symbol}',
+            side=f'{side}',
+            quantity=f'{trade.quantity}',
+            price='0',
+            take_profit='0',
+            stop_loss='0'
         )
 
+        opposite_trade = OpenTrade.objects.filter(user=user).order_by('-time').first()
+        net_pl = float(opposite_trade.cumulative_quote_qty) - float(trade.cumulative_quote_qty)
+
         # If the order gets filled create a new entry for trade history
-        # TODO get the users newest open trade id and cancel both it and the previous trade id
 
         new_trade = TradeHistory.objects.create(
             user=user,
-            order_id=opposite_trade.get('orderId'),
-            client_order_id=opposite_trade.get('clientOrderId'),
-            symbol=opposite_trade.get('symbol'),
-            order_type=opposite_trade.get('type'),
-            quantity=opposite_trade.get('executedQty'),
-            cumulative_quote_qty=opposite_trade.get('cummulativeQuoteQty'),
+            order_id=opposite_trade.order_id,
+            client_order_id=opposite_trade.client_order_id,
+            symbol=opposite_trade.symbol,
+            order_type=opposite_trade.order_type,
+            quantity=opposite_trade.quantity,
+            cumulative_quote_qty=opposite_trade.cumulative_quote_qty,
             entry_price=trade.entry,
             take_profit=trade.take_profit,
             stop_loss=trade.stop_loss,
-            close_price=entry,
+            close_price=opposite_trade.entry,
             net_pl=net_pl
         )
         new_trade.save()
 
         # Update user profile
-        user_profile.account_balance = float(user_profile.account_balance) + float(net_pl)
+        user_profile.account_balance = float(user_profile.account_balance) + net_pl
         user_profile.save()
 
         # Update account history
@@ -143,5 +147,6 @@ def close_position(request):
         )
         new_entry.save()
         trade.delete()
+        opposite_trade.delete()
 
     return redirect('trade')
