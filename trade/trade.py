@@ -1,3 +1,4 @@
+from env import BINANCE_API_KEY, BINANCE_SECRET_KEY
 from .models import OpenTrade
 import websocket
 import hashlib
@@ -6,10 +7,6 @@ import json
 import time
 import uuid
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
-
-
-API_KEY = 'eVCKz8VvUi2FCSlxbuV3LT54cWVPa4OVU6ycVVEu0AyBXUHbG4RJmTNfxnqXaBPQ'
-SECRET_KEY = 'kR9m1gC574eV5SUz1LrSGpQ1ul0kDi3NF3PrKHaCmcqY0wIw2HbY390E1l9YvBRy'
 
 
 def construct_signature_payload(params):
@@ -51,7 +48,6 @@ def trade_on_message(ws, response, user, take_profit, stop_loss):
         ws.close()
 
     print('Order webSocket connection closed')
-    
 
 
 def trade_on_open(ws, params):
@@ -59,7 +55,7 @@ def trade_on_open(ws, params):
 
     # Sign the request
     payload = construct_signature_payload(params['params'])
-    signature = compute_signature(payload, SECRET_KEY)
+    signature = compute_signature(payload, BINANCE_SECRET_KEY)
     params['params']['signature'] = signature
 
     # Send the order message
@@ -78,7 +74,7 @@ def handle_trade(user, params, symbol, side, quantity, price, take_profit, stop_
                 'type': 'MARKET',
                 'quantity': quantity,
                 'timestamp': int(time.time() * 1000),
-                'apiKey': API_KEY,
+                'apiKey': BINANCE_API_KEY,
             }
         }
 
@@ -94,7 +90,7 @@ def handle_trade(user, params, symbol, side, quantity, price, take_profit, stop_
                 'quantity': quantity,
                 'timeInForce': 'GTC',
                 'timestamp': int(time.time() * 1000),
-                'apiKey': API_KEY,
+                'apiKey': BINANCE_API_KEY,
             }
         }
 
@@ -105,7 +101,7 @@ def handle_trade(user, params, symbol, side, quantity, price, take_profit, stop_
             'params': {
                 'symbol': symbol,
                 'timestamp': int(time.time() * 1000),
-                'apiKey': API_KEY,
+                'apiKey': BINANCE_API_KEY,
             }
         }
 
@@ -116,7 +112,7 @@ def handle_trade(user, params, symbol, side, quantity, price, take_profit, stop_
             'params': {
                 'symbol': symbol,
                 'timestamp': int(time.time() * 1000),
-                'apiKey': API_KEY,
+                'apiKey': BINANCE_API_KEY,
             }
         }
 
@@ -128,7 +124,7 @@ def handle_trade(user, params, symbol, side, quantity, price, take_profit, stop_
                 'symbol': symbol,
                 'orderId': '3090331',
                 'timestamp': int(time.time() * 1000),
-                'apiKey': API_KEY,
+                'apiKey': BINANCE_API_KEY,
             }
         }
 
