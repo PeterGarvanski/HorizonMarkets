@@ -13,10 +13,15 @@
 <div class="my-container">
     <div class="col-md-6">
         <div class="sections box-shadow support-display">
-            <p>TODO:</p>
-            <p>Sell Side orders and limit orders</p>
-            <p>Customer support</p>
-            <p>Login and Registration</p>
+            <form action="{% url 'customer_support' %}" method="post" class="my-forms settings-form">
+                {% csrf_token %}
+                <h2 class="heading-customer-support">Customer Support</h2>
+                <label for="subject" class="withdrawal-label">Email Subject</label>
+                <input type="text" id="subject" name="subject" class="withdraw-input" required>
+                <label for="body" class="withdrawal-label">Email Body</label>
+                <textarea id="body" name="body" rows="8" cols="50" class="withdraw-input body" required></textarea>
+                <input type="submit" value="Submit" class="withdraw-input withdraw-button color">
+            </form>
         </div>
     </div>
     <div class="col-md-6 my-centre">

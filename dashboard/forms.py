@@ -22,10 +22,10 @@ class UserProfileForm(forms.ModelForm):
                 'first_name',
                 'last_name'
             ),
-            Submit('submit', 'Save', css_class='btn btn-primary save')
+            Submit('submit', 'Save', css_class='withdraw-input withdraw-button')
         )
 
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-inputs'
+            field.widget.attrs['class'] = 'withdraw-input'
             field.widget.attrs['id'] = field_name
             self.fields[field_name].label = f'<span class="form-label">{self.fields[field_name].label}</span>'

@@ -391,6 +391,10 @@ legend {
     padding: none;
 }
 
+.withdraw-input.withdraw-button.color {
+    color: #ffffff;
+}
+
 .account-balance-sum {
     font-size: 13px;
     font-weight: 600;
@@ -404,4 +408,15 @@ legend {
     font-weight: 500;
     color: #080b0e85;
     text-align: center;
+}
+
+.heading-customer-support {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin: 15px 0;
+}
+
+.withdraw-input.body {
+    height: 215px;
 }
