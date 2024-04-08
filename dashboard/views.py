@@ -14,9 +14,11 @@ import calendar
 import time
 import uuid
 import json
-import ssl
 import smtplib
-from email.message import EmailMessage
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+
 
 @login_required
 def dashboard(request):
@@ -193,7 +195,7 @@ def customer_support(request):
         subject = request.POST.get('subject')
         body = request.POST.get('body')
         
-        send_email(SENDER_EMAIL, SENDER_PASSWORD, RECIPIENT_EMAIL, subject, body)
+        send_email()
 
     return redirect('dashboard')
 
@@ -403,18 +405,27 @@ def get_access_token(client_id, client_secret):
         return None
 
 
-def send_email(sender_email, sender_password, recipient_email, subject, body):
+def send_email():
+    sender_email = SENDER_EMAIL
+    sender_password = SENDER_PASSWORD
+    reciever_email = RECIPIENT_EMAIL
+
+    subject = 'Test Email'
+    body = 'This is a test email'
+
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = reciever_email
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(body, 'plain'))
+
     try:
-        email = EmailMessage()
-        email['From'] = sender_email
-        email['To'] = recipient_email
-        email['Subject'] = subject
-        email.set_content(body)
-        
-        context = ssl.create_default_context()
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-            smtp.login(sender_email, sender_password)
-            smtp.sendmail(sender_email, recipient_email, email.as_string())
-        print("Email sent successfully!")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.starttls()
+            server.login(sender_email, sender_password)
+            text = msg.as_string()
+            server.sendmail(sender_email, reciever_email, text)
+            print('Message Sent')
+    except:
+        print('Error Sending Email')
