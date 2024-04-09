@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpRequest, JsonResponse
+from django.core.mail import send_mail
 from .forms import UserProfileForm
 from .models import UserProfile, AccountHistory
 from markets.models import Market
@@ -14,9 +15,6 @@ import calendar
 import time
 import uuid
 import json
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 
 
 
@@ -194,8 +192,13 @@ def customer_support(request):
     if request.method == 'POST':
         subject = request.POST.get('subject')
         body = request.POST.get('body')
-        
-        send_email()
+        send_mail(
+            subject,
+            body,
+            SENDER_EMAIL,
+            [RECIPIENT_EMAIL],
+            fail_silently=False,
+        )
 
     return redirect('dashboard')
 
@@ -405,27 +408,27 @@ def get_access_token(client_id, client_secret):
         return None
 
 
-def send_email():
-    sender_email = SENDER_EMAIL
-    sender_password = SENDER_PASSWORD
-    reciever_email = RECIPIENT_EMAIL
+# def send_email():
+#     sender_email = SENDER_EMAIL
+#     sender_password = SENDER_PASSWORD
+#     reciever_email = RECIPIENT_EMAIL
 
-    subject = 'Test Email'
-    body = 'This is a test email'
+#     subject = 'Test Email'
+#     body = 'This is a test email'
 
-    msg = MIMEMultipart()
-    msg['From'] = sender_email
-    msg['To'] = reciever_email
-    msg['Subject'] = subject
+#     msg = MIMEMultipart()
+#     msg['From'] = sender_email
+#     msg['To'] = reciever_email
+#     msg['Subject'] = subject
 
-    msg.attach(MIMEText(body, 'plain'))
+#     msg.attach(MIMEText(body, 'plain'))
 
-    try:
-        with smtplib.SMTP('smtp.gmail.com', 587) as server:
-            server.starttls()
-            server.login(sender_email, sender_password)
-            text = msg.as_string()
-            server.sendmail(sender_email, reciever_email, text)
-            print('Message Sent')
-    except:
-        print('Error Sending Email')
+#     try:
+#         with smtplib.SMTP('smtp.gmail.com', 587) as server:
+#             server.starttls()
+#             server.login(sender_email, sender_password)
+#             text = msg.as_string()
+#             server.sendmail(sender_email, reciever_email, text)
+#             print('Message Sent')
+#     except:
+#         print('Error Sending Email')

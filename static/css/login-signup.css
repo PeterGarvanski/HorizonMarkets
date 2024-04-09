@@ -76,3 +76,16 @@ small {
     color: #080b0e85;
     margin: 0 auto 20px auto;
 }
+
+.container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    width: 30%;
+    margin: auto;
+    border: 1px solid rgba(128, 128, 128, 0.233);
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.spacer {
+    height: 100px;
+}
