@@ -1,6 +1,9 @@
 {% extends "account/base_entrance.html" %}
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% block head_title %}
+    {% trans "Horizon Markets | Log In" %}
+{% endblock head_title %}
 {% block content %}
     <div class="spacer"></div>
     <form method="post" action="{% url 'account_login' %}">

@@ -1,5 +1,8 @@
 {% extends "account/base_manage.html" %}
 {% load allauth i18n %}
+{% block head_title %}
+    {% trans "Horizon Markets | Sign Out" %}
+{% endblock head_title %}
 {% block content %}
     <div class="spacer"></div>
     {% element form method="post" action=action_url no_visible_fields=True %}

@@ -1,4 +1,4 @@
-from env import STRIPE_SECRET_KEY, PAYPAL_CLIENT_ID, PAYPAL_SECRET_KEY, SENDER_EMAIL, SENDER_PASSWORD, RECIPIENT_EMAIL
+from env import STRIPE_SECRET_KEY, PAYPAL_CLIENT_ID, PAYPAL_SECRET_KEY, SENDER_EMAIL, RECIPIENT_EMAIL
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
@@ -191,7 +191,7 @@ def customer_support(request):
     # If the user form is being submitted
     if request.method == 'POST':
         subject = request.POST.get('subject')
-        body = request.POST.get('body')
+        body = request.POST.get('body') + f'\nAccount Email: {user_profile.email}'
         send_mail(
             subject,
             body,
