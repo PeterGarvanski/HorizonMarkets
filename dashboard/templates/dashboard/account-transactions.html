@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Account Transactions
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-12 history box-shadow">
+        <h2 class="titles">Account History</h2>
+        <div class="table">
+            <div>
+                <div class="head-row">
+                    <span class="table-cell t-head">New Account Balance</span>
+                    <span class="table-cell t-head">Net Difference</span>
+                    <span class="table-cell t-head">Transaction Date</span>
+                    <span class="table-cell t-head">Transaction Time</span>
+                </div>
+                {% for entry in account_historys %}
+                    <div class="body-row">
+                        <span class="table-cell">${{ entry.new_balance }}</span>
+                        <span class="table-cell">${{ entry.net_diffrence }}</span>
+                        <span class="table-cell">{{ entry.date }}</span>
+                        <span class="table-cell">{{ entry.time}}</span>
+                    </div>
+                    <hr class="line-div">
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

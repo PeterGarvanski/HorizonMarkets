@@ -312,6 +312,34 @@ def withdraw(request):
 
 
 @login_required
+def account_transactions(request):
+    """
+    A view to return all account history entries
+    """
+    # Requests the logged in users data
+    user = request.user
+    querys = AccountHistory.objects.filter(user=user)
+
+    account_historys = []
+    for entry in querys:
+        account_historys.append(
+            {
+                'new_balance': entry.new_account_balance,
+                'net_diffrence': entry.net_difference,
+                'date': entry.date,
+                'time': entry.time
+            }
+        )
+
+    # All the relevant context the templates will need
+    context = {
+        'account_historys': account_historys
+    }
+
+    return render(request, 'dashboard/account-transactions.html', context)
+
+
+@login_required
 def return_page(request):
 
     return render(request, 'dashboard/return.html')

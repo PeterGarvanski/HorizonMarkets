@@ -420,3 +420,63 @@ legend {
 .withdraw-input.body {
     height: 215px;
 }
+
+.table {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 10px auto 30px auto;
+}
+
+.head-row,
+.body-row {
+    display: flex;
+    width: 100%;
+}
+
+.head-row {
+    background-color: #ffffff;
+    border: 1px solid rgba(128, 128, 128, 0.233);
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+    color: #080b0e85;
+}
+
+.body-row {
+    background-color: #ffffff6b;
+    border-radius: 10px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+    color: #080b0e85;
+}
+
+.table-cell {
+    flex: 1;
+    text-align: center;
+}
+
+.t-head {
+    border-right: 1px solid rgba(128, 128, 128, 0.233);
+}
+
+.t-head.last {
+    border-right: none;
+}
+
+.line-div {
+    margin: 0 auto;
+    background-color: rgba(128, 128, 128, 0.233);
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.history {
+    width: 97%;
+    margin: auto;
+    border-radius: 10px;
+    background-color: #ecf1f7;
+}
+
+.titles {
+    text-align: center;
+    font-weight: 600;
+    margin: 20px 0;
+}
