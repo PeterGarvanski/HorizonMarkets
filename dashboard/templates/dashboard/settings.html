@@ -30,7 +30,7 @@
                 {% csrf_token %}
                 {% crispy user_form %}
                 <div class="links">
-                    <a href="#">View Trading Logs</a>
+                    <a href="{% url 'trading_logs' %}">View Trading Logs</a>
                     <a href="{% url 'account_transactions' %}">Account Transactions</a>
                 </div>
             </form>

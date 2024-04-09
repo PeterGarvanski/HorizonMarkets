@@ -12,4 +12,5 @@ urlpatterns = [
     path('session-status/', views.session_status, name="session_status"),
     path('return.html', views.return_page, name="return_page"),
     path('account-transactions/', views.account_transactions, name="account_transactions"),
+    path('trading-logs/', views.trading_logs, name="trading_logs"),
 ]

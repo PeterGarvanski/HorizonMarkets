@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Trading Logs
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-12 history box-shadow">
+        <h2 class="titles">Trading Logs</h2>
+        <div class="table">
+            <div>
+                <div class="head-row">
+                    <span class="table-cell t-head">Date</span>
+                    <span class="table-cell t-head">Time</span>
+                    <span class="table-cell t-head">Order Id</span>
+                    <span class="table-cell t-head">Symbol</span>
+                    <span class="table-cell t-head">Type</span>
+                    <span class="table-cell t-head">Quantity</span>
+                    <span class="table-cell t-head">Quote</span>
+                    <span class="table-cell t-head">Entry</span>
+                    <span class="table-cell t-head">Close</span>
+                    <span class="table-cell t-head">Take Profit</span>
+                    <span class="table-cell t-head">Stop Loss</span>
+                    <span class="table-cell t-head">Net P&L</span>
+
+                </div>
+                {% for entry in trading_logs %}
+                    <div class="body-row">
+                        <span class="table-cell">{{ entry.date }}</span>
+                        <span class="table-cell">{{ entry.time }}</span>
+                        <span class="table-cell">{{ entry.order_id }}</span>
+                        <span class="table-cell">{{ entry.symbol }}</span>
+                        <span class="table-cell">{{ entry.type }}</span>
+                        <span class="table-cell">{{ entry.quantity }}</span>
+                        <span class="table-cell">{{ entry.quote }}</span>
+                        <span class="table-cell">{{ entry.entry }}</span>
+                        <span class="table-cell">{{ entry.close }}</span>
+                        <span class="table-cell">{{ entry.take_profit }}</span>
+                        <span class="table-cell">{{ entry.stop_loss }}</span>
+                        <span class="table-cell">{{ entry.net_pl }}</span>
+                    </div>
+                    <hr class="line-div">
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

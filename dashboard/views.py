@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from .forms import UserProfileForm
 from .models import UserProfile, AccountHistory
 from markets.models import Market
+from trade.models import TradeHistory
 import stripe
 import requests
 from datetime import datetime
@@ -337,6 +338,42 @@ def account_transactions(request):
     }
 
     return render(request, 'dashboard/account-transactions.html', context)
+
+
+@login_required
+def trading_logs(request):
+    """
+    A view to return all account history entries
+    """
+    # Requests the logged in users data
+    user = request.user
+    querys = TradeHistory.objects.filter(user=user)
+
+    trading_logs = []
+    for entry in querys:
+        trading_logs.append(
+            {
+                'time' : entry.time,
+                'date' : entry.date,
+                'order_id' : entry.order_id,
+                'symbol' : entry.symbol,
+                'type' : entry.order_type,
+                'quantity' : entry.quantity,
+                'quote' : round(entry.cumulative_quote_qty, 2),
+                'entry' : round(entry.entry_price, 2),
+                'close' : round(entry.close_price, 2),
+                'take_profit' : round(entry.take_profit, 2),
+                'stop_loss' : round(entry.stop_loss, 2),
+                'net_pl' : round(entry.net_pl, 2),
+            }
+        )
+
+    # All the relevant context the templates will need
+    context = {
+        'trading_logs': trading_logs
+    }
+
+    return render(request, 'dashboard/trading-logs.html', context)
 
 
 @login_required
