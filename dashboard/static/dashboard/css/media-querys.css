@@ -1,0 +1,208 @@
+/* CSS for Navigation on mobile devices */
+
+@media screen and (min-width: 320px) and (max-width: 576px) {
+    .sections {
+        width: 96%;
+        margin-top: 500px;
+    }
+
+    .account-history {
+        left:calc(0vw + 2%);
+        height: 500px;
+    }
+    
+    .fav-tickers {
+        left:calc(0vw + 2%);
+        top: 20px;
+        height: 800px;
+    }
+
+    .title {
+        font-size: 22px;
+    }
+
+    #account-title {
+        margin-top: 50px;
+    }
+
+    .trapezium {
+        width: 80px;
+        height: 35px;
+        left: calc(50vw - 27px);
+    }
+
+    .date-row {
+        gap: 30px;
+    }
+
+    .date-buttons {
+        padding: 0.5em 2em;
+        font-size: 10px;
+    }
+    
+    .balance {
+        font-size: 7px;
+        margin-top: 5px;
+    }
+
+    .sum {
+        font-size: 14px;
+    }
+
+    .name {
+        font-size: 14px;
+    }
+    
+    .value {
+        font-size: 10px;
+
+    }
+    
+    .percentage {
+        padding: 4px 14px;
+        font-size: 10px;
+    }
+
+    .centre-gap {
+        gap: 30px;
+        justify-content: center;
+    }
+
+    #cancel-form {
+        width: 30px;
+    }
+}
+
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+    .sections {
+        width: 96%;
+        margin-top: 650px;
+    }
+
+    .account-history {
+        left:calc(0vw + 2%);
+        height: 650px;
+    }
+    
+    .fav-tickers {
+        left:calc(0vw + 2%);
+        top: 20px;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+
+    #account-title {
+        margin-top: 70px;
+    }
+
+    .trapezium {
+        width: 125px;
+        height: 45px;
+        left: calc(50vw - 62px);
+    }
+    
+    .balance {
+        font-size: 10px;
+        margin-top: 6px;
+    }
+
+    .sum {
+        font-size: 20px;
+    }
+
+    .name {
+        font-size: 22px;
+    }
+    
+    .value {
+        font-size: 18px;
+
+    }
+    
+    .percentage {
+        padding: 4px 18px;
+        font-size: 18px;
+    }
+    
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .sections {
+        width: 96%;
+    }
+
+    .account-history {
+        left:calc(0vw + 2%);
+    }
+    
+    .fav-tickers {
+        left:calc(0vw + 2%);
+        top: 20px;
+    }
+
+    .title {
+        font-size: 30px;
+    }
+
+    #account-title {
+        margin-top: 70px;
+    }
+
+    .trapezium {
+        width: 140px;
+        height: 50px;
+    }
+    
+    .balance {
+        font-size: 12px;
+    }
+
+    .sum {
+        font-size: 22px;
+    }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+    .sections {
+        width: 96%;
+        margin-top: 820px;
+    }
+
+    .account-history {
+        left:calc(0vw + 2%);
+        height: 820px;
+    }
+    
+    .fav-tickers {
+        left:calc(0vw + 2%);
+        top: 20px;
+    }
+
+    #account-title {
+        margin-top: 70px;
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+    .sections {
+        width: 96%;
+        margin-top: 900px;
+    }
+
+    .account-history {
+        left:calc(0vw + 2%);
+        height: 900px;
+    }
+    
+    .fav-tickers {
+        left:calc(0vw + 2%);
+        top: 20px;
+    }
+
+    #account-title {
+        margin-top: 70px;
+    }
+}

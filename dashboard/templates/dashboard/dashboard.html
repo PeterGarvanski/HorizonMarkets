@@ -7,6 +7,7 @@
 
 {% block extra_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/dashboard.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/media-querys.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -15,9 +16,9 @@
             <h4 class="balance">Account Balance:</h4>
             <h2 class="sum">${{ account_balance }}</h2>
         </div>
-        <div class="col-md-6 centre">
+        <div class="col-md-12 col-lg-6 centre">
             <div class="sections box-shadow account-history">
-                <h1 class="title centre">Account History</h1>
+                <h1 class="title centre" id="account-title">Account History</h1>
                 <div class="chart">
                     <canvas id="account-history-chart" my-data="{{ account_history }}"></canvas>
                 </div>
@@ -28,19 +29,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 centre">
+        <div class="col-xxl-12 centre">
             <div class="sections box-shadow fav-tickers" data="{{ fav_tickers }}">
                 <h1 class="title centre">Favourited Tickers</h1>
                 {% for ticker in fav_tickers %}
                     <hr class="divider">
                     <div class="row">
-                        <div class="col-md-4 centre">
+                        <div class="col-sm-4 col-xxl-3 centre">
                             <h3 class="name" id="{{ ticker }}">{{ ticker }}</h3>
                         </div>
-                        <div class="col-md-8 centre-gap">
+                        <div class="col-sm-8 col-xxl-9 centre-gap">
                             <p class="value" id="{{ ticker }}USDT_value">N/A</p>
                             <p class="percentage" id="{{ ticker }}USDT_percentage">N/A</p>
-                            <form action="{% url 'markets' %}" method="post">
+                            <form action="{% url 'markets' %}" method="post" id="cancel-form">
                                 {% csrf_token %}
                                 <input type="hidden" name="remove_crypto" value="{{ ticker }}">
                                 <button type="submit" class="cancel"><i class="fas fa-xmark"></i></button>
