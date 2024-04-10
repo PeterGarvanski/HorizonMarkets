@@ -108,3 +108,145 @@
     color: #437DBC;
     background-color: #ffffff;
 }
+
+@media screen and (min-width: 320px) and (max-width: 576px) {
+    .search-bar {
+        left: calc(50vw - 100px);
+        top: 120px;
+        width: 200px;
+        height: 35px;
+        font-size: 14px;
+    }
+
+    .search-dropdown {
+        left: calc(50vw - 100px);
+        top: 160px;
+        width: 200px;
+    }
+
+    .search-button {
+        left: calc(50vw + 60px);
+        top: 120px;
+        width: 40px;
+        font-size: 14px;
+    }
+    
+    .favourite {
+        left: 80vw;
+        top: 190px;
+    }
+
+    .tradingview-widget-container {
+        margin-top: 80px;
+    }
+
+    .sections {
+        padding-bottom: 80px;
+    }
+
+    .crypto-links {
+        font-size: 14px;
+    }
+}
+
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+    .search-bar {
+        left: calc(50vw - 200px);
+        top: 120px;
+    }
+
+    .search-dropdown {
+        left: calc(50vw - 200px);
+        top: 160px;
+    }
+
+    .search-button {
+        left: calc(50vw + 140px);
+        top: 120px;
+    }
+    
+    .favourite {
+        left: 88vw;
+        top: 200px;
+    }
+
+    .tradingview-widget-container {
+        margin-top: 80px;
+    }
+
+    .sections {
+        padding-bottom: 80px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    
+    .search-bar {
+        left: calc(50vw - 200px);
+        top: 120px;
+    }
+
+    .search-dropdown {
+        left: calc(50vw - 200px);
+        top: 160px;
+    }
+
+    .search-button {
+        left: calc(50vw + 140px);
+        top: 120px;
+    }
+    
+    .favourite {
+        left: 90vw;
+        top: 200px;
+    }
+
+    .tradingview-widget-container {
+        margin-top: 80px;
+    }
+
+    .sections {
+        padding-bottom: 80px;
+    }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+    .search-bar {
+        left: calc(50vw - 50px);
+        top: 140px;
+    }
+
+    .search-dropdown {
+        left: calc(50vw - 50px);
+        top: 180px;
+    }
+
+    .search-button {
+        left: calc(50vw + 290px);
+        top: 140px;
+    }
+    
+    .favourite {
+        left: 92vw;
+        top: 135px;
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+    .search-bar {
+        left: calc(50vw - 50px);
+    }
+
+    .search-dropdown {
+        left: calc(50vw - 50px);
+    }
+
+    .search-button {
+        left: calc(50vw + 290px);
+    }
+    
+    .favourite {
+        left: 94vw;
+    }
+}
