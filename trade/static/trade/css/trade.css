@@ -167,3 +167,91 @@
 .cancel:hover {
     color: #ffffff;
 }
+
+.small-screen {
+    display: none;
+    text-align: center;
+    margin: auto;
+}
+
+.small-screen-text {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+@media screen and (min-width: 320px) and (max-width: 576px) {
+    .small-screen {
+        display: block;
+    }
+
+    .big-screen {
+        display: none;
+    }
+
+    .small-screen-text {
+        font-size: 18px;
+    }
+}
+
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+    .small-screen {
+        display: block;
+    }
+
+    .big-screen {
+        display: none;
+    }
+
+    .small-screen-text {
+        font-size: 22px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .trade-sections {
+        width: 95vw;
+        margin: 0 0 20px 2.5vw;
+    }
+
+    .active-trades {
+        margin: 0;
+        width: 95vw;
+        margin-left: 2.5vw;
+    }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+    .trade-sections {
+        width: 95vw;
+        margin: 0 0 20px 2.5vw;
+    }
+
+    .active-trades {
+        margin: 0;
+        width: 95vw;
+        margin-left: 2.5vw;
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+    .trade-sections {
+        width: 47%;
+        margin-right: 0;
+    }
+
+    .right {
+        margin-left: 3vw;
+    }
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1690px) {
+    .trade-sections {
+        width: 47%;
+        margin-right: 0;
+    }
+
+    .right {
+        margin-left: 3vw;
+    }
+}

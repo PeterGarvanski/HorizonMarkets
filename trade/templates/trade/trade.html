@@ -10,7 +10,10 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
+    <div class="row small-screen">
+        <h2 class="small-screen-text">Please use a device with a larger screen to access trading.</h2>
+    </div>
+    <div class="row big-screen">
         <div class="col-md-6 trade-sections box-shadow right">
             <h2 class="titles">Today's Trades</h2>
             <div class="table">
@@ -81,7 +84,7 @@
             </form>
         </div>
     </div>
-    <div class="row">
+    <div class="row big-screen">
         <div class="col-md-12 active-trades box-shadow">
             <h2 class="titles">Open Positions</h2>
             <div class="table" id="open-trades" data="{{ open_trades }}">
