@@ -29,3 +29,80 @@
 .chart-actions:hover {
     color: #69A2E0;
 }
+
+@media screen and (min-width: 320px) and (max-width: 576px) {
+    .chart-actions {
+        top: 0;
+    }
+    
+    .add {
+        left: 7.5vw;
+        top: 750px;
+    }
+    
+    .remove {
+        left: 7.6vw;
+        top: 790px;
+    }
+}
+
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+    .chart-actions {
+        top: 0;
+    }
+    
+    .add {
+        left: 4.5vw;
+        top: 750px;
+    }
+    
+    .remove {
+        left: 4.6vw;
+        top: 790px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .chart-actions {
+        top: 0;
+    }
+    
+    .add {
+        left: 4.5vw;
+        top: 750px;
+    }
+    
+    .remove {
+        left: 4.6vw;
+        top: 790px;
+    }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+    .chart-actions {
+        top: 125px;
+    }
+    
+    .add {
+        left: 93vw;
+    }
+    
+    .remove {
+        left: 95.5vw;
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+    .chart-actions {
+        top: 140px;
+    }
+    
+    .add {
+        left: 93vw;
+    }
+    
+    .remove {
+        left: 95.5vw;
+    }
+}
