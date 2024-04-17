@@ -109,6 +109,15 @@
     .settings-form {
         width: 80%;
     }
+
+    .special-display {
+        display: none;
+    }
+
+    .small-special-display {
+        display: block;
+        font-size: 14px;
+    }
 }
 
 
@@ -184,6 +193,15 @@
         top: 775px;
         margin-top: 0;
     }
+
+    .special-display {
+        display: none;
+    }
+
+    .small-special-display {
+        display: block;
+        font-size: 16px;
+    }
 }
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
@@ -239,6 +257,15 @@
         top: 775px;
         margin-top: 0;
     }
+
+    .special-display {
+        display: none;
+    }
+
+    .small-special-display {
+        display: block;
+        font-size: 18px;
+    }
 }
 
 @media screen and (min-width: 992px) and (max-width: 1200px) {
@@ -273,6 +300,15 @@
         left: 2vw;
         top: 775px;
         margin-top: 0;
+    }
+
+    .special-display {
+        display: none;
+    }
+
+    .small-special-display {
+        display: block;
+        font-size: 20px;
     }
 }
 
@@ -312,5 +348,14 @@
         left: 2vw;
         top: 775px;
         margin-top: 0;
+    }
+
+    .special-display {
+        display: none;
+    }
+
+    .small-special-display {
+        display: block;
+        font-size: 20px;
     }
 }

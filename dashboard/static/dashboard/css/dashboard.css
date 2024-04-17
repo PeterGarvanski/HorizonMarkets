@@ -480,3 +480,8 @@ legend {
     font-weight: 600;
     margin: 20px 0;
 }
+
+.small-special-display {
+    display: none;
+    text-align: center;
+}

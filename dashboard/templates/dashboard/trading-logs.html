@@ -7,10 +7,12 @@
 
 {% block extra_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/dashboard.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/media-querys.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="col-md-12 history box-shadow">
+    <h2 class="small-special-display">Please use a larger device to access trading logs!</h2>
+    <div class="col-md-12 history box-shadow special-display">
         <h2 class="titles">Trading Logs</h2>
         <div class="table">
             <div>
