@@ -7,10 +7,12 @@
 
 {% block extra_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/dashboard.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/media-querys.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="my-container">
+    <h2 class="small-screen">Please use a larger device to access deposits!</h2>
+    <div class="my-container large-screen">
         <div class="transfer-display">
             <a class="transfer-page-link" href="{% url 'withdraw' %}">Withdrawals <i class="fas fa-arrow-right"></i></a>
             <form action="{% url 'deposit' %}" method="post" id="deposit-form">

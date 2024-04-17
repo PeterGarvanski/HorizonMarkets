@@ -1,5 +1,9 @@
 /* CSS for Navigation on mobile devices */
 
+.small-screen {
+    display: none;
+}
+
 @media screen and (min-width: 320px) and (max-width: 576px) {
     .sections {
         width: 96%;
@@ -71,6 +75,22 @@
     #cancel-form {
         width: 30px;
     }
+
+    .transfer-page-link {
+        left: 58vw;
+        top: 5px;
+        font-size: 12px;
+    }
+
+    .large-screen {
+        display: none;
+    }
+
+    .small-screen {
+        display: block;
+        text-align: center;
+        font-size: 14px;
+    }
 }
 
 
@@ -126,6 +146,12 @@
         padding: 4px 18px;
         font-size: 18px;
     }
+
+    .transfer-page-link {
+        left: 58vw;
+        top: 5px;
+        font-size: 12px;
+    }
     
 }
 
@@ -162,6 +188,11 @@
 
     .sum {
         font-size: 22px;
+    }
+
+    .transfer-page-link {
+        left: 60vw;
+        top: 5px;
     }
 }
 
@@ -204,5 +235,9 @@
 
     #account-title {
         margin-top: 70px;
+    }
+
+    .transfer-page-link {
+        left: 40vw;
     }
 }

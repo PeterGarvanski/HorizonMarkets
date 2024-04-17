@@ -7,30 +7,32 @@
 
 {% block extra_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/dashboard.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/media-querys.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="my-container">
-    <div class="withdraw-display box-shadow">
-        <a class="transfer-page-link" href="{% url 'deposit' %}">Deposits <i class="fas fa-arrow-right"></i></a>
-        <form action="{% url 'withdraw' %}" method="post" id="withdraw-form">
-            {% csrf_token %}
-            <div class="head">
-                <h1 class="withdraw-title">Withdraw</h1>
-                <p class="withdrawal-warning">Withdraw money into your PayPal or Venmo account. Minimum withdrawals are $50!</p>
-            </div>
-            <div class="form-section">
-                <label for="withdrawal-amount" class="withdrawal-label first">Amount</label>
-                <input type="number" class="withdraw-input amount" name="withdrawal-amount" min="50" max="{{ account_balance }}">
-                <p class="account-balance-sum">Available Balance: ${{ account_balance }}</p>
-                <label for="paypal-name" class="withdrawal-label">Account Name</label>
-                <input type="text" class="withdraw-input" name="paypal-name">
-                <label for="paypal-email" class="withdrawal-label">Account Email</label>
-                <input type="email" class="withdraw-input" name="paypal-email">
-                <input type="submit" class="withdraw-button withdraw-input" value="Withdraw">
-                <p class="paypal">powered by <b>PayPal</b></p>
-            </div>
-        </form>
+    <h2 class="small-screen">Please use a larger device to access deposits!</h2>
+    <div class="my-container large-screen">
+        <div class="withdraw-display box-shadow">
+            <a class="transfer-page-link" href="{% url 'deposit' %}">Deposits <i class="fas fa-arrow-right"></i></a>
+            <form action="{% url 'withdraw' %}" method="post" id="withdraw-form">
+                {% csrf_token %}
+                <div class="head">
+                    <h1 class="withdraw-title">Withdraw</h1>
+                    <p class="withdrawal-warning">Withdraw money into your PayPal or Venmo account. Minimum withdrawals are $50!</p>
+                </div>
+                <div class="form-section">
+                    <label for="withdrawal-amount" class="withdrawal-label first">Amount</label>
+                    <input type="number" class="withdraw-input amount" name="withdrawal-amount" min="50" max="{{ account_balance }}">
+                    <p class="account-balance-sum">Available Balance: ${{ account_balance }}</p>
+                    <label for="paypal-name" class="withdrawal-label">Account Name</label>
+                    <input type="text" class="withdraw-input" name="paypal-name">
+                    <label for="paypal-email" class="withdrawal-label">Account Email</label>
+                    <input type="email" class="withdraw-input" name="paypal-email">
+                    <input type="submit" class="withdraw-button withdraw-input" value="Withdraw">
+                    <p class="paypal">powered by <b>PayPal</b></p>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}
