@@ -1,110 +1,216 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Horizon Markets
 
-Welcome Peter Garvanski,
+## Purpose of the Project
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+**Description:**
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+Welcome to Horizon Markets! Horizon Markets is a web-based cryptocurrency exchange designed to empower users with comprehensive tools for trading and analysis. With support for over 152 cryptocurrencies, users can seamlessly navigate through the platform to explore, chart, analyze, and execute trades with ease. Our priority lies in providing a secure environment for transactions, ensuring the safety and convenience of deposits and withdrawals through over 5 supported payment methods.
 
-## Gitpod Reminders
+**Favourite Coins:** 
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+Horizon Markets introduces the feature to favorite specific cryptocurrencies, enhancing the user experience by enabling direct access to price information for these chosen coins from their dashboard. This functionality equips users with up-to-date insights, empowering them to make informed decisions and improve their trading performance.
 
-`python3 -m http.server`
+**Advanced Charting:** 
 
-A blue button should appear to click: _Make Public_,
+Our platform offers advanced charting capabilities, allowing users to stack up to three advanced TradingView widget charts on the charts page. This facilitates in-depth analysis as users can compare different time frames or cryptocurrencies simultaneously. This feature is instrumental in providing users with comprehensive insights into market trends, aiding them in making strategic trading decisions.
 
-Another blue button should appear to click: _Open Browser_.
+**Execute Trades:** 
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+Horizon Markets is equipped with advanced trading features tailored to accommodate various trading styles and preferences. Users can utilize functionalities such as limit and market orders, stop-loss and take-profit integration, and a quick-close button to efficiently manage their positions. These features empower users to execute trades with precision and agility, enhancing their overall trading experience on our platform.
 
-A blue button should appear to click: _Make Public_,
+### Why This Project:
 
-Another blue button should appear to click: _Open Browser_.
+At Horizon Markets, our project aims to revolutionize cryptocurrency trading by providing a user-centric platform equipped with cutting-edge features and functionalities. We empower traders of all levels with comprehensive tools, allowing them to view, chart, and analyze over 152 supported cryptocurrencies while executing trades seamlessly. Our platform enhances user experience by streamlining the trading process, offering advanced charting capabilities for in-depth analysis, and prioritizing security and convenience with secure transaction processes and multiple payment methods. With tailored trading features such as limit and market orders, stop-loss and take-profit integration, and a quick-close button, Horizon Markets caters to diverse trading styles and preferences. Join us and experience the future of cryptocurrency trading today!
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+### Project Objectives:
 
-To log into the Heroku toolbelt CLI:
+- *Secure and Seamless Registration:* Incorporate Django's built-in OAuth system to enable users to register and log in securely with seamless integration. Enable users to modify their account credentials to rectify any inaccuracies or mistakes in their information.
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+- *Secure Transaction Processes:* Integrate the APIs of Stripe and PayPal to facilitate various payment and withdrawal options, ensuring flexibility for users.
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+- *Comprehensive Charting:* Develop a system that enables users to access and manage up to three charts simultaneously, each equipped with diverse charting features to enhance cryptocurrency analysis capabilities.
 
-------
+- *Advanced Trading:* Implement an intuitive and responsive trading interface that empowers users to execute trades efficiently and effectively, incorporating advanced order types, real-time market data, and customizable trading strategies to optimize their trading experience.
 
-## Release History
+- *Customer-Support System:* Establish a customer support system that provides assistance to user inquiries and issues, utilizing Django's built in mail protocall.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+## User Stories
 
-**September 20 2023:** Update Python version to 3.9.17.
+### Current User Stories:
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+1. **As a new user**, As a cryptocurrency trader, I want to be able to easily register for an account on Horizon Markets through OAuth integration, so that I can quickly access the platform. 
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+2. **As a seasoned investor**, I want the ability to customize my dashboard on Horizon Markets by favoriting specific cryptocurrencies, so that I can easily track their prices and performance without having to search through a long list of coins.
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+3. **As a technical analyst**, I want access to advanced charting features on Horizon Markets, such as the ability to stack up to three different charts with various timeframes and indicators, so that I can conduct in-depth analysis and make well-informed trading decisions.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+4. **As a security-conscious user**, I want Horizon Markets to offer multiple payment and withdrawal methods, including integration with reputable payment processors like Stripe and PayPal, so that I can choose the most convenient and secure option for managing my funds on the platform.
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+5. **As a novice trader**, I want Horizon Markets to provide a user-friendly trading interface with intuitive features like limit and market orders, stop-loss and take-profit options, and a quick-close button, so that I can easily execute trades and manage my positions without feeling overwhelmed by complex trading terminology.
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+### Future User Stories:
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+1. **As a high-volume trader**, I want Horizon Markets to introduce a VIP or premium membership program with exclusive benefits such as reduced trading fees, priority customer support, and access to advanced trading tools and analytics, to incentivize loyalty and attract more active traders to the platform.
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+2. **As a global trader**, I want Horizon Markets to expand its supported languages beyond English to cater to a more diverse user base, ensuring that non-English speaking users can navigate the platform and access support resources in their preferred language.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+3. **As a trader interested in diversifying my portfolio**, I want Horizon Markets to introduce support for trading derivatives such as futures contracts and options, so that I can hedge my positions and take advantage of price movements in the cryptocurrency market.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+## Features
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+### Key Features:
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+- **Registration:** Allows users to become members of the website, disabling any incorrect inputs.
+![Registration Screenshot](static/images/readme-images/registration.png)
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+- **Log-In:** Allows users to enter their individual accounts, validating information and displaying error messages if any of the information is incorrect.
+![Log In Screenshot](static/images/readme-images/login.png)
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+- **Navigation:** Easy-to-use navigation for a seamless user experience while navigating the website. This feature displays navigation links, guiding you to each individual section of the website, along with the settings page and log-out button.
+![Navigation Screenshot](static/images/readme-images/navigation.png)
 
-------
+- **Dashhboard:** Displays the user's account history information, along with live price updates and details about their favorite cryptocurrency coins.
+![Dashboard Screenshot](static/images/readme-images/dashboard.png)
 
-## FAQ about the uptime script
+- **Markets:** Showcases the price action of any cryptocurrency through simple charts, while also offering the ability to favorite cryptocurrencies.
+![Markets Screenshot](static/images/readme-images/markets.png)
 
-**Why have you added this script?**
+- **Chart:** Users can view and analyze up to a total of three advanced charts simultaneously, across any chosen cryptocurrency and time frame.
+![Chart Screenshot](static/images/readme-images/chart.png)
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
 
-**How will this affect me?**
+- **Trade:** Enables users to trade any cryptocurrency, offering features such as limit and market orders, stop-loss, and take-profit options. Additionally, it displays current positions and relevant information, along with a summary of today's trades.
+![Trade Screenshot](static/images/readme-images/trade.png)
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+- **Settings:** Includes a customer support section where users can reach out for technical assistance, as well as the ability to update their current user profile information.
+![Settings Screenshot](static/images/readme-images/settings.png)
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+- **Deposits:** Allows users to securely deposit funds into their account using Stripe's payment processes.
+![Deposits Screenshot](static/images/readme-images/deposits.png)
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+- **Withdrawals:** Allows users to securely withdraw funds from their account using PayPal's payment processes.
+![Withdrawals Screenshot](static/images/readme-images/withdrawals.png)
 
-**So….?**
+- **Transactions:** Showcases all trades executed, providing comprehensive information about each trade.
+![Transactions Screenshot](static/images/readme-images/transactions.png)
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+## Future Features
 
-**Can I opt out?**
+### Planned Future Features:
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+- Implement additional currency pairs, starting with GBP (British Pound) and EUR (Euro), to provide users with more trading options.
+- Implement margin trading functionality, allowing users to borrow funds to leverage their positions and potentially increase their returns (while also increasing their risk).
+- Introduce a premium membership program with exclusive benefits such as reduced trading fees.
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+## User Experience Design Features
 
-**Anything more?**
+### Typography:
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+- **Primary Font:**  *Rubik*, chosen for its versatility and readability, enhances the overall UI and UX experience. With a clean and modern appearance, Rubik ensures a seamless and pleasant reading experience across various screen sizes. Its balanced letterforms and legibility make it an excellent choice for body text and user interface elements.
 
----
+- **Secondary Font:** *Sans-Serif*, I chose sans-serif as my secondary font because it is a basic font that is universally supported across all browsers. In the event that my main font fails to load for any reason, I can rely on and depend on sans-serif as a fallback option.
 
-Happy coding!
+### Color Scheme:
+
+- **Primary Color:**  *#474471*, carefully chosen for its visual appeal and functionality, contributes to an enhanced UI and UX experience on the website. This deep, muted shade of purple possesses a richness that can add a touch of sophistication and depth to various interface elements. Its darker tone makes it effective for creating contrasts and emphasizing certain components, improving overall readability and navigation. The color choice aligns with the website's aesthetics, fostering a cohesive and visually pleasing design.
+  
+- **Secondary Color:** *#edf0f2* has been thoughtfully selected to enhance the website's UI and UX. This soft, neutral shade serves as an excellent choice for text and borders due to its high contrast with darker backgrounds, ensuring readability and clarity. The lightness of this color promotes a clean and modern aesthetic, contributing to a user-friendly and visually pleasing experience.
+
+## Wireframes
+
+### Wireframes:
+
+- **Log In Section Wireframe:** ![Log In Wirerame Screenshot](financetracker/static/images/wireframes/log-in-wireframe.png)
+
+- **Dashboard Section Wireframe:** ![Dashboard Wirerame Screenshot](financetracker/static/images/wireframes/dashboard-wireframe.png)
+
+- **Income & Expenses Section Wireframe:** ![Income & Expenses Wirerame Screenshot](financetracker/static/images/wireframes/income-expenses-wireframe.png)
+
+## Technologies
+
+### Languages:
+
+- **HTML:** Used to structure the contents for my website.
+- **CSS:** Used to style the content of my website.
+- **JavaScript:** Used to add the interactivity to the charts.
+- **Python:** Used for the back-end and data management.
+- **PostgreSQL:** Used as the database for the website.
+
+**Frameworks and Add-Ons:**
+
+- **Flask:** Web Developent framework for Python.
+- **SQLAlchemy:** Object-Relational Mapping (ORM) library for Python
+- **Bootstrap:** Used to make the website scalable across multiple screen sizes.
+- **Chart.js:** Used to create the graphs on my website.
+- **Google Fonts:** Used to apply non-included fonts onto my text.
+
+**Additional:**
+
+- **GitPod:** My Integrated Development Environment.
+- **Git and Github:** Used Git for source code management and github for version control.
+- **Heroku:** For deployment of my website.
+- **ElephantSQL:** Cloud-based PostgreSQL database service that I used to host my database.
+
+## Testing
+
+### W3C Validator:
+
+- ***HTML*** ![HTML Passing Validator Screenshot](financetracker/static/images/testing-images/html-validation.png)
+
+### Jigsaw Validator:
+- ***CSS*** ![CSS Passing Validator Screenshot](financetracker/static/images/testing-images/css-validation.png)
+
+### JSHint:
+- ***JavaScript Dashboard*** ![Javascript Passing Screenshot](financetracker/static/images/testing-images/dashboard-javascript-validation.png)
+
+### JSHint:
+- ***JavaScript Asset*** ![Javascript Passing Screenshot](financetracker/static/images/testing-images/asset-javascript-validation.png)
+
+### JSHint:
+- ***Python*** ![Python Passing Screenshot](financetracker/static/images/testing-images/python-validation.png)
+
+### Manual Testing:
+
+| Feature                      | Action                                | Expected Result                    | Tested | Passed  | Comments   |
+| ---------------------------- | ------------------------------------- | ---------------------------------- | ------ | ------- | ---------- |
+| Dashboard Navigation         | Click on the 'Dashboard' link         | Redirect to Dashboard page         | ✅     | ✅     | Works Fine |
+| Income & Expenses Navigation | Click on the 'Income & Expenses' link | Redirect to Income & Expenses page | ✅     | ✅     | Works Fine |
+| Assets Navigation            | Click on the 'Assets' link            | Redirect to Assets page            | ✅     | ✅     | Works Fine |
+| Log Out button               | Click on the 'Log Out' Button         | Redirect to Log In page            | ✅     | ✅     | Works Fine |
+| View All Transactions Page   | Click on the 'View All' button        | Redirect to All Transactions page  | ✅     | ✅     | Works Fine |
+| Form Submits                 | Click on the 'Submit' buttons         | Redirect to relevant pages         | ✅     | ✅     | Works Fine |
+| Register Page Form           | Fill register form out and submit     | If fields not empty it redirects   | ✅     | ✅     | Works Fine |
+| Log In Page Form             | Fill Log In form out and submit       | If fields not empty it redirects   | ✅     | ✅     | Works Fine |
+| Savings Goal Chart           | Add transaction income & earning      | Chart updates based on transaction | ✅     | ✅     | Works Fine |
+| Net Worth Goal Chart         | Add an asset or change salary         | Chart updates based on assets      | ✅     | ✅     | Works Fine |
+| Asset Chart                  | Dispalys all assets and amounts       | Dispalys all assets and amounts    | ✅     | ✅     | Works Fine |
+| Total Asset Value number     | Add an asset or delete an asset       | Number updates based on assets     | ✅     | ✅     | Works Fine | 
+| Savings number               | Add transaction income & earning      | Number updates based on transaction| ✅     | ✅     | Works Fine |
+| Net Worth number             | Add an asset or change salary         | Number updates based on assets     | ✅     | ✅     | Works Fine |
+| Salary Circle                | Click "Edit Salary" and submit salary | Salary Circle updates to new salary| ✅     | ✅     | Works Fine |
+| Add Transaction              | Click and fill out the form           | If fields not empty it submits     | ✅     | ✅     | Works Fine |
+| Delete Transaction           | Click and fill out the form           | If fields not empty it submits     | ✅     | ✅     | Works Fine |
+| Add Asset                    | Click and fill out the form           | If fields not empty it submits     | ✅     | ✅     | Works Fine |
+| Delete Asset                 | Click and fill out the form           | If fields not empty it submits     | ✅     | ✅     | Works Fine |
+
+### Fixed Bugs:
+
+1. **Negative Savings and Net Worth Goal:** When registering as a user on the website, you are required to enter a "Savings Goal" and a "Net Worth Goal." I discovered that if users enter a negative number or zero, the charts won't display correctly. To address this issue, I added extra validation during registration in the form of an if-else statement: ***if int(net_worth_goal) <= 0:*** and ***elif int(savings_goal) <= 0:*** . This resolution ensures that users cannot input non-positive values for these goals, preventing potential issues with chart display.
+
+### Supported Screen Sizes:
+
+- **For Small, Medium and Large Phone Screen Sizes:** (Breakpoint: 320px to 576px).
+- **For Small and Medium Tablet Sizes:** (576px to 768px).
+- **For Small and Medium Laptop Screen Sizes:** (768px to 992px).
+- **For Large Laptop and Small Desktop Screen Sizes:** (992px to 1200px).
+- **For Large Desktop Screen Sizes:** (1200px +).
+
+### Database Schema:
+
+The FinanceTracker database consists of three interconnected tables: **User**, **Transaction**, and **Asset**. The **User** table serves as the central entity, containing user-specific information such as username, password, financial goals, net worth, savings, and salary. Both the **Transaction** and **Asset** tables are linked to the **User** table through the `user_id` foreign key, establishing a relational connection. In the **Transaction** table, each entry corresponds to a financial transaction made by a user, with details including the transaction date, type, category, and amount. The **Asset** table represents assets owned by users, featuring information such as the asset name and its associated value. The foreign key relationships, particularly with `user_id`, enable a cascading effect, ensuring that when a user is removed, their related transactions and assets are automatically deleted as well. This schema provides a comprehensive framework for managing user information, financial transactions, and owned assets within the FinanceTracker application.
+
+## Deployment
+
+To deploy the site, I first created an instance of my database in ElephantSQL. Then, in my IDE, I created a requirements.txt file listing all libraries, frameworks, and add-ons I have used. Following that, I created a Procfile with the commands needed to run my web app. Finally, on Heroku, I added all my environment variables and deployed my site.
+
+The Site was Deployed on Heroku. This is the link <https://my-finview-15e37362d8a7.herokuapp.com/>
