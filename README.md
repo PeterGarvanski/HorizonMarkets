@@ -106,25 +106,27 @@ At Horizon Markets, our project aims to revolutionize cryptocurrency trading by 
 
 ### Typography:
 
-- **Primary Font:**  *Rubik*, chosen for its versatility and readability, enhances the overall UI and UX experience. With a clean and modern appearance, Rubik ensures a seamless and pleasant reading experience across various screen sizes. Its balanced letterforms and legibility make it an excellent choice for body text and user interface elements.
+- **Primary Font:**  *Poppins*, Poppins is a widely used font known for its modern, clean appearance and high readability. Its balanced proportions and consistent letterforms make it suitable for this web-application. Available in multiple weights and styles, Poppins offers versatility for different typographic needs, supporting both headlines and body text. Additionally, its international support and accessibility features, such as open counters and ample spacing, cater to diverse audiences and ensure readability across languages and user groups. Poppins is also favored for branding purposes due to its contemporary yet neutral aesthetic, helping maintain brand consistency across different platforms and communications. Overall, Poppins is valued for its contemporary design, readability, versatility, and accessibility, making it a personal choice.
 
 - **Secondary Font:** *Sans-Serif*, I chose sans-serif as my secondary font because it is a basic font that is universally supported across all browsers. In the event that my main font fails to load for any reason, I can rely on and depend on sans-serif as a fallback option.
 
 ### Color Scheme:
 
-- **Primary Color:**  *#474471*, carefully chosen for its visual appeal and functionality, contributes to an enhanced UI and UX experience on the website. This deep, muted shade of purple possesses a richness that can add a touch of sophistication and depth to various interface elements. Its darker tone makes it effective for creating contrasts and emphasizing certain components, improving overall readability and navigation. The color choice aligns with the website's aesthetics, fostering a cohesive and visually pleasing design.
+- **Primary Color:**  *#437DBC*, Using the color #437DBC in UI and UX design offers several advantages. Its deep blue hue with a hint of cyan creates a visually appealing palette, drawing users' attention and enhancing engagement. Additionally, the color conveys professionalism and trustworthiness, making it suitable for trading interfaces. Its clear contrast against light backgrounds improves readability and ensures key elements stand out.
   
-- **Secondary Color:** *#edf0f2* has been thoughtfully selected to enhance the website's UI and UX. This soft, neutral shade serves as an excellent choice for text and borders due to its high contrast with darker backgrounds, ensuring readability and clarity. The lightness of this color promotes a clean and modern aesthetic, contributing to a user-friendly and visually pleasing experience.
+- **Secondary Color:** *#93B8E1* Using the color #93B8E1 as a secondary color in UI and UX design offers several benefits. Its soft and muted blue tone creates a calming and soothing effect, complementing primary colors and enhancing the overall color palette. As a secondary color, #93B8E1 can be used for accents, highlights, or background elements, providing visual interest without overpowering the primary content. Its gentle hue promotes a sense of harmony and balance in the interface, contributing to a cohesive and pleasant user experience. Additionally, #93B8E1 maintains good contrast against darker or lighter tones, ensuring readability and accessibility.
 
 ## Wireframes
 
 ### Wireframes:
 
-- **Log In Section Wireframe:** ![Log In Wirerame Screenshot](financetracker/static/images/wireframes/log-in-wireframe.png)
+- **Dashboard Wireframe:** ![Dashboard Wirerame Screenshot](static/images/wireframes/dahsboard-wireframe.png)
 
-- **Dashboard Section Wireframe:** ![Dashboard Wirerame Screenshot](financetracker/static/images/wireframes/dashboard-wireframe.png)
+- **Markets Wireframe:** ![Markets Wirerame Screenshot](static/images/wireframes/markets-wireframe.png)
 
-- **Income & Expenses Section Wireframe:** ![Income & Expenses Wirerame Screenshot](financetracker/static/images/wireframes/income-expenses-wireframe.png)
+- **Chart Wireframe:** ![Chart Wirerame Screenshot](static/images/wireframes/chart-wireframe.png)
+
+- **Trade Wireframe:** ![Trade Wirerame Screenshot](static/images/wireframes/trade-wireframe.png)
 
 ## Technologies
 
@@ -132,16 +134,19 @@ At Horizon Markets, our project aims to revolutionize cryptocurrency trading by 
 
 - **HTML:** Used to structure the contents for my website.
 - **CSS:** Used to style the content of my website.
-- **JavaScript:** Used to add the interactivity to the charts.
+- **JavaScript:** Used to add the interactivity to the elements.
 - **Python:** Used for the back-end and data management.
-- **PostgreSQL:** Used as the database for the website.
+- **Sqlite:** Used as the database for the website.
 
 **Frameworks and Add-Ons:**
 
-- **Flask:** Web Developent framework for Python.
-- **SQLAlchemy:** Object-Relational Mapping (ORM) library for Python
+- **Django:** Web Developent framework for Python.
 - **Bootstrap:** Used to make the website scalable across multiple screen sizes.
 - **Chart.js:** Used to create the graphs on my website.
+- **Stripe API:** Used for secure deposits.
+- **PayPal API:** Used for secure Withdrawals.
+- **Binance Websocket and  API:** Used for trading information and execution of trades.
+- **TradingView API:** Used for charting and displaying markets.
 - **Google Fonts:** Used to apply non-included fonts onto my text.
 
 **Additional:**
