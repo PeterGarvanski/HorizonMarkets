@@ -160,47 +160,51 @@ At Horizon Markets, our project aims to revolutionize cryptocurrency trading by 
 
 ### W3C Validator:
 
-- ***HTML*** ![HTML Passing Validator Screenshot](financetracker/static/images/testing-images/html-validation.png)
+- ***HTML*** ![HTML Passing Validator Screenshot](static/images/readme-images/w3c-css-validator.png)
 
-### Jigsaw Validator:
-- ***CSS*** ![CSS Passing Validator Screenshot](financetracker/static/images/testing-images/css-validation.png)
-
-### JSHint:
-- ***JavaScript Dashboard*** ![Javascript Passing Screenshot](financetracker/static/images/testing-images/dashboard-javascript-validation.png)
+### W3C CSS Validator:
+- ***CSS*** ![CSS Passing Validator Screenshot](static/images/readme-images/w3c-css-validator.png)
 
 ### JSHint:
-- ***JavaScript Asset*** ![Javascript Passing Screenshot](financetracker/static/images/testing-images/asset-javascript-validation.png)
+- ***JavaScript*** ![Javascript Passing Screenshot](static/images/readme-images/jshint-js-validator.png)
+
 
 ### JSHint:
-- ***Python*** ![Python Passing Screenshot](financetracker/static/images/testing-images/python-validation.png)
+- ***Python*** ![Python Passing Screenshot](static/images/readme-images/w3c-css-validator.png)
 
 ### Manual Testing:
 
 | Feature                      | Action                                | Expected Result                    | Tested | Passed  | Comments   |
 | ---------------------------- | ------------------------------------- | ---------------------------------- | ------ | ------- | ---------- |
-| Dashboard Navigation         | Click on the 'Dashboard' link         | Redirect to Dashboard page         | ✅     | ✅     | Works Fine |
-| Income & Expenses Navigation | Click on the 'Income & Expenses' link | Redirect to Income & Expenses page | ✅     | ✅     | Works Fine |
-| Assets Navigation            | Click on the 'Assets' link            | Redirect to Assets page            | ✅     | ✅     | Works Fine |
-| Log Out button               | Click on the 'Log Out' Button         | Redirect to Log In page            | ✅     | ✅     | Works Fine |
-| View All Transactions Page   | Click on the 'View All' button        | Redirect to All Transactions page  | ✅     | ✅     | Works Fine |
-| Form Submits                 | Click on the 'Submit' buttons         | Redirect to relevant pages         | ✅     | ✅     | Works Fine |
-| Register Page Form           | Fill register form out and submit     | If fields not empty it redirects   | ✅     | ✅     | Works Fine |
+| Site Navigation              | Click on the links in the navigation  | Redirect to relevant part of site  | ✅     | ✅     | Works Fine |
+| Log Out button               | Click on the 'Log Out' Button         | Redirect to confirmation page      | ✅     | ✅     | Works Fine |
+| Transfer button              | Click on the 'Transfer' Button        | Redirect to Deposits page          | ✅     | ✅     | Works Fine |
+| Settings button              | Click on the 'Settings' Button        | Redirect to Settings page          | ✅     | ✅     | Works Fine |
+| Withdraw Button              | Click on the 'Withdraw' button        | Redirect to Withdraw form page     | ✅     | ✅     | Works Fine |
+| Transaction forms            | Fill transaction form out and submit  | Processes transaction and operates | ✅     | ✅     | Works Fine |
+| Registration form            | Fill register form out and submit     | If fields not empty it redirects   | ✅     | ✅     | Works Fine |
 | Log In Page Form             | Fill Log In form out and submit       | If fields not empty it redirects   | ✅     | ✅     | Works Fine |
-| Savings Goal Chart           | Add transaction income & earning      | Chart updates based on transaction | ✅     | ✅     | Works Fine |
-| Net Worth Goal Chart         | Add an asset or change salary         | Chart updates based on assets      | ✅     | ✅     | Works Fine |
-| Asset Chart                  | Dispalys all assets and amounts       | Dispalys all assets and amounts    | ✅     | ✅     | Works Fine |
-| Total Asset Value number     | Add an asset or delete an asset       | Number updates based on assets     | ✅     | ✅     | Works Fine | 
-| Savings number               | Add transaction income & earning      | Number updates based on transaction| ✅     | ✅     | Works Fine |
-| Net Worth number             | Add an asset or change salary         | Number updates based on assets     | ✅     | ✅     | Works Fine |
-| Salary Circle                | Click "Edit Salary" and submit salary | Salary Circle updates to new salary| ✅     | ✅     | Works Fine |
-| Add Transaction              | Click and fill out the form           | If fields not empty it submits     | ✅     | ✅     | Works Fine |
-| Delete Transaction           | Click and fill out the form           | If fields not empty it submits     | ✅     | ✅     | Works Fine |
-| Add Asset                    | Click and fill out the form           | If fields not empty it submits     | ✅     | ✅     | Works Fine |
-| Delete Asset                 | Click and fill out the form           | If fields not empty it submits     | ✅     | ✅     | Works Fine |
+| Account History Chart        | Dispalys all transactions             | Dispalys all queried transactions  | ✅     | ✅     | Works Fine |
+| Account History Buttons      | Click on the any of the 3 Buttons     | Dispalys relevant info on chart    | ✅     | ✅     | Works Fine |
+| Favourited Crypto Buttons    | Click on the "x" buttons on a crypto  | Removes Crypto and info from list  | ✅     | ✅     | Works Fine |
+| Markets Search Bar           | Type a crypto pair into the search    | Displays a simple crypto chart     | ✅     | ✅     | Works Fine |
+| Markets Favourite Button     | Click on the heart shaped button      | Adds crypto pair to favourites     | ✅     | ✅     | Works Fine |
+| Charts, Interactive Charts   | Click, Select and Drag on Charts      | Should be responsive and functional| ✅     | ✅     | Works Fine | 
+| Charts Add Button            | Click on the "+" Button               | Should add another chart if ch > 3 | ✅     | ✅     | Works Fine |
+| Chart Remove Button          | Click on the "x" Button               | Should remove chart if chart < 0   | ✅     | ✅     | Works Fine |
+| Trade Markets Form           | Fill out form and place trade         | Should open trade position         | ✅     | ✅     | Works Fine |
+| Trade Open Position          | Place a trade to see                  | Displays open trading positions    | ✅     | ✅     | Works Fine |
+| Trade Close Open Position    | Click on the "x" button in a trade    | Should close the position          | ✅     | ✅     | Works Fine |
+| Todays trades                | Close open positions from today       | Displays relevant trade info       | ✅     | ✅     | Works Fine |
+| Customer Support             | Click and fill out the form           | Sends an email to admin with info  | ✅     | ✅     | Works Fine |
+| User Profile Form            | Click and fill out the form           | Updates user profile information   | ✅     | ✅     | Works Fine |
+| Trading Logs Button          | Click on "Trading Logs" button        | redirects to trading logs page     | ✅     | ✅     | Works Fine |
+| Account Transactions Button  | Click on "Account Transactions" button| redirects to Account Transactions  | ✅     | ✅     | Works Fine |
 
 ### Fixed Bugs:
 
-1. **Negative Savings and Net Worth Goal:** When registering as a user on the website, you are required to enter a "Savings Goal" and a "Net Worth Goal." I discovered that if users enter a negative number or zero, the charts won't display correctly. To address this issue, I added extra validation during registration in the form of an if-else statement: ***if int(net_worth_goal) <= 0:*** and ***elif int(savings_goal) <= 0:*** . This resolution ensures that users cannot input non-positive values for these goals, preventing potential issues with chart display.
+1. **Trade Entry Calculation:** 
+Discovered a bug with the trade entry calculation where I overlooked using the cumulative quote quantity. Realized my mistake was failing to divide the cumulative quote quantity by the quantity of the asset traded to determine the entry price accurately. Corrected the mistake by implementing the proper calculation logic `float(result.get('cummulativeQuoteQty')) / float(result.get('executedQty')))`, dividing the cumulative quote quantity by the asset quantity to obtain the correct trade entry price.
 
 ### Supported Screen Sizes:
 
@@ -212,7 +216,7 @@ At Horizon Markets, our project aims to revolutionize cryptocurrency trading by 
 
 ### Database Schema:
 
-The FinanceTracker database consists of three interconnected tables: **User**, **Transaction**, and **Asset**. The **User** table serves as the central entity, containing user-specific information such as username, password, financial goals, net worth, savings, and salary. Both the **Transaction** and **Asset** tables are linked to the **User** table through the `user_id` foreign key, establishing a relational connection. In the **Transaction** table, each entry corresponds to a financial transaction made by a user, with details including the transaction date, type, category, and amount. The **Asset** table represents assets owned by users, featuring information such as the asset name and its associated value. The foreign key relationships, particularly with `user_id`, enable a cascading effect, ensuring that when a user is removed, their related transactions and assets are automatically deleted as well. This schema provides a comprehensive framework for managing user information, financial transactions, and owned assets within the FinanceTracker application.
+The Horizon Markets database encompasses several interconnected models designed to manage various aspects of the trading platform. At the core of the database is the `UserProfile` model, which stores user-specific information such as account balance and deposit amount multiplier. The `AccountHistory` model tracks changes in user account balances over time, linking each entry to a user profile through a foreign key relationship. The `Market` model allows users to customize their trading experience by specifying favorite tickers and market preferences, while the `Chart` model enables users to view and analyze multiple cryptocurrency charts simultaneously. The `OpenTrade` model records details of users' open trades, including order type, quantity, and entry price, with each trade associated with a user profile. Additionally, the `TradeHistory` model logs past trades made by users, capturing essential information such as trade date, symbol, and net profit or loss. These models are interconnected through foreign key relationships, facilitating data retrieval and ensuring data integrity across different components of the platform. This schema provides a comprehensive framework for managing user profiles, trading activity, and market preferences within the Horizon Markets application.
 
 ## Deployment
 

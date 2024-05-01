@@ -6,7 +6,6 @@ import hmac
 import json
 import time
 import uuid
-from cryptography.hazmat.primitives.serialization import load_pem_private_key
 
 
 def construct_signature_payload(params):
@@ -135,3 +134,4 @@ def handle_trade(user, params, symbol, side, quantity, price, take_profit, stop_
                                )
 
     ws.run_forever()
+    
