@@ -160,17 +160,17 @@ At Horizon Markets, our project aims to revolutionize cryptocurrency trading by 
 
 ### W3C Validator:
 
-- ***HTML*** ![HTML Passing Validator Screenshot](static/images/readme-images/w3c-css-validator.png)
+- ***HTML*** ![HTML Passing Validator Screenshot](static/images/readme-images/w3c-html-validator.png)
 
 ### W3C CSS Validator:
 - ***CSS*** ![CSS Passing Validator Screenshot](static/images/readme-images/w3c-css-validator.png)
 
-### JSHint:
+### ExtendsClass Python Validator:
 - ***JavaScript*** ![Javascript Passing Screenshot](static/images/readme-images/jshint-js-validator.png)
 
 
 ### JSHint:
-- ***Python*** ![Python Passing Screenshot](static/images/readme-images/w3c-css-validator.png)
+- ***Python*** ![Python Passing Screenshot](static/images/readme-images/extendsclass-python-validator.png)
 
 ### Manual Testing:
 
