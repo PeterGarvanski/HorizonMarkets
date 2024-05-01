@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'horizon-markets-54be7eb26f4d.herokuapp.com',
+    'localhost'
 ]
 
 
