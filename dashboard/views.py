@@ -471,29 +471,3 @@ def get_access_token(client_id, client_secret):
     else:
         print('Error:', response.text)
         return None
-
-
-# def send_email():
-#     sender_email = SENDER_EMAIL
-#     sender_password = SENDER_PASSWORD
-#     reciever_email = RECIPIENT_EMAIL
-
-#     subject = 'Test Email'
-#     body = 'This is a test email'
-
-#     msg = MIMEMultipart()
-#     msg['From'] = sender_email
-#     msg['To'] = reciever_email
-#     msg['Subject'] = subject
-
-#     msg.attach(MIMEText(body, 'plain'))
-
-#     try:
-#         with smtplib.SMTP('smtp.gmail.com', 587) as server:
-#             server.starttls()
-#             server.login(sender_email, sender_password)
-#             text = msg.as_string()
-#             server.sendmail(sender_email, reciever_email, text)
-#             print('Message Sent')
-#     except:
-#         print('Error Sending Email')
