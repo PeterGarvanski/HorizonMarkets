@@ -1,4 +1,5 @@
-from env import BINANCE_API_KEY, BINANCE_SECRET_KEY
+# from env import BINANCE_API_KEY, BINANCE_SECRET_KEY
+from django.conf import settings
 from .models import OpenTrade
 import websocket
 import hashlib
@@ -6,6 +7,9 @@ import hmac
 import json
 import time
 import uuid
+
+BINANCE_API_KEY = settings.BINANCE_API_KEY
+BINANCE_SECRET_KEY = settings.BINANCE_SECRET_KEY
 
 
 def construct_signature_payload(params):

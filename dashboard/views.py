@@ -1,10 +1,11 @@
-from env import STRIPE_SECRET_KEY, PAYPAL_CLIENT_ID, PAYPAL_SECRET_KEY, SENDER_EMAIL, RECIPIENT_EMAIL
+# from env import STRIPE_SECRET_KEY, PAYPAL_CLIENT_ID, PAYPAL_SECRET_KEY, SENDER_EMAIL, RECIPIENT_EMAIL
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpRequest, JsonResponse
 from django.core.mail import send_mail
+from django.conf import settings
 from .forms import UserProfileForm
 from .models import UserProfile, AccountHistory
 from markets.models import Market
@@ -17,7 +18,11 @@ import time
 import uuid
 import json
 
-
+STRIPE_SECRET_KEY = settings.STRIPE_SECRET_KEY
+PAYPAL_CLIENT_ID = settings.PAYPAL_CLIENT_ID
+PAYPAL_SECRET_KEY = settings.PAYPAL_SECRET_KEY
+SENDER_EMAIL = settings.SENDER_EMAIL
+RECIPIENT_EMAIL = settings.RECIPIENT_EMAIL
 
 @login_required
 def dashboard(request):

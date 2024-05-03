@@ -14,6 +14,9 @@ import os
 import dj_database_url
 from pathlib import Path
 
+if os.path.isfile('env.py'):
+    import env
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,7 +35,6 @@ ALLOWED_HOSTS = [
     'localhost',
     '8080-petergarvan-horizonmark-ofungvqkje6.ws-eu110.gitpod.io'
 ]
-
 
 # Application definition
 
@@ -180,3 +182,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+BINANCE_API_KEY = os.getenv('BINANCE_SECRET_KEY', '')
+BINANCE_SECRET_KEY = os.getenv('BINANCE_SECRET_KEY', '')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', '')
+PAYPAL_SECRET_KEY = os.getenv('PAYPAL_SECRET_KEY', '')
+SENDER_EMAIL = os.getenv('SENDER_EMAIL', '')
+RECIPIENT_EMAIL = os.getenv('RECIPIENT_EMAIL', '')
